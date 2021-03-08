@@ -20,7 +20,7 @@ function module.sendListToPlayer(Player: player, Title: string, Attachment)
 	module.Remotes.Event:FireClient(Player, "newList", Title, Attachment)
 end
 
-function module.doThisToPlayers(Client: player, Player: player, Callback)
+function module.doThisToPlayers(Client: player, Player: string, Callback)
 	if string.lower(Player) == "all" then
 		for i,v in pairs(Players:GetPlayers()) do
 			Callback(v)
@@ -59,7 +59,6 @@ function module.registerPlayerAddedEvent(Function)
 end
 
 function module.filterText(From: player, Content: string)
-	warn("LOL")
 	local success, result = pcall(TextService.FilterStringAsync, TextService, Content, From.UserId)
 	if success and result then
 		return true, result:GetNonChatStringForBroadcastAsync()
