@@ -21,17 +21,18 @@ function module.sendListToPlayer(Player: player, Title: string, Attachment)
 end
 
 function module.doThisToPlayers(Client: player, Player: player, Callback)
-	if string.lower(Player) == "all" then
+	Player = string.lower(Player)
+	if Player == "all" then
 		for i,v in pairs(Players:GetPlayers()) do
 			Callback(v)
 		end
-	elseif string.lower(Player) == "others" then
+	elseif Player == "others" then
 		for i,v in pairs(Players:GetPlayers()) do
 			if v ~= Client then
 				Callback(v)
 			end
 		end
-	elseif string.lower(Player) == "random" then
+	elseif Player == "random" then
 		Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
 	else
 		Player = module.getPlayerWithName(Player)
@@ -75,14 +76,12 @@ function module.registerPlayerAddedEvent(Function)
 end
 
 function module.filterText(From: player, Content: string)
-	warn("LOL")
 	local success, result = pcall(TextService.FilterStringAsync, TextService, Content, From.UserId)
 	if success and result then
-		return true, result:GetNonChatStringForBroadcastAsync()
-	else
-		warn(tostring(result))
-		return false, result
+		result = result:GetNonChatStringForBroadcastAsync()
 	end
+			
+	return success, result
 end
 
 function module.checkAdmin(ClientId: number)
