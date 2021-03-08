@@ -101,17 +101,17 @@ if isDataStoreEnabled then
 	end
 
 	local function setupUIForPlayer(Client)
-		local UI = script.Library.Client_UI:Clone()
+		local UI = script.Library.UI.Client:Clone()
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
 		if systemPackages.API.checkAdmin(Client.UserId) then
 			isPlayerAddedFired = true
 			if systemPackages.Settings.UI["Dark Theme"] then
-				UI = script.Library.Dark_UI:Clone()
+				UI = script.Library.UI.Dark:Clone()
 			else
-				UI = script.Library.UI:Clone()
+				UI = script.Library.UI.Light:Clone()
 			end
-			
+	
 			UI.Name = "UI"
 			UI.Scripts.Core.Disabled = false
 			UI.Parent = Client.PlayerGui
