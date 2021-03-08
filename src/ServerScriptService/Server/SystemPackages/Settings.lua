@@ -56,18 +56,18 @@
 		A: You can change it by modifying the Keybind settings below.
 		
 	--]]
-
-return {
-	["Admins"] = {
-		game.CreatorId,
-		"nana_kon"
-	},
 	
-	["UI"] = {
-		["Accent"] = Color3.fromRGB(64, 157, 130),
-		["Keybind"] = Enum.KeyCode.Semicolon,
-		["Dark Theme"] = false
-	},
-	
-	["Version"] = {"DP2 (A1150)", "Developer Preview 2 (A1150)"}
-}
+	return {
+		["Admins"] = {
+			game.CreatorId,
+			"nana_kon"
+		},
+		
+		["UI"] = {
+			["Accent"] = Color3.fromRGB(64, 157, 130),
+			["Keybind"] = Enum.KeyCode.Semicolon,
+			["Theme"] = "Light"
+		},
+		
+		["Version"] = {"DP2 (A1151)", "Developer Preview 2 (A1151)"}
+	}

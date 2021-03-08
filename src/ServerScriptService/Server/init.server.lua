@@ -71,6 +71,10 @@ if isDataStoreEnabled then
 		end
 	end
 	loadPackages()
+	
+	if not script.Library.UI:FindFirstChild(systemPackages.Settings.UI.Theme) or systemPackages.Settings.UI.Theme == "Client" then
+		error("Please choose a valid theme!")
+	end
 
 	remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 		if systemPackages.API.checkAdmin(Client.UserId) then
@@ -106,12 +110,7 @@ if isDataStoreEnabled then
 		UI.Parent = Client.PlayerGui
 		if systemPackages.API.checkAdmin(Client.UserId) then
 			isPlayerAddedFired = true
-			if systemPackages.Settings.UI["Dark Theme"] then
-				UI = script.Library.UI.Dark:Clone()
-			else
-				UI = script.Library.UI.Light:Clone()
-			end
-	
+			UI = script.Library.UI[systemPackages.Settings.UI.Theme]:Clone()
 			UI.Name = "UI"
 			UI.Scripts.Core.Disabled = false
 			UI.Parent = Client.PlayerGui
