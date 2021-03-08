@@ -6,14 +6,17 @@ local module = {
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
-		module.API.sendModalToPlayer(Client).Event:Connect(function(Input)
-			if Input ~= false then
-				local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
-				if char then
-					char.Humanoid.WalkSpeed = tonumber(Input)
-				end
-			end
-		end)
+		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
+		
+		if Input == false then
+			return
+		end
+
+		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
+		
+		if char then
+			char.Humanoid.WalkSpeed = tonumber(Input)
+		end
 	end
 end
 
