@@ -247,7 +247,7 @@
 										<YS>0.5</YS>
 										<YO>0</YO>
 									</UDim2>
-									<bool name="RichText">false</bool>
+									<bool name="RichText">true</bool>
 									<Ref name="RootLocalizationTable">null</Ref>
 									<float name="Rotation">0</float>
 									<bool name="Selectable">false</bool>
@@ -289,7 +289,7 @@
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<UDim name="CornerRadius">
 										<S>0</S>
-										<O>8</O>
+										<O>6</O>
 									</UDim>
 									<string name="Name">UICorner</string>
 									<int64 name="SourceAssetId">-1</int64>
@@ -495,8 +495,8 @@
 										<Properties>
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
-												<S>0</S>
-												<O>8</O>
+												<S>1</S>
+												<O>0</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -724,8 +724,8 @@
 										<Properties>
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
-												<S>0</S>
-												<O>8</O>
+												<S>1</S>
+												<O>0</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -813,7 +813,7 @@
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
 											<S>0</S>
-											<O>8</O>
+											<O>4</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -1116,8 +1116,8 @@
 											<Properties>
 												<BinaryString name="AttributesSerialize"></BinaryString>
 												<UDim name="CornerRadius">
-													<S>0</S>
-													<O>8</O>
+													<S>1</S>
+													<O>0</O>
 												</UDim>
 												<string name="Name">UICorner</string>
 												<int64 name="SourceAssetId">-1</int64>
@@ -1335,8 +1335,8 @@
 										<Properties>
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
-												<S>0</S>
-												<O>8</O>
+												<S>1</S>
+												<O>0</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -1545,7 +1545,7 @@
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<UDim name="CornerRadius">
 									<S>0</S>
-									<O>8</O>
+									<O>6</O>
 								</UDim>
 								<string name="Name">UICorner</string>
 								<int64 name="SourceAssetId">-1</int64>
@@ -1931,7 +1931,7 @@
 									</Vector2>
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<bool name="AutoLocalize">true</bool>
-									<token name="AutomaticCanvasSize">0</token>
+									<token name="AutomaticCanvasSize">2</token>
 									<token name="AutomaticSize">0</token>
 									<Color3 name="BackgroundColor3">
 										<R>0.972549081</R>
@@ -2152,10 +2152,10 @@
 													<X>0</X>
 													<Y>0</Y>
 												</Vector2>
-												<float name="Rotation">0</float>
+												<float name="Rotation">90</float>
 												<int64 name="SourceAssetId">-1</int64>
 												<BinaryString name="Tags"></BinaryString>
-												<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+												<NumberSequence name="Transparency">0 0 0 1 1 0 </NumberSequence>
 											</Properties>
 										</Item>
 									</Item>
@@ -2287,8 +2287,8 @@
 												<Properties>
 													<BinaryString name="AttributesSerialize"></BinaryString>
 													<UDim name="CornerRadius">
-														<S>0</S>
-														<O>8</O>
+														<S>1</S>
+														<O>0</O>
 													</UDim>
 													<string name="Name">UICorner</string>
 													<int64 name="SourceAssetId">-1</int64>
@@ -2353,8 +2353,8 @@
 													<Properties>
 														<BinaryString name="AttributesSerialize"></BinaryString>
 														<UDim name="CornerRadius">
-															<S>0</S>
-															<O>8</O>
+															<S>1</S>
+															<O>0</O>
 														</UDim>
 														<string name="Name">UICorner</string>
 														<int64 name="SourceAssetId">-1</int64>
@@ -2452,8 +2452,8 @@
 													<Properties>
 														<BinaryString name="AttributesSerialize"></BinaryString>
 														<UDim name="CornerRadius">
-															<S>0</S>
-															<O>8</O>
+															<S>1</S>
+															<O>0</O>
 														</UDim>
 														<string name="Name">UICorner</string>
 														<int64 name="SourceAssetId">-1</int64>
@@ -4682,10 +4682,10 @@
 											<X>0</X>
 											<Y>0</Y>
 										</Vector2>
-										<float name="Rotation">0</float>
+										<float name="Rotation">90</float>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+										<NumberSequence name="Transparency">0 1 0 1 0 0 </NumberSequence>
 									</Properties>
 								</Item>
 								<Item class="UICorner" referent="RBX8277b9cae89647609a58376e5217c742">
@@ -4693,7 +4693,7 @@
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
 											<S>0</S>
-											<O>8</O>
+											<O>6</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -4710,7 +4710,7 @@
 									</Vector2>
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<bool name="AutoLocalize">true</bool>
-									<token name="AutomaticCanvasSize">0</token>
+									<token name="AutomaticCanvasSize">2</token>
 									<token name="AutomaticSize">0</token>
 									<Color3 name="BackgroundColor3">
 										<R>0.972549081</R>
@@ -5056,7 +5056,7 @@
 													<BinaryString name="AttributesSerialize"></BinaryString>
 													<UDim name="CornerRadius">
 														<S>0</S>
-														<O>8</O>
+														<O>4</O>
 													</UDim>
 													<string name="Name">UICorner</string>
 													<int64 name="SourceAssetId">-1</int64>
@@ -5359,8 +5359,8 @@
 														<Properties>
 															<BinaryString name="AttributesSerialize"></BinaryString>
 															<UDim name="CornerRadius">
-																<S>0</S>
-																<O>8</O>
+																<S>1</S>
+																<O>0</O>
 															</UDim>
 															<string name="Name">UICorner</string>
 															<int64 name="SourceAssetId">-1</int64>
@@ -13566,8 +13566,8 @@ return module
 														<Properties>
 															<BinaryString name="AttributesSerialize"></BinaryString>
 															<UDim name="CornerRadius">
-																<S>0</S>
-																<O>8</O>
+																<S>1</S>
+																<O>0</O>
 															</UDim>
 															<string name="Name">UICorner</string>
 															<int64 name="SourceAssetId">-1</int64>
@@ -34386,8 +34386,8 @@ return M]]></ProtectedString>
 										<Properties>
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
-												<S>0</S>
-												<O>8</O>
+												<S>1</S>
+												<O>0</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -34615,8 +34615,8 @@ return M]]></ProtectedString>
 										<Properties>
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
-												<S>0</S>
-												<O>8</O>
+												<S>1</S>
+												<O>0</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -34704,7 +34704,7 @@ return M]]></ProtectedString>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
 											<S>0</S>
-											<O>8</O>
+											<O>4</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -35007,8 +35007,8 @@ return M]]></ProtectedString>
 											<Properties>
 												<BinaryString name="AttributesSerialize"></BinaryString>
 												<UDim name="CornerRadius">
-													<S>0</S>
-													<O>8</O>
+													<S>1</S>
+													<O>0</O>
 												</UDim>
 												<string name="Name">UICorner</string>
 												<int64 name="SourceAssetId">-1</int64>
@@ -35226,8 +35226,8 @@ return M]]></ProtectedString>
 										<Properties>
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
-												<S>0</S>
-												<O>8</O>
+												<S>1</S>
+												<O>0</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -35436,7 +35436,7 @@ return M]]></ProtectedString>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<UDim name="CornerRadius">
 									<S>0</S>
-									<O>8</O>
+									<O>6</O>
 								</UDim>
 								<string name="Name">UICorner</string>
 								<int64 name="SourceAssetId">-1</int64>
@@ -36043,10 +36043,10 @@ return M]]></ProtectedString>
 													<X>0</X>
 													<Y>0</Y>
 												</Vector2>
-												<float name="Rotation">0</float>
+												<float name="Rotation">90</float>
 												<int64 name="SourceAssetId">-1</int64>
 												<BinaryString name="Tags"></BinaryString>
-												<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+												<NumberSequence name="Transparency">0 0 0 1 1 0 </NumberSequence>
 											</Properties>
 										</Item>
 									</Item>
@@ -36178,8 +36178,8 @@ return M]]></ProtectedString>
 												<Properties>
 													<BinaryString name="AttributesSerialize"></BinaryString>
 													<UDim name="CornerRadius">
-														<S>0</S>
-														<O>8</O>
+														<S>1</S>
+														<O>0</O>
 													</UDim>
 													<string name="Name">UICorner</string>
 													<int64 name="SourceAssetId">-1</int64>
@@ -36244,8 +36244,8 @@ return M]]></ProtectedString>
 													<Properties>
 														<BinaryString name="AttributesSerialize"></BinaryString>
 														<UDim name="CornerRadius">
-															<S>0</S>
-															<O>8</O>
+															<S>1</S>
+															<O>0</O>
 														</UDim>
 														<string name="Name">UICorner</string>
 														<int64 name="SourceAssetId">-1</int64>
@@ -36343,8 +36343,8 @@ return M]]></ProtectedString>
 													<Properties>
 														<BinaryString name="AttributesSerialize"></BinaryString>
 														<UDim name="CornerRadius">
-															<S>0</S>
-															<O>8</O>
+															<S>1</S>
+															<O>0</O>
 														</UDim>
 														<string name="Name">UICorner</string>
 														<int64 name="SourceAssetId">-1</int64>
@@ -38573,10 +38573,10 @@ return M]]></ProtectedString>
 											<X>0</X>
 											<Y>0</Y>
 										</Vector2>
-										<float name="Rotation">0</float>
+										<float name="Rotation">90</float>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+										<NumberSequence name="Transparency">0 1 0 1 0 0 </NumberSequence>
 									</Properties>
 								</Item>
 								<Item class="UICorner" referent="RBX9e61ea6e57f3487ea5b57bbb01d669bc">
@@ -38584,7 +38584,7 @@ return M]]></ProtectedString>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
 											<S>0</S>
-											<O>8</O>
+											<O>6</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -38601,7 +38601,7 @@ return M]]></ProtectedString>
 									</Vector2>
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<bool name="AutoLocalize">true</bool>
-									<token name="AutomaticCanvasSize">0</token>
+									<token name="AutomaticCanvasSize">2</token>
 									<token name="AutomaticSize">0</token>
 									<Color3 name="BackgroundColor3">
 										<R>0.972549081</R>
@@ -38947,7 +38947,7 @@ return M]]></ProtectedString>
 													<BinaryString name="AttributesSerialize"></BinaryString>
 													<UDim name="CornerRadius">
 														<S>0</S>
-														<O>8</O>
+														<O>4</O>
 													</UDim>
 													<string name="Name">UICorner</string>
 													<int64 name="SourceAssetId">-1</int64>
@@ -41531,7 +41531,7 @@ return M]]></ProtectedString>
 															<YS>0.5</YS>
 															<YO>0</YO>
 														</UDim2>
-														<bool name="RichText">false</bool>
+														<bool name="RichText">true</bool>
 														<Ref name="RootLocalizationTable">null</Ref>
 														<float name="Rotation">0</float>
 														<bool name="Selectable">false</bool>
@@ -41888,7 +41888,7 @@ return M]]></ProtectedString>
 															<YS>0</YS>
 															<YO>0</YO>
 														</UDim2>
-														<bool name="RichText">false</bool>
+														<bool name="RichText">true</bool>
 														<Ref name="RootLocalizationTable">null</Ref>
 														<float name="Rotation">0</float>
 														<bool name="Selectable">false</bool>
@@ -41902,7 +41902,7 @@ return M]]></ProtectedString>
 														<token name="SizeConstraint">0</token>
 														<int64 name="SourceAssetId">-1</int64>
 														<BinaryString name="Tags"></BinaryString>
-														<string name="Text">Commander&lt;br /&gt;&#195;&#130;&#194;&#169; 2021 Evo Inc. All rights reserved.</string>
+														<string name="Text">Commander&lt;br /&gt;&#194;&#169; 2021 Evo Inc. All rights reserved.</string>
 														<Color3 name="TextColor3">
 															<R>0.392156869</R>
 															<G>0.392156869</G>
@@ -42020,7 +42020,7 @@ return M]]></ProtectedString>
 																<YS>0</YS>
 																<YO>0</YO>
 															</UDim2>
-															<bool name="RichText">false</bool>
+															<bool name="RichText">true</bool>
 															<Ref name="RootLocalizationTable">null</Ref>
 															<float name="Rotation">0</float>
 															<bool name="Selectable">true</bool>
@@ -42116,7 +42116,7 @@ return M]]></ProtectedString>
 																<YS>0</YS>
 																<YO>0</YO>
 															</UDim2>
-															<bool name="RichText">false</bool>
+															<bool name="RichText">true</bool>
 															<Ref name="RootLocalizationTable">null</Ref>
 															<float name="Rotation">0</float>
 															<bool name="Selectable">true</bool>
@@ -42621,8 +42621,8 @@ return M]]></ProtectedString>
 											<Properties>
 												<BinaryString name="AttributesSerialize"></BinaryString>
 												<UDim name="CornerRadius">
-													<S>0</S>
-													<O>8</O>
+													<S>1</S>
+													<O>0</O>
 												</UDim>
 												<string name="Name">UICorner</string>
 												<int64 name="SourceAssetId">-1</int64>
@@ -42656,7 +42656,7 @@ return M]]></ProtectedString>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
 											<S>0</S>
-											<O>8</O>
+											<O>6</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -45188,8 +45188,6 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		Elements.Panel.Container.Body.About.List.Container.Top.Text.Subtitle.Text = Elements.Panel.Container.Body.About.List.Container.Top.Text.Subtitle.Text
 		updateInfo()
 		notifyClient("Commander", "Use the " .. Attachment.Keybind.Name .. " key to open")
-	elseif Type == "fetchAdminLevel" then
-		Elements.Panel.Container.Body.Home.Top.Container.Subtitle.Text = Attachment
 	end
 end)
 
@@ -46326,7 +46324,7 @@ return module
 											<BinaryString name="AttributesSerialize"></BinaryString>
 											<UDim name="CornerRadius">
 												<S>0</S>
-												<O>8</O>
+												<O>4</O>
 											</UDim>
 											<string name="Name">UICorner</string>
 											<int64 name="SourceAssetId">-1</int64>
@@ -46394,7 +46392,7 @@ return module
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
 											<S>0</S>
-											<O>8</O>
+											<O>6</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -46743,7 +46741,7 @@ return module
 												<BinaryString name="AttributesSerialize"></BinaryString>
 												<UDim name="CornerRadius">
 													<S>0</S>
-													<O>8</O>
+													<O>6</O>
 												</UDim>
 												<string name="Name">UICorner</string>
 												<int64 name="SourceAssetId">-1</int64>
@@ -47330,8 +47328,8 @@ return module
 														<Properties>
 															<BinaryString name="AttributesSerialize"></BinaryString>
 															<UDim name="CornerRadius">
-																<S>0</S>
-																<O>8</O>
+																<S>1</S>
+																<O>0</O>
 															</UDim>
 															<string name="Name">UICorner</string>
 															<int64 name="SourceAssetId">-1</int64>
@@ -47604,7 +47602,7 @@ return module
 															<BinaryString name="AttributesSerialize"></BinaryString>
 															<UDim name="CornerRadius">
 																<S>0</S>
-																<O>8</O>
+																<O>3</O>
 															</UDim>
 															<string name="Name">UICorner</string>
 															<int64 name="SourceAssetId">-1</int64>
@@ -49367,7 +49365,7 @@ return module
 											<YS>0</YS>
 											<YO>4</YO>
 										</UDim2>
-										<bool name="RichText">false</bool>
+										<bool name="RichText">true</bool>
 										<Ref name="RootLocalizationTable">null</Ref>
 										<float name="Rotation">0</float>
 										<bool name="Selectable">false</bool>
