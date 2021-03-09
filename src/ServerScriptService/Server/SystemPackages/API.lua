@@ -22,6 +22,15 @@ end
 
 function module.doThisToPlayers(Client: player, Player: player, Callback)
 	Player = string.lower(Player)
+
+	local clientAdminLevel = module.getAdminLevel(Client.UserId)
+
+	if clientAdminLevel
+	and module.DisableTable[clientAdminLevel]
+	and module.DisableTable[clientAdminLevel][Player] == true then
+		return false
+	end
+
 	if Player == "all" then
 		for i,v in pairs(Players:GetPlayers()) do
 			Callback(v)
@@ -40,6 +49,8 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 			Callback(Player)
 		end
 	end
+
+	return true
 end
 
 function module.getPlayerWithName(Player: string)
@@ -84,16 +95,47 @@ function module.filterText(From: player, Content: string)
 	return success, result
 end
 
+function module.checkHasPermission(ClientId: number, Command: string)
+	local clientAdminLevel = module.getAdminLevel(ClientId)
+
+	if not clientAdminLevel or not module.PermissionTable[clientAdminLevel] then
+		return false
+	end
+
+	return (module.PermissionTable[clientAdminLevel][Command] == true
+		or module.PermissionTable[clientAdminLevel]["*"] == true)
+end
+
 function module.checkAdmin(ClientId: number)
+	return module.getAdminLevel(ClientId) ~= nil
+end
+
+function module.getAdminLevel(ClientId: number)
+	local highestPriority, permissionGroupId = -math.huge, nil;
+
 	for i,v in pairs(module.Settings.Admins) do
-		if typeof(v) == "string" then
-			if v:match("(%d+):([<>]?)(%d+)") then
+		local permissionGroup = module.Settings.Permissions[v]
+
+		-- If permission group is invalid or group has
+		-- lower priority than a group that the user has
+		-- continue.
+		if permissionGroup == nil
+			or permissionGroup.Priority == nil
+			or permissionGroup.Priority < highestPriority then
+			continue
+		end
+
+		-- Whether or not user matches the role.
+		local isInGroup = false
+
+		if typeof(i) == "string" then
+			if i:match("(%d+):([<>]?)(%d+)") then
 				-- Group setting.
 				-- Formatted as groupId:[<>]?rankId.
 				-- "<" / ">" signifies if the user rank should be
 				-- less than or greater than the rank (inclusive).
 				-- If no "<" or ">" is provided it must be an exact match.
-				local groupId, condition, rankId = v:match("(%d+):([<>]?)(%d+)");
+				local groupId, condition, rankId = i:match("(%d+):([<>]?)(%d+)");
 				local playerGroups = GroupService:GetGroupsAsync(ClientId) or {};
 				local selectedGroup;
 
@@ -106,28 +148,37 @@ function module.checkAdmin(ClientId: number)
 
 				-- Player not in group or error occurred with Roblox API.
 				if selectedGroup == nil then
-					return false;
+					continue
 				end
 
 				local difference = selectedGroup.Rank - tonumber(rankId);
-
+				
 				if (condition == "" and difference == 0)
 					or (condition == ">" and difference >= 0)
 					or (condition == "<" and difference <= 0) then
-					return true;
+					isInGroup = true
 				end
 			else
-				local success, result = pcall(Players.GetUserIdFromNameAsync, Players, v)
+				local success, result = pcall(Players.GetUserIdFromNameAsync, Players, i)
+
 				if success and ClientId == result then
-					return true
+					isInGroup = true
 				end
 			end
-		elseif typeof(v) == "number" then
-			if ClientId == v then
-				return true
+		elseif typeof(i) == "number" then
+			if ClientId == i then
+				isInGroup = true
 			end
 		end
+
+		-- Player is in this role.
+		if isInGroup == true then
+			highestPriority = permissionGroup.Priority
+			permissionGroupId = v
+		end
 	end
+
+	return permissionGroupId
 end
 
 function module.getAdmins()
