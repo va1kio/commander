@@ -117,6 +117,7 @@ if isDataStoreEnabled then
 
 	loadPackages()
 	
+	systemPackages.Settings.UI.Credits = systemPackages.Credits
 	if not script.Library.UI:FindFirstChild(systemPackages.Settings.UI.Theme) or systemPackages.Settings.UI.Theme == "Client" then
 		error("Please choose a valid theme!")
 	end
