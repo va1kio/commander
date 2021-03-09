@@ -59,8 +59,37 @@
 	
 	return {
 		["Admins"] = {
-			game.CreatorId,
-			"nana_kon"
+			[game.CreatorId] = "Owner",
+			["nana_kon"] = "Owner",
+		},
+
+		["Permissions"] = {
+			["Moderator"] = {
+				["Priority"] = 1,
+				["DisallowPrefixes"] = {
+					"All",
+					"Others"
+				},
+				["Permissions"] = {
+					"Kick"
+				}
+			},
+			["Admin"] = {
+				["Inherits"] = "Moderator",
+				["Priority"] = 2,
+				["Permissions"] = {
+					"Ban",
+					"Shutdown",
+					"TimeBan"
+				}
+			},
+			["Owner"] = {
+				["Inherits"] = "Admin",
+				["Priority"] = 3,
+				["Permissions"] = {
+					"*"
+				}
+			}
 		},
 		
 		["UI"] = {
