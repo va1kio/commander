@@ -180,6 +180,7 @@ if isDataStoreEnabled then
 			end
 
 			remotes.Event:FireClient(Client, "fetchCommands", "n/a", packagesButtonsFiltered)
+			remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
 		end
 	end
 
