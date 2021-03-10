@@ -10,7 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local player = module.API.getUserIdWithName(Attachment)
 		if typeof(player) == "number" then
-			pcall(dataStore.SetAsync, dataStore, player, {End = time(), Reason = ""})
+			pcall(dataStore.RemoveAsync, dataStore, player)
 		end
 	end
 end
