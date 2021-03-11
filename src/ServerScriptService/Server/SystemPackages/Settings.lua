@@ -55,6 +55,9 @@
 		Q: How can I change the toggle keybind?
 		A: You can change it by modifying the Keybind settings below.
 		
+		Q: I can't find any theme options apart from Light, what to do?
+		A: We've stopped shipping themes by default as this increases the actual system size, but you can look for themes in our community.
+		
 	--]]
 	
 	return {
@@ -98,5 +101,5 @@
 			["Theme"] = "Light"
 		},
 		
-		["Version"] = {"DP2 (A1151)", "Developer Preview 2 (A1151)"}
+		["Version"] = {"DP3 (A1151)", "Developer Preview 3 (A1151)"}
 	}
