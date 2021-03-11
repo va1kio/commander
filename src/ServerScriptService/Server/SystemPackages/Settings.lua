@@ -101,5 +101,5 @@
 			["Theme"] = "Light"
 		},
 		
-		["Version"] = {"DP3 (A1151)", "Developer Preview 3 (A1151)"}
+		["Version"] = {"DP3 (A1152)", "Developer Preview 3 (A1152)"}
 	}
