@@ -1,20 +1,16 @@
-local DataStoreService = game:GetService("DataStoreService")
-local dataStore = DataStoreService:GetDataStore("commander.bans")
 local module = {
-	Name = "Chat logs",
-	Description = "Shows a list of chat messages",
+	Name = "Join logs",
+	Description = "Shows a list of who joined",
 	Location = "Server",
 }
 local t = {}
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
-		module.API.sendListToPlayer(Client, "Chat logs", t)
+		module.API.sendListToPlayer(Client, "Join logs", t)
 	elseif Type == "firstrun" then
 		module.API.registerPlayerAddedEvent(function(Client)
-			Client.Chatted:Connect(function(Message)
-				t[#t + 1] = Client.Name .. ": " .. Message
-			end)
+			t[#t + 1] = os.date("%X", os.time()) .. ": " .. Client.Name
 		end)
 	end
 end

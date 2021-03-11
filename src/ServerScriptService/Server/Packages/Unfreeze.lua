@@ -1,5 +1,5 @@
 local module = {
-	Name = "Thaw",
+	Name = "Unfreeze",
 	Description = "Opposite of Freeze",
 	Location = "Player",
 }
