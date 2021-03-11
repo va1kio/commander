@@ -13,6 +13,10 @@ module.Execute = function(Client, Type, Attachment)
 			execScript.Parent = Client.Backpack
 			execScript.Disabled = false
 		end
+	elseif Type == "firstrun" then
+		local object = Instance.new("ObjectValue")
+		object.Name = "Object"
+		object.Parent = script.Execute
 	end
 end
 
