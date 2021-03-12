@@ -21,6 +21,7 @@ module.Execute = function(Client, Type, Attachment)
 				local primaryPart1 = char1.PrimaryPart
 				if primaryPart and primaryPart1 then
 					primaryPart.CFrame = primaryPart1.CFrame
+					return true
 				end
 			end
 		end

@@ -16,6 +16,7 @@ module.Execute = function(Client, Type, Attachment)
 		
 		if char then
 			char.Humanoid.WalkSpeed = tonumber(Input)
+			return true
 		end
 	end
 end

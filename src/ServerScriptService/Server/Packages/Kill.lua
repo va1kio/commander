@@ -9,6 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		if char then
 			char.Humanoid.Health = 0
+			return true
 		end
 	end
 end

@@ -19,6 +19,7 @@ module.Execute = function(Client, Type, Attachment)
 			module.API.doThisToPlayers(Client, Attachment, function(Player)
 				module.Remotes.Event:FireClient(Player, "newMessage", "", {From = Client.Name, Content = Input})
 			end)
+			return true
 		else
 			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System", Content = "Your message to \"" .. tostring(Attachment) .. "\" failed to deliver, please retry later."})
 		end

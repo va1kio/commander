@@ -16,6 +16,7 @@ module.Execute = function(Client, Type, Attachment)
 		
 		if char then
 			char.Humanoid.Health = tonumber(Input)
+			return true
 		end
 	end
 end

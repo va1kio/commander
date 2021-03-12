@@ -25,6 +25,10 @@ if isDataStoreEnabled then
 	remotes.Function.Parent, remotes.Event.Parent = remotefolder, remotefolder
 	remotefolder.Parent = ReplicatedStorage
 	remotefolder = nil
+	
+	function fetchLogs()
+		return systemPackages.Services.Waypoints.fetch()
+	end
 
 	for i,v in pairs(script.Packages:GetChildren()) do
 		if v:IsA("ModuleScript") then
@@ -107,6 +111,7 @@ if isDataStoreEnabled then
 				v = require(v)
 				v.API = systemPackages.API
 				v.Remotes = remotes
+				v.fetchLogs = fetchLogs
 				if v and v.Name and v.Description and v.Location then
 					packages[v.Name] = v
 				end
@@ -126,9 +131,12 @@ if isDataStoreEnabled then
 		if systemPackages.API.checkAdmin(Client.UserId) then
 			if Type == "command" and packages[Protocol] then
 				if systemPackages.API.checkHasPermission(Client.UserId, Protocol) then
-					coroutine.wrap(function()
-						packages[Protocol].Execute(Client, Type, Attachment)
-					end)()
+					status = packages[Protocol].Execute(Client, Type, Attachment)
+					if status then
+						systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
+					else
+						remotes.Event:FireClient(Client, "newMessage", "", {From = "System; " .. packages[Protocol].Name, Content = "This command may have failed due to incompatability issue, this will not be logged."})
+					end
 				else
 					warn(Client.UserId, "does not have permission to run", Protocol)
 				end
