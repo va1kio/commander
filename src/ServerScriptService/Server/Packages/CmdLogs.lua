@@ -7,7 +7,7 @@ local t = {}
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
-		local logs = module.fetchLogs()
+		local logs = module.fetchLogs:Invoke()
 		for i,v in pairs(logs) do
 			local logmsg = os.date("%x %H:%M", tonumber(v.Timestamp)) .. " | " .. tostring(v.Client) .. "; " .. tostring(v.Action) .. "("
 			if v.Attachments and #v.Attachments >= 1 then

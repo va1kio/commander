@@ -25,10 +25,6 @@ if isDataStoreEnabled then
 	remotes.Function.Parent, remotes.Event.Parent = remotefolder, remotefolder
 	remotefolder.Parent = ReplicatedStorage
 	remotefolder = nil
-	
-	function fetchLogs()
-		return systemPackages.Services.Waypoints.fetch()
-	end
 
 	for i,v in pairs(script.Packages:GetChildren()) do
 		if v:IsA("ModuleScript") then
@@ -111,7 +107,7 @@ if isDataStoreEnabled then
 				v = require(v)
 				v.API = systemPackages.API
 				v.Remotes = remotes
-				v.fetchLogs = fetchLogs
+				v.fetchLogs = script.waypointBindable
 				if v and v.Name and v.Description and v.Location then
 					packages[v.Name] = v
 				end
@@ -127,11 +123,15 @@ if isDataStoreEnabled then
 		error("Please choose a valid theme!")
 	end
 
+	script.waypointBindable.OnInvoke = function()
+		return systemPackages.Services.Waypoints.fetch()
+	end
+
 	remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 		if systemPackages.API.checkAdmin(Client.UserId) then
 			if Type == "command" and packages[Protocol] then
 				if systemPackages.API.checkHasPermission(Client.UserId, Protocol) then
-					status = packages[Protocol].Execute(Client, Type, Attachment)
+					local status = packages[Protocol].Execute(Client, Type, Attachment)
 					if status then
 						systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
 					else
