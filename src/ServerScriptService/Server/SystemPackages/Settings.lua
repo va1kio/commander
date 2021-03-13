@@ -46,7 +46,14 @@ return {
 				"Others"
 			},
 			["Permissions"] = {
-				"Kick"
+				"Kick",
+				"ChatLogs",
+				"JoinLogs",
+				"CheckBan",
+				"Message",
+				"HandTo",
+				"View",
+				"Unview"
 			}
 		},
 		["Admin"] = {
@@ -55,7 +62,10 @@ return {
 			["Permissions"] = {
 				"Ban",
 				"Shutdown",
-				"TimeBan"
+				"TimeBan",
+				"Unban",
+				"SystemMessage",
+				"ServerLock"
 			}
 		},
 		["Owner"] = {
