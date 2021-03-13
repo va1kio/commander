@@ -43,10 +43,10 @@
 		A: You can add a new entry to the administrator list by putting down their name or user Id. Builds after A1149 supports
 		group permission, here's an example of an administrator entry
 		["Admins"] = {
-			"Roblox", -- This is username, remember to add a comma after each entry.
-			123123123, -- This is UserId
-			"123432:>100", -- This is group rank, > means greater than or equal to, and < means lesser than or equal to. The number before : is the group Id, and the number after :>/< is the rank id
-			game.CreatorId, -- If your game is published under your account, you can use game.CreatorId to give yourself administrator. This won't work for games published under a group.
+			["Roblox"] = "Owner", -- This is username, remember to add a comma after each entry.
+			[123123123] = "Owner", -- This is UserId
+			["123432:>100"] = "Owner", -- This is group rank, > means greater than or equal to, and < means lesser than or equal to. The number before : is the group Id, and the number after :>/< is the rank id
+			[game.CreatorId] = "Owner", -- If your game is published under your account, you can use game.CreatorId to give yourself administrator. This won't work for games published under a group.
 		},
 		
 		Q: How can I change the theme colour?
@@ -74,7 +74,14 @@
 					"Others"
 				},
 				["Permissions"] = {
-					"Kick"
+					"Kick",
+					"ChatLogs",
+					"JoinLogs",
+					"CheckBan",
+					"Message",
+					"HandTo",
+					"View",
+					"Unview"
 				}
 			},
 			["Admin"] = {
@@ -83,7 +90,10 @@
 				["Permissions"] = {
 					"Ban",
 					"Shutdown",
-					"TimeBan"
+					"TimeBan",
+					"Unban",
+					"SystemMessage",
+					"ServerLock"
 				}
 			},
 			["Owner"] = {
