@@ -1,5 +1,3 @@
--- stuff to be worked on: well-developed API, more built-in commands, code cleanup
-
 local DataStoreService = game:GetService("DataStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
