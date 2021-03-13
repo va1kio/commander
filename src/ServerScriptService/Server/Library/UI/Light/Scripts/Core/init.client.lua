@@ -1,5 +1,3 @@
--- stuff to be worked on: search, optimisation, code cleanup, etc
-
 local UserInputService = game:GetService("UserInputService")
 local StarterGui = game:GetService("StarterGui")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
