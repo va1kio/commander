@@ -17,6 +17,7 @@ module.Execute = function(Client, Type, Attachment)
 			else
 				module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; CheckBan (" .. player .. ")", Content = "This player is not banned"})
 			end
+			return true
 		else
 			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; CheckBan (" .. player .. ")", Content = "An error occured, please retry later."})
 		end

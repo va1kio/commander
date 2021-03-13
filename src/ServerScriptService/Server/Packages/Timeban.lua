@@ -28,6 +28,7 @@ module.Execute = function(Client, Type, Attachment)
 			
 			if actualPlayer and success then
 				Client:Kick("\nBanned\nReason: " .. result .. "\n\nCome back at " .. os.date("%d %b, %Y (%a) %X", tick() + tonumber(Input2) * 60 * 60))
+				return true
 			end
 		end
 	end

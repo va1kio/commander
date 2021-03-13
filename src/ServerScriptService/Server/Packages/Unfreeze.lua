@@ -9,6 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		if char and char.PrimaryPart then
 			char.PrimaryPart.Anchored = false
+			return true
 		end
 	end
 end

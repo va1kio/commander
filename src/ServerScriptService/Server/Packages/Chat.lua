@@ -22,6 +22,7 @@ module.Execute = function(Client, Type, Attachment)
 					Chat:Chat(Player.Character, Input)
 				end
 			end)
+			return true
 		else
 			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System", Content = "Your bubble chat request to \"" .. tostring(Attachment) .. "\" failed to filter, please retry later."})
 		end
