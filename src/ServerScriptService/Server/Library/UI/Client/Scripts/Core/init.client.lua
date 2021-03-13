@@ -52,6 +52,7 @@ end
 local function makeMessage(From: string, Content: string)
 	coroutine.wrap(function()
 		local guid = HttpService:GenerateGUID()
+		local closeButtonEvent
 		messages[#messages + 1] = guid
 		repeat wait() until messages[1] == guid
 		local message = script.Message:Clone()
@@ -65,6 +66,7 @@ local function makeMessage(From: string, Content: string)
 		local function close()
 			if messages[1] == guid then
 				isActive = false
+				closeButtonEvent:Disconnect()
 				Classes.Tween(message, Classes.TweenInfo.Longer, {Size = UDim2.new(0.45, 0, 0, 0)})
 				Classes.Fader.FadeOut(message, 0.5)
 				wait(0.5)
@@ -73,7 +75,7 @@ local function makeMessage(From: string, Content: string)
 			end
 		end
 		
-		Classes.Button.register(message.Container.Top.Exit):Connect(function()
+		closeButtonEvent = Classes.Button.register(message.Container.Top.Exit):Connect(function()
 			close()
 		end)
 		

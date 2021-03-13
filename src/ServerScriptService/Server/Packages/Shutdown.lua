@@ -21,6 +21,7 @@ module.Execute = function(Client, Type, Attachment)
 			for i,v in pairs(Players:GetPlayers()) do
 				v:Kick(result)
 			end
+			return true
 		end
 	end
 end

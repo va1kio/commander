@@ -15,6 +15,7 @@ module.Execute = function(Client, Type, Attachment)
 		if player and tool then
 			tool.Parent = player.Backpack
 			module.Remotes.Event:FireClient(player, "newMessage", "", {From = "System; HandTo", Content = Client.Name .. "has given you tool " .. tool.Name})
+			return true
 		else
 			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; HandTo", Content = "Are you sure that player and tool exist?"})
 		end

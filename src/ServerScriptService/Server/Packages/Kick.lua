@@ -18,6 +18,7 @@ module.Execute = function(Client, Type, Attachment)
 			
 			if success and result then
 				player:Kick(result)
+				return true
 			end
 		end
 	end

@@ -11,6 +11,7 @@ module.Execute = function(Client, Type, Attachment)
 		local player = module.API.getUserIdWithName(Attachment)
 		if typeof(player) == "number" then
 			pcall(dataStore.RemoveAsync, dataStore, player)
+			return true
 		end
 	end
 end

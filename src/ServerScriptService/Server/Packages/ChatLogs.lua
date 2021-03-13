@@ -8,6 +8,7 @@ local t = {}
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
 		module.API.sendListToPlayer(Client, "Chat logs", t)
+		return true
 	elseif Type == "firstrun" then
 		module.API.registerPlayerAddedEvent(function(Client)
 			Client.Chatted:Connect(function(Message)

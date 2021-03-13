@@ -22,6 +22,7 @@ module.Execute = function(Client, Type, Attachment)
 			
 			if actualPlayer and success then
 				actualPlayer:Kick("\nPermanently banned\nReason: " ..  result)
+				return true
 			end
 		end
 	elseif Type == "firstrun" then
