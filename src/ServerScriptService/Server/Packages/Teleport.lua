@@ -11,7 +11,7 @@ module.Execute = function(Client, Type, Attachment)
 			local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 			
 			if Input == false then
-				return
+				return false
 			end
 			
 			local char1 = module.API.getCharacter(module.API.getPlayerWithName(Input))
@@ -21,8 +21,10 @@ module.Execute = function(Client, Type, Attachment)
 				local primaryPart1 = char1.PrimaryPart
 				if primaryPart and primaryPart1 then
 					primaryPart.CFrame = primaryPart1.CFrame
+					return true
 				end
 			end
+			return false
 		end
 	end
 end

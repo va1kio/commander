@@ -11,14 +11,16 @@ module.Execute = function(Client, Type, Attachment)
 			local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 
 			if Input == false then
-				return
+				return false
 			end
 
 			local success, result = module.API.filterText(Client, Input)
 			
 			if success and result then
 				player:Kick(result)
+				return true
 			end
+			return false
 		end
 	end
 end

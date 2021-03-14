@@ -9,7 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 		local Input = module.API.sendModalToPlayer(Client, "What's the message?").Event:Wait()
 
 		if Input == false then
-			return
+			return false
 		end
 
 		local Status
@@ -19,9 +19,11 @@ module.Execute = function(Client, Type, Attachment)
 			module.API.doThisToPlayers(Client, Attachment, function(Player)
 				module.Remotes.Event:FireClient(Player, "newMessage", "", {From = "System", Content = Input})
 			end)
+			return true
 		else
 			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System", Content = "Your message to \"" .. tostring(Attachment) .. "\" failed to deliver, please retry later."})
 		end
+		return false
 	end
 end
 

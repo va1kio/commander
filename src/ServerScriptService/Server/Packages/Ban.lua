@@ -14,7 +14,7 @@ module.Execute = function(Client, Type, Attachment)
 			local Input = module.API.sendModalToPlayer(Client, "Reason?").Event:Wait()
 			
 			if Input == false then
-				return
+				return false
 			end
 
 			local success, result = module.API.filterText(Client, Input)
@@ -22,7 +22,9 @@ module.Execute = function(Client, Type, Attachment)
 			
 			if actualPlayer and success then
 				actualPlayer:Kick("\nPermanently banned\nReason: " ..  result)
+				return true
 			end
+			return false
 		end
 	elseif Type == "firstrun" then
 		module.API.registerPlayerAddedEvent(function(Client)

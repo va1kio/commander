@@ -1,7 +1,8 @@
 {
 	"className": "ScreenGui",
 	"properties": {
-		"ZIndexBehavior": "Sibling"
+		"ZIndexBehavior": "Sibling",
+		"ResetOnSpawn": false
 	},
 	"ignoreUnknownInstances": true
 }

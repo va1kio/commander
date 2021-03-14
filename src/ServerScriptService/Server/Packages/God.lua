@@ -10,7 +10,9 @@ module.Execute = function(Client, Type, Attachment)
 		if char then
 			char.Humanoid.MaxHealth = math.huge
 			char.Humanoid.Health = math.huge
+			return true
 		end
+		return false
 	end
 end
 

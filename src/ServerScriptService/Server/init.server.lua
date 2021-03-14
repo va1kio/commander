@@ -1,5 +1,3 @@
--- stuff to be worked on: well-developed API, more built-in commands, code cleanup
-
 local DataStoreService = game:GetService("DataStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
@@ -107,6 +105,7 @@ if isDataStoreEnabled then
 				v = require(v)
 				v.API = systemPackages.API
 				v.Remotes = remotes
+				v.fetchLogs = script.waypointBindable
 				if v and v.Name and v.Description and v.Location then
 					packages[v.Name] = v
 				end
@@ -122,13 +121,20 @@ if isDataStoreEnabled then
 		error("Please choose a valid theme!")
 	end
 
+	script.waypointBindable.OnInvoke = function()
+		return systemPackages.Services.Waypoints.fetch()
+	end
+
 	remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 		if systemPackages.API.checkAdmin(Client.UserId) then
 			if Type == "command" and packages[Protocol] then
 				if systemPackages.API.checkHasPermission(Client.UserId, Protocol) then
-					coroutine.wrap(function()
-						packages[Protocol].Execute(Client, Type, Attachment)
-					end)()
+					local status = packages[Protocol].Execute(Client, Type, Attachment)
+					if status then
+						systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
+					elseif status == nil then
+						remotes.Event:FireClient(Client, "newMessage", "", {From = "System; " .. packages[Protocol].Name, Content = "This command may have failed due to incompatability issue, this will not be logged."})
+					end
 				else
 					warn(Client.UserId, "does not have permission to run", Protocol)
 				end
@@ -137,10 +143,8 @@ if isDataStoreEnabled then
 			elseif Type == "input" then
 				-- bindable aren't really good for this, yikes
 				local Event = script.Bindables:FindFirstChild(Protocol)
-				if Event and Attachment ~= false then
-					Event:Fire(Attachment)
-					Event:Destroy()
-				elseif Event and not Attachment then
+				if Event and Attachment then
+					Event:Fire(Attachment or false)
 					Event:Destroy()
 				else
 					return false

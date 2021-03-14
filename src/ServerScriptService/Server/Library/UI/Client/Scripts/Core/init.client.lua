@@ -10,6 +10,9 @@ local Remotes = {
 	Event = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteEvent")
 }
 
+local Audio = Instance.new("Sound")
+Audio.Volume = 1
+Audio.Parent = script
 local Elements = script.Parent.Parent.Elements
 
 local function dropAllClasses(Child)
@@ -52,8 +55,9 @@ end
 local function makeMessage(From: string, Content: string)
 	coroutine.wrap(function()
 		local guid = HttpService:GenerateGUID()
+		local closeButtonEvent
 		messages[#messages + 1] = guid
-		repeat wait() until messages[1] == guid
+		repeat wait() until messages[1] == guid		
 		local message = script.Message:Clone()
 		local isActive = true
 		message.Container.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Message from </font>" .. tostring(From)
@@ -65,6 +69,7 @@ local function makeMessage(From: string, Content: string)
 		local function close()
 			if messages[1] == guid then
 				isActive = false
+				closeButtonEvent:Disconnect()
 				Classes.Tween(message, Classes.TweenInfo.Longer, {Size = UDim2.new(0.45, 0, 0, 0)})
 				Classes.Fader.FadeOut(message, 0.5)
 				wait(0.5)
@@ -73,7 +78,7 @@ local function makeMessage(From: string, Content: string)
 			end
 		end
 		
-		Classes.Button.register(message.Container.Top.Exit):Connect(function()
+		closeButtonEvent = Classes.Button.register(message.Container.Top.Exit):Connect(function()
 			close()
 		end)
 		
@@ -89,9 +94,10 @@ local function makeMessage(From: string, Content: string)
 			Elements.List.Indicator.Visible = true
 		end
 
-		
+		Audio.SoundId = "rbxassetid://6518811702"
 		Classes.Tween(message, Classes.TweenInfo.Longer, {Size = UDim2.new(0.45, 0, 0, message.Container.Size.Y.Offset)})
 		Classes.Fader.FadeIn(message, 0.5)
+		Audio:Play()
 	end)()
 end
 
