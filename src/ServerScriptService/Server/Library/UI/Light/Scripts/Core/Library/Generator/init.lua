@@ -62,7 +62,7 @@ function module.newInputModal(Title)
 		module.Button.register(modal.UI.Container.Top.Exit, topBarContextButtonReaction):Connect(function()
 			module.Animator.animateOut(modal.UI)
 			module.Tween(modal, fadeTweenInfo, {BackgroundTransparency = 1})
-			bindable:Fire()
+			bindable:Fire(false)
 			wait(0.3)
 			isModalBusy = false
 			modal:Destroy()

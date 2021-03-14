@@ -12,6 +12,7 @@ module.Execute = function(Client, Type, Attachment)
 			char.Humanoid.Health = math.huge
 			return true
 		end
+		return false
 	end
 end
 

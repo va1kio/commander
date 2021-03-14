@@ -13,6 +13,7 @@ module.Execute = function(Client, Type, Attachment)
 			pcall(dataStore.RemoveAsync, dataStore, player)
 			return true
 		end
+		return false
 	end
 end
 
