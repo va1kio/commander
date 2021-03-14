@@ -9,7 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 		
 		if Input == false then
-			return
+			return false
 		end
 
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
@@ -18,6 +18,7 @@ module.Execute = function(Client, Type, Attachment)
 			char.Humanoid.JumpPower = tonumber(Input)
 			return true
 		end
+		return false
 	end
 end
 

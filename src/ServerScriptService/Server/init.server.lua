@@ -132,7 +132,7 @@ if isDataStoreEnabled then
 					local status = packages[Protocol].Execute(Client, Type, Attachment)
 					if status then
 						systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
-					else
+					elseif status == nil then
 						remotes.Event:FireClient(Client, "newMessage", "", {From = "System; " .. packages[Protocol].Name, Content = "This command may have failed due to incompatability issue, this will not be logged."})
 					end
 				else
@@ -143,10 +143,8 @@ if isDataStoreEnabled then
 			elseif Type == "input" then
 				-- bindable aren't really good for this, yikes
 				local Event = script.Bindables:FindFirstChild(Protocol)
-				if Event and Attachment ~= false then
-					Event:Fire(Attachment)
-					Event:Destroy()
-				elseif Event and not Attachment then
+				if Event and Attachment then
+					Event:Fire(Attachment or false)
 					Event:Destroy()
 				else
 					return false

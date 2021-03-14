@@ -17,6 +17,8 @@ module.Execute = function(Client, Type, Attachment)
 				end
 			end
 		end
+		
+		return false
 	end
 end
 
