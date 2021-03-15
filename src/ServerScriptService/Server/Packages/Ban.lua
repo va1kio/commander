@@ -1,10 +1,11 @@
-local DataStoreService = game:GetService("DataStoreService")
-local dataStore = DataStoreService:GetDataStore("commander.bans")
 local module = {
 	Name = "Ban",
 	Description = "Bans a player",
 	Location = "Player",
 }
+
+local DataStoreService
+local dataStore
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
@@ -27,6 +28,9 @@ module.Execute = function(Client, Type, Attachment)
 			return false
 		end
 	elseif Type == "firstrun" then
+		DataStoreService = module.Services.DataStoreService
+		dataStore = DataStoreService:GetDataStore("commander.bans")
+
 		module.API.registerPlayerAddedEvent(function(Client)
 			local success, data = pcall(dataStore.GetAsync, dataStore, Client.UserId)
 			if success then

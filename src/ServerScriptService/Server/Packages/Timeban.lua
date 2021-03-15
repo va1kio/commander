@@ -1,10 +1,11 @@
-local DataStoreService = game:GetService("DataStoreService")
-local dataStore = DataStoreService:GetDataStore("commander.bans")
 local module = {
 	Name = "Time ban",
 	Description = "Bans a player for a certain of time",
 	Location = "Player",
 }
+
+local DataStoreService
+local dataStore
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
@@ -32,6 +33,9 @@ module.Execute = function(Client, Type, Attachment)
 			end
 			return false
 		end
+	elseif Type == "firstrun" then
+		DataStoreService = module.Services.DataStoreService
+		dataStore = DataStoreService:GetDataStore("commander.bans")
 	end
 end
 
