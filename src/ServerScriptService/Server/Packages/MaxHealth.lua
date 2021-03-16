@@ -6,15 +6,15 @@ local module = {
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
-		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
+		local _, Humanoid = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 
 		if Input == false then
 			return
 		end
 
-		if char then
-			char.Humanoid.MaxHealth = tonumber(Input)
+		if Humanoid then
+			Humanoid.MaxHealth = tonumber(Input)
 			return true
 		end
 	end
