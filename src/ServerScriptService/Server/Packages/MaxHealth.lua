@@ -9,9 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 		local _, Humanoid = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 
-		if Input == false then
-			return
-		end
+		if not Input then return end
 
 		if Humanoid then
 			Humanoid.MaxHealth = tonumber(Input)
