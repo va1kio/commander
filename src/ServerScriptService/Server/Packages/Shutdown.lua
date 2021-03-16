@@ -9,7 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 		
-		if Input == false then
+		if not Input then
 			return
 		end
 
