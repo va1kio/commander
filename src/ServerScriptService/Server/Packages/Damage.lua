@@ -8,9 +8,7 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 		
-		if Input == false then
-			return
-		end
+		if not Input then return end
 
 		local _, Humanoid = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 
