@@ -12,10 +12,10 @@ module.Execute = function(Client, Type, Attachment)
 			return
 		end
 
-		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
+		local _, Humanoid = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		
-		if char then
-			char.Humanoid.Health = tonumber(Input)
+		if Humanoid then
+			Humanoid.Health = tonumber(Input)
 			return true
 		end
 	end
