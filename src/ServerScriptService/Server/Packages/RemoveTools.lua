@@ -10,6 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 		local BackPack = Player:FindFirstChildOfClass("Backpack")
 		if Backpack then
 			Backpack:ClearAllChildren()
+			return true
 		end
 	end
 end
