@@ -15,7 +15,7 @@ module.Execute = function(Client, Type, Attachment)
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 
 		if char then
-			char:FindFirstChild("Humanoid"):TakeDamage(tonumber(Input))
+			char:FindFirstChildOfClass("Humanoid"):TakeDamage(tonumber(Input))
 			return true
 		end
 	end
