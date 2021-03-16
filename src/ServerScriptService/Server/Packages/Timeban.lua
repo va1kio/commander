@@ -13,15 +13,11 @@ module.Execute = function(Client, Type, Attachment)
 		if typeof(player) == "number" and not module.API.checkAdmin(player) then
 			local Input = module.API.sendModalToPlayer(Client, "Reason?").Event:Wait()
 			
-			if Input == false then
-				return
-			end
+			if not Input then return end
 			
 			local Input2 = module.API.sendModalToPlayer(Client, "How many hours?").Event:Wait()
 			
-			if Input2 == false then
-				return
-			end
+			if not Input2 then return end
 			
 			local success, result = module.API.filterText(Client, Input)
 			success = pcall(dataStore.SetAsync, dataStore, player, {End = os.time() + tonumber(Input2) * 60 * 60, Reason = result})
