@@ -9,9 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client, "What's the message?").Event:Wait()
 
-		if Input == false then
-			return
-		end
+		if not Input then return end
 
 		local Status
 		Status, Input = module.API.filterText(Client, Input)
