@@ -8,9 +8,8 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		if char then
-			local Humanoid = char:FindFirstChild("Humanoid")
-			Humanoid.MaxHealth = math.huge
-			Humanoid.Health = math.huge
+			local Humanoid = char:FindFirstChildOfClass("Humanoid")
+			Humanoid.MaxHealth, Humanoid.Health = math.huge, math.huge
 			return true
 		end
 	end
