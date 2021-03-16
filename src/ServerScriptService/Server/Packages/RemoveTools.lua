@@ -10,7 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 		local BackPack = Player:FindFirstChildOfClass("Backpack")
 		if Backpack then
 			for _, v in ipairs({Player.Character and table.unpack(Player.Character:GetChildren()), table.unpack(Backpack:GetChildren())}) do
-				if v:IsA("Backpackitem") then
+				if v:IsA("BackpackItem") then
 					v:Destroy()
 				end
 			end
