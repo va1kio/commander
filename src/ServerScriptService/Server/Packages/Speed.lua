@@ -15,7 +15,7 @@ module.Execute = function(Client, Type, Attachment)
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		
 		if char then
-			char.Humanoid.WalkSpeed = tonumber(Input)
+			char:FindFirstChildOfClass("Humanoid").WalkSpeed = tonumber(Input)
 			return true
 		end
 	end
