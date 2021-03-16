@@ -233,7 +233,7 @@ end
 local globalAPI = setmetatable({
 	checkHasPermission = makeBindable(module.checkHasPermission),
 	checkAdmin = makeBindable(module.checkAdmin),
-	checkHasPermission = makeBindable(module.checkHasPermission),
+	getAdminLevel = makeBindable(module.getAdminLevel),
 	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
 }, {
 	__metatable = "This table is read only.",
