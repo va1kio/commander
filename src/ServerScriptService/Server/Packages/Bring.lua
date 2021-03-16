@@ -9,10 +9,9 @@ module.Execute = function(Client, Type, Attachment)
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		if char then
 			if Client.Character then
-				local primaryPart = char.PrimaryPart
-				local primaryPart2 = Client.Character.PrimaryPart
+				local primaryPart, primaryPart2 = char.PrimaryPart, Client.Character.PrimaryPart
 				if primaryPart and primaryPart2 then
-					primaryPart.CFrame = primaryPart2.CFrame
+					char:SetPrimaryPartCFrame(primaryPart2.CFrame:ToWorldSpace(CFrame.new(Vector3.new(0, 0, 5))))
 					return true
 				end
 			end
