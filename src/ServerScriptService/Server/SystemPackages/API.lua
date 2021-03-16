@@ -233,7 +233,7 @@ end
 
 local function sandboxFunc(func)
 	local function returnResults(success, ...)
-		return verifyAPIreturn(success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured.")
+		return success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured."
 	end
 
 	return function(...)
@@ -258,7 +258,7 @@ local globalAPI = setmetatable({
 	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
 }, {
 	__metatable = "This table is read only.",
-	__newindex = function() return "This table is read only." end
+	__newindex = function() return end
 })
 
 rawset(_G, "CommanderAPI", globalAPI)
