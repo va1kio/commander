@@ -6,10 +6,10 @@ local module = {
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
-		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
-		if char then
-			char.Humanoid.MaxHealth = math.huge
-			char.Humanoid.Health = math.huge
+		local _, Humanoid = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
+		if Humanoid then
+			Humanoid.MaxHealth = math.huge
+			Humanoid.Health = math.huge
 			return true
 		end
 	end
