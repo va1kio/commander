@@ -202,6 +202,46 @@ function module.getCharacter(Player: player)
 	end
 end
 
+local function containsDisallowed(tbl)
+	for _, v in ipairs(tbl) do
+		if type(v) == "table" or typeof(v) == "userdata" or type(v) == "function" or type(v) == "thread" then
+			return true
+		end
+	end
+end
+
+local function sandboxFunc(func)
+	local function returnResults(success, ...)
+		return verifyAPIreturn(success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured.")
+	end
+
+	return function(...)
+		if containsDisallowed({...}) then
+			return "Disallowed input!"
+		end
+
+		return returnResults(pcall(func, ...))
+	end
+end
+
+local function makeBindable(func)
+	local Bindable = Instance.new("BindableFunction")
+	Bindable.OnInvoke = sandboxFunc(func)
+	return Bindable
+end
+
+local globalAPI = setmetatable({
+	checkHasPermission = makeBindable(module.checkHasPermission),
+	checkAdmin = makeBindable(module.checkAdmin),
+	getAdminLevel = makeBindable(module.getAdminLevel),
+	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
+}, {
+	__metatable = "This table is read only.",
+	__newindex = function() return "This table is read only." end
+})
+
+rawset(_G, "CommanderAPI", globalAPI)
+
 coroutine.wrap(function()
 	Players.PlayerAdded:Connect(function(Client)
 		for i,v in pairs(t) do
