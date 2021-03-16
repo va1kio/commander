@@ -42,7 +42,7 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 					Callback(v)
 				end
 			end
-		elseif Player == "me" or string.match(Player, "^%s*$") then
+		elseif Player == "me" then
 			Callback(Client)
 		elseif Player == "admins" or Player == "nonadmins" then
 			for _, v in pairs(Players:GetPlayers()) do
