@@ -237,7 +237,7 @@ local globalAPI = setmetatable({
 	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
 }, {
 	__metatable = "This table is read only.",
-	__newindex = "This table is read only.",
+	__newindex = "This table is read only."
 })
 
 rawset(_G, "CommanderAPI", globalAPI)
