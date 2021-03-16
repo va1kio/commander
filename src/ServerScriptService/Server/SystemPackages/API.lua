@@ -197,9 +197,7 @@ function module.getAvailableAdmins()
 end
 
 function module.getCharacter(Player: player)
-	if Player.Character and Player.Character.PrimaryPart and Player.Character:FindFirstChildOfClass("Humanoid") then
-		return Player.Character
-	end
+	return Player.Character, Player.Character and  Player.Character:FindFirstChildOfClass("Humanoid")
 end
 
 coroutine.wrap(function()
