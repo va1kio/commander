@@ -31,23 +31,44 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 		return false
 	end
 
-	if Player == "all" then
-		for i,v in pairs(Players:GetPlayers()) do
-			Callback(v)
-		end
-	elseif Player == "others" then
-		for i,v in pairs(Players:GetPlayers()) do
-			if v ~= Client then
+	local function runOnName(Player)
+		if Player == "all" then
+			for _, v in pairs(Players:GetPlayers()) do
 				Callback(v)
 			end
+		elseif Player == "others" then
+			for _, v in pairs(Players:GetPlayers()) do
+				if v ~= Client then
+					Callback(v)
+				end
+			end
+		elseif Player == "me" then
+			Callback(Client)
+		elseif Player == "admins" or Player == "nonadmins" then
+			for _, v in pairs(Players:GetPlayers()) do
+				if Player == "admins" and module.checkAdmin(v.UserId) or Player == "nonadmins" then
+					Callback(v)
+				end
+			end
+		elseif Player == "random" then
+			Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+		else
+			Player = module.getPlayerWithName(Player)
+			if Player then
+				Callback(Player)
+			end
 		end
-	elseif Player == "random" then
-		Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+	end
+	
+	if string.match(",", Player) then
+		local i = 0
+		for Player in string.gmatch(Player, "[^,]+,") do
+			i += string.len(Player)
+			runOnName(string.sub(Player1, string.len(Player) - 1))
+		end
+		runOnName(string.sub(Player, i + 1, string.len(Player)))
 	else
-		Player = module.getPlayerWithName(Player)
-		if Player then
-			Callback(Player)
-		end
+		runOnName(Player)
 	end
 
 	return true
