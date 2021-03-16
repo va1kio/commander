@@ -10,9 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 		if player and not module.API.checkAdmin(player.UserId) then
 			local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 
-			if Input == false then
-				return
-			end
+			if not Input then return end
 
 			local success, result = module.API.filterText(Client, Input)
 			
