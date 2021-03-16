@@ -13,9 +13,7 @@ module.Execute = function(Client, Type, Attachment)
 		if typeof(player) == "number" and not module.API.checkAdmin(player) then
 			local Input = module.API.sendModalToPlayer(Client, "Reason?").Event:Wait()
 			
-			if Input == false then
-				return
-			end
+			if not Input then return end
 
 			local success, result = module.API.filterText(Client, Input)
 			success = pcall(dataStore.SetAsync, dataStore, player, {End = math.huge, Reason = result})
