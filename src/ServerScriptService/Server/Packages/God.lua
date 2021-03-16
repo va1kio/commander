@@ -8,8 +8,7 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local _, Humanoid = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		if Humanoid then
-			Humanoid.MaxHealth = math.huge
-			Humanoid.Health = math.huge
+			Humanoid.MaxHealth, Humanoid.Health = math.huge, math.huge
 			return true
 		end
 	end
