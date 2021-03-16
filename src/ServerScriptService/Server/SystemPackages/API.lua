@@ -204,7 +204,7 @@ end
 
 local function containsDisallowed(tbl)
 	for _, v in ipairs(tbl) do
-		if rawequal(type(v), "table") or rawequal(typeof(v), "userdata") or rawequal(type(v), "function") or rawequal(type(v), "thread") then
+		if type(v) == "table" or typeof(v) == "userdata" or type(v) == "function" or type(v) == "thread" then
 			return true
 		end
 	end
