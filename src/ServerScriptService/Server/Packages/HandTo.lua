@@ -7,9 +7,8 @@ local module = {
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client, "What's the tool name?").Event:Wait()
-		local player, tool
 		if Input == false then return end
-		player, tool = module.API.getPlayerWithName(Attachment), (Client:FindFirstChildOfWhichIsA("Backpack") or Client:WaitForChild("Backpack", 5) or Instance.new("Backpack", Client)):FindFirstChild(Input)
+		local player, tool = module.API.getPlayerWithName(Attachment), (Client:FindFirstChildOfWhichIsA("Backpack") or Client:WaitForChild("Backpack", 5) or Instance.new("Backpack", Client)):FindFirstChild(Input)
 		
 		if player and tool then
 			tool.Parent = player:FindFirstChildOfWhichIsA("Backpack") or player:WaitForChild("Backpack", 5) or Instance.new("Backpack", player)
