@@ -17,8 +17,7 @@ module.Execute = function(Client, Type, Attachment)
 			local char1 = module.API.getCharacter(module.API.getPlayerWithName(Input))
 			
 			if char1 then
-				local primaryPart = char.PrimaryPart
-				local primaryPart1 = char1.PrimaryPart
+				local primaryPart, primaryPart1 = char.PrimaryPart, char1.PrimaryPart
 				if primaryPart and primaryPart1 then
 					primaryPart.CFrame = primaryPart1.CFrame
 					return true
