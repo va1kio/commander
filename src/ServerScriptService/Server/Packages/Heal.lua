@@ -11,6 +11,7 @@ module.Execute = function(Client, Type, Attachment)
 			char.Humanoid.Health = char.Humanoid.MaxHealth
 			return true
 		end
+		return false
 	end
 end
 

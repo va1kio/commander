@@ -11,6 +11,7 @@ module.Execute = function(Client, Type, Attachment)
 			char.PrimaryPart.Anchored = true
 			return true
 		end
+		return false
 	end
 end
 

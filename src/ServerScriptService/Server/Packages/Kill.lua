@@ -11,6 +11,7 @@ module.Execute = function(Client, Type, Attachment)
 			char.Humanoid.Health = 0
 			return true
 		end
+		return false
 	end
 end
 

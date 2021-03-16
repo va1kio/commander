@@ -1,10 +1,11 @@
-local DataStoreService = game:GetService("DataStoreService")
-local dataStore = DataStoreService:GetDataStore("commander.bans")
 local module = {
 	Name = "Unban",
 	Description = "Unbans a player",
 	Location = "Player",
 }
+
+local DataStoreService
+local dataStore
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
@@ -13,6 +14,10 @@ module.Execute = function(Client, Type, Attachment)
 			pcall(dataStore.RemoveAsync, dataStore, player)
 			return true
 		end
+		return false
+	elseif Type == "firstrun" then
+		DataStoreService = module.Services.DataStoreService
+		dataStore = DataStoreService:GetDataStore("commander.bans")
 	end
 end
 

@@ -12,6 +12,8 @@ module.Execute = function(Client, Type, Attachment)
 			char:SetPrimaryPartCFrame(primaryPart2.CFrame:ToWorldSpace(CFrame.new(Vector3.new(0, 0, 5))))
 			return true
 		end
+		
+		return false
 	end
 end
 

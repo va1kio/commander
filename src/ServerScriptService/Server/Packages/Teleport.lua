@@ -10,7 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 		if char then
 			local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 			
-			if not Input then return end
+			if not Input then return false end
 			
 			local char1 = module.API.getCharacter(module.API.getPlayerWithName(Input))
 			
@@ -19,6 +19,7 @@ module.Execute = function(Client, Type, Attachment)
 				char:SetPrimaryPartCFrame(primaryPart1.CFrame:ToWorldSpace(CFrame.new(Vector3.new(0, 0, 5))))
 				return true
 			end
+			return false
 		end
 	end
 end

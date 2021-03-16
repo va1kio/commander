@@ -31,23 +31,44 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 		return false
 	end
 
-	if Player == "all" then
-		for i,v in pairs(Players:GetPlayers()) do
-			Callback(v)
-		end
-	elseif Player == "others" then
-		for i,v in pairs(Players:GetPlayers()) do
-			if v ~= Client then
+	local function runOnName(Player)
+		if Player == "all" then
+			for _, v in pairs(Players:GetPlayers()) do
 				Callback(v)
 			end
+		elseif Player == "others" then
+			for _, v in pairs(Players:GetPlayers()) do
+				if v ~= Client then
+					Callback(v)
+				end
+			end
+		elseif Player == "me" then
+			Callback(Client)
+		elseif Player == "admins" or Player == "nonadmins" then
+			for _, v in pairs(Players:GetPlayers()) do
+				if Player == "admins" and module.checkAdmin(v.UserId) or Player == "nonadmins" then
+					Callback(v)
+				end
+			end
+		elseif Player == "random" then
+			Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+		else
+			Player = module.getPlayerWithName(Player)
+			if Player then
+				Callback(Player)
+			end
 		end
-	elseif Player == "random" then
-		Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+	end
+	
+	if string.match(",", Player) then
+		local i = 0
+		for Player in string.gmatch(Player, "[^,]+,") do
+			i += string.len(Player)
+			runOnName(string.sub(Player1, string.len(Player) - 1))
+		end
+		runOnName(string.sub(Player, i + 1, string.len(Player)))
 	else
-		Player = module.getPlayerWithName(Player)
-		if Player then
-			Callback(Player)
-		end
+		runOnName(Player)
 	end
 
 	return true
@@ -201,6 +222,46 @@ function module.getCharacter(Player: player)
 		return Player.Character
 	end
 end
+
+local function containsDisallowed(tbl)
+	for _, v in ipairs(tbl) do
+		if type(v) == "table" or typeof(v) == "userdata" or type(v) == "function" or type(v) == "thread" then
+			return true
+		end
+	end
+end
+
+local function sandboxFunc(func)
+	local function returnResults(success, ...)
+		return verifyAPIreturn(success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured.")
+	end
+
+	return function(...)
+		if containsDisallowed({...}) then
+			return "Disallowed input!"
+		end
+
+		return returnResults(pcall(func, ...))
+	end
+end
+
+local function makeBindable(func)
+	local Bindable = Instance.new("BindableFunction")
+	Bindable.OnInvoke = sandboxFunc(func)
+	return Bindable
+end
+
+local globalAPI = setmetatable({
+	checkHasPermission = makeBindable(module.checkHasPermission),
+	checkAdmin = makeBindable(module.checkAdmin),
+	getAdminLevel = makeBindable(module.getAdminLevel),
+	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
+}, {
+	__metatable = "This table is read only.",
+	__newindex = function() return "This table is read only." end
+})
+
+rawset(_G, "CommanderAPI", globalAPI)
 
 coroutine.wrap(function()
 	Players.PlayerAdded:Connect(function(Client)
