@@ -10,9 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 		if char then
 			local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 			
-			if Input == false then
-				return
-			end
+			if not Input then return end
 			
 			local char1 = module.API.getCharacter(module.API.getPlayerWithName(Input))
 			
