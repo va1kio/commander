@@ -211,16 +211,8 @@ local function containsDisallowed(tbl)
 end
 
 local function sandboxFunc(func)
-	local function verifyAPIreturn(...)
-		if containsDisallowed({...}) then
-			return "API returned disallowed arguments. Vulnerability?"
-		end
-
-		return ...
-	end
-
 	local function returnResults(success, ...)
-		return verifyAPIreturn(success and ... or "An error occured.")
+		return verifyAPIreturn(success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured.")
 	end
 
 	return function(...)
