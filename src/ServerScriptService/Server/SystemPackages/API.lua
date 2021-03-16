@@ -42,7 +42,7 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 					Callback(v)
 				end
 			end
-		elseif Player == "me" then
+		elseif Player == "me" or Player == "" then
 			Callback(Client)
 		elseif Player == "admins" or Player == "nonadmins" then
 			for _, v in pairs(Players:GetPlayers()) do
