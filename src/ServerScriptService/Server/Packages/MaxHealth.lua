@@ -14,7 +14,7 @@ module.Execute = function(Client, Type, Attachment)
 		end
 
 		if char then
-			char:FindFirstChild("Humanoid").MaxHealth = tonumber(Input)
+			char:FindFirstChildOfClass("Humanoid").MaxHealth = tonumber(Input)
 			return true
 		end
 	end
