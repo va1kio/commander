@@ -10,10 +10,10 @@ module.Execute = function(Client, Type, Attachment)
 		local player 
 		local tool
 		if Input == false then return end
-		player, tool = module.API.getPlayerWithName(Attachment), Client.Backpack:FindFirstChild(Input)
+		player, tool = module.API.getPlayerWithName(Attachment), (Client:FindFirstChildOfWhichIsA("Backpack") or Client:WaitForChild("Backpack", 5) or Instance.new("Backpack", Client)):FindFirstChild(Input)
 		
 		if player and tool then
-			tool.Parent = player.Backpack
+			tool.Parent = player:FindFirstChildOfWhichIsA("Backpack") or player:WaitForChild("Backpack", 5) or Instance.new("Backpack", player)
 			module.Remotes.Event:FireClient(player, "newMessage", "", {From = "System; HandTo", Content = Client.Name .. "has given you tool " .. tool.Name})
 			return true
 		else
