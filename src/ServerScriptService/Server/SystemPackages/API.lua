@@ -46,7 +46,8 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 			Callback(Client)
 		elseif Player == "admins" or Player == "nonadmins" then
 			for _, v in pairs(Players:GetPlayers()) do
-				if Player == "admins" and module.checkAdmin(v.UserId) or Player == "nonadmins" then
+				local isAdmin = module.checkAdmin(v.UserId)
+				if Player == "admins" and isAdmin or Player == "nonadmins" and not isAdmin then
 					Callback(v)
 				end
 			end
