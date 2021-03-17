@@ -7,7 +7,7 @@ local module = {
 module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Player = module.API.getPlayerWithName(Attachment)
-		local BackPack = Player:FindFirstChildOfClass("Backpack")
+		local Backpack = Player:FindFirstChildOfClass("Backpack")
 		if Backpack then
 			for _, v in ipairs({Player.Character and table.unpack(Player.Character:GetChildren()), table.unpack(Backpack:GetChildren())}) do
 				if v:IsA("BackpackItem") then
