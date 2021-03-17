@@ -10,7 +10,7 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Player = module.API.getPlayerWithName(Attachment)
 		if not (Players.CharacterAutoLoads and not Player.Character) then
-			v:LoadCharacter()
+			Player:LoadCharacter()
 			return true
 		end
 	end
