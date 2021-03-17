@@ -16,10 +16,10 @@ module.Execute = function(Client, Type, Attachment)
 		Status, Input = module.API.filterText(Client, Input)
 		
 		if Status then
-			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; TestFilter", Content = "Your message has been filitered, here's the result:\n" .. Input})
+			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; TestFilter", Content = "Your message has been filtered, here's the result:\n" .. Input})
 			return true
 		else
-			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; TestFilter", Content = "Your message \"" .. tostring(Attachment) .. "\" failed to filitered, please retry later."})
+			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; TestFilter", Content = "Your message \"" .. tostring(Attachment) .. "\" failed to filter, please retry later."})
 		end
 	end
 end
