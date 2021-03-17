@@ -65,7 +65,7 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 		local i = 0
 		for Player in string.gmatch(Player, "[^,]+,") do
 			i += string.len(Player)
-			runOnName(string.sub(Player1, string.len(Player) - 1))
+			runOnName(string.sub(Player, 1, string.len(Player) - 1))
 		end
 		runOnName(string.sub(Player, i + 1, string.len(Player)))
 	else
