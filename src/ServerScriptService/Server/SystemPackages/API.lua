@@ -76,7 +76,7 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 end
 
 function module.getPlayerWithName(Player: string)
-	for _, v in pairs(Players:GetPlayers()) do
+	for _, v in ipairs(Players:GetPlayers()) do
 		if string.lower(v.Name) == string.lower(Player) then
 			return v
 		end
@@ -265,7 +265,7 @@ local globalAPI = setmetatable({
 rawset(_G, "CommanderAPI", globalAPI)
 
 Players.PlayerAdded:Connect(function(Client)
-	for _, v in pairs(t) do
+	for _, v in ipairs(t) do
 		pcall(v, Client)
 	end
 end)
