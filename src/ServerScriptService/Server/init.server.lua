@@ -99,15 +99,16 @@ local function loadPackages()
 	
 	for i,v in pairs(script.Packages:GetChildren()) do
 		if v:IsA("ModuleScript") then
-			v = require(v)
-			v.Services = systemPackages.Services
-			v.API = systemPackages.API
-			v.Remotes = remotes
-			v.fetchLogs = script.waypointBindable
-			if v and v.Name and v.Description and v.Location then
-				packages[v.Name] = v
+			local mod = require(v)
+			mod.Services = systemPackages.Services
+			mod.API = systemPackages.API
+			mod.Remotes = remotes
+			mod.fetchLogs = script.waypointBindable
+			mod.PackageId = v.Name
+			if mod and mod.Name and mod.Description and mod.Location then
+				packages[mod.Name] = mod
 			end
-			v.Execute(nil, "firstrun")
+			mod.Execute(nil, "firstrun")
 		end
 	end
 end
@@ -126,7 +127,7 @@ end
 remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 	if systemPackages.API.checkAdmin(Client.UserId) then
 		if Type == "command" and packages[Protocol] then
-			if systemPackages.API.checkHasPermission(Client.UserId, Protocol) then
+			if systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
 				local status = packages[Protocol].Execute(Client, Type, Attachment)
 				if status then
 					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
