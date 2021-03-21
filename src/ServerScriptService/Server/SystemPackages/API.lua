@@ -33,11 +33,11 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 
 	local function runOnName(Player)
 		if Player == "all" then
-			for _, v in pairs(Players:GetPlayers()) do
+			for _, v in ipairs(Players:GetPlayers()) do
 				Callback(v)
 			end
 		elseif Player == "others" then
-			for _, v in pairs(Players:GetPlayers()) do
+			for _, v in ipairs(Players:GetPlayers()) do
 				if v ~= Client then
 					Callback(v)
 				end
@@ -45,7 +45,7 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 		elseif Player == "me" then
 			Callback(Client)
 		elseif Player == "admins" or Player == "nonadmins" then
-			for _, v in pairs(Players:GetPlayers()) do
+			for _, v in ipairs(Players:GetPlayers()) do
 				local isAdmin = module.checkAdmin(v.UserId)
 				if Player == "admins" and isAdmin or Player == "nonadmins" and not isAdmin then
 					Callback(v)
@@ -76,23 +76,23 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 end
 
 function module.getPlayerWithName(Player: string)
-	for i,v in pairs(Players:GetPlayers()) do
-		if v.Name:lower() == Player:lower() then
+	for _, v in ipairs(Players:GetPlayers()) do
+		if string.lower(v.Name) == string.lower(Player) then
 			return v
 		end
 	end
 end
 
 function module.getPlayerWithNamePartial(Player: string)
-	for i,v in ipairs(Players:GetPlayers()) do
-		if v.Name:sub(1, #Player):lower() == Player:lower() then
+	for _, v in ipairs(Players:GetPlayers()) do
+		if sring.lower(string.sub(v.Name, 1, #Player)) == string.lower(Player) then
 			return v;
 		end
 	end
 end
 
 function module.getPlayerWithFilter(filter: (Instance) -> boolean)
-	for i,v in ipairs(Players:GetPlayers()) do
+	for _, v in ipairs(Players:GetPlayers()) do
 		if filter(v) == true then
 			return v;
 		end
@@ -105,7 +105,7 @@ function module.getUserIdWithName(Player: string)
 end
 
 function module.registerPlayerAddedEvent(Function)
-	t[#t + 1] = Function
+	table.insert(t, Function)
 end
 
 function module.filterText(From: player, Content: string)
@@ -135,7 +135,7 @@ end
 function module.getAdminLevel(ClientId: number)
 	local highestPriority, permissionGroupId = -math.huge, nil;
 
-	for i,v in pairs(module.Settings.Admins) do
+	for i, v in pairs(module.Settings.Admins) do
 		local permissionGroup = module.Settings.Permissions[v]
 
 		-- If permission group is invalid or group has
@@ -151,17 +151,17 @@ function module.getAdminLevel(ClientId: number)
 		local isInGroup = false
 
 		if typeof(i) == "string" then
-			if i:match("(%d+):([<>]?)(%d+)") then
+			if string.match(i, "(%d+):([<>]?)(%d+)") then
 				-- Group setting.
 				-- Formatted as groupId:[<>]?rankId.
 				-- "<" / ">" signifies if the user rank should be
 				-- less than or greater than the rank (inclusive).
 				-- If no "<" or ">" is provided it must be an exact match.
-				local groupId, condition, rankId = i:match("(%d+):([<>]?)(%d+)");
+				local groupId, condition, rankId = string.match(i, "(%d+):([<>]?)(%d+)");
 				local playerGroups = GroupService:GetGroupsAsync(ClientId) or {};
 				local selectedGroup;
 
-				for x,y in ipairs(playerGroups) do
+				for _, y in ipairs(playerGroups) do
 					if y.Id == tonumber(groupId) then
 						selectedGroup = y;
 						break;
@@ -187,7 +187,7 @@ function module.getAdminLevel(ClientId: number)
 					isInGroup = true
 				end
 			end
-		elseif typeof(i) == "number" then
+		elseif type(i) == "number" then
 			if ClientId == i then
 				isInGroup = true
 			end
@@ -209,7 +209,7 @@ end
 
 function module.getAvailableAdmins()
 	local availableAdmins = 0
-	for i,v in pairs(Players:GetPlayers()) do
+	for _, v in ipairs(Players:GetPlayers()) do
 		if module.checkAdmin(v.UserId) then
 			availableAdmins += 1
 		end
@@ -264,12 +264,10 @@ local globalAPI = setmetatable({
 
 rawset(_G, "CommanderAPI", globalAPI)
 
-coroutine.wrap(function()
-	Players.PlayerAdded:Connect(function(Client)
-		for i,v in pairs(t) do
-			pcall(v, Client)
-		end
-	end)
-end)()
+Players.PlayerAdded:Connect(function(Client)
+	for _, v in ipairs(t) do
+		pcall(v, Client)
+	end
+end)
 
 return module
