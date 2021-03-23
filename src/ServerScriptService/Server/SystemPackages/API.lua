@@ -61,13 +61,10 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 		end
 	end
 	
-	if string.match(",", Player) then
-		local i = 0
-		for Player in string.gmatch(Player, "[^,]+,") do
-			i += string.len(Player)
-			runOnName(string.sub(Player, 1, string.len(Player) - 1))
+	if string.match(Player, ",") then
+		for PlayerName in string.gmatch(Player, "([^,]+)(,? ?)") do
+			runOnName(PlayerName)
 		end
-		runOnName(string.sub(Player, i + 1, string.len(Player)))
 	else
 		runOnName(Player)
 	end
