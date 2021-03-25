@@ -82,7 +82,7 @@ end
 
 function module.getPlayerWithNamePartial(Player: string)
 	for _, v in ipairs(Players:GetPlayers()) do
-		if sring.lower(string.sub(v.Name, 1, #Player)) == string.lower(Player) then
+		if string.lower(string.sub(v.Name, 1, #Player)) == string.lower(Player) then
 			return v;
 		end
 	end
