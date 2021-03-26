@@ -82,5 +82,10 @@ return {
 		["Theme"] = "Light" -- DO NOT TOUCH
 	},
 	
+	["Misc"] = {
+		["DisableCredits"] = false,
+		["HideDonations"] = false
+	},
+	
 	["Version"] = {"DP3 (A1154)", "Developer Preview 3 (A1154)"}
 }

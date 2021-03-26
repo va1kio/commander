@@ -278,7 +278,7 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 	elseif Type == "firstRun" then
 		local credits = ""
 		UserInputService.InputEnded:Connect(function(Input, Processed)
-			if not Processed and Input.KeyCode == Attachment.Keybind then
+			if not Processed and Input.KeyCode == Attachment.UI.Keybind then
 				Classes.Animator.animateIn(Elements.Panel)
 			end
 		end)
@@ -288,7 +288,8 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		end
 		
 		Classes.Donations.execute()
-		changeAccent(Attachment.Accent)
+		changeAccent(Attachment.UI.Accent)
+		Elements.Panel.Container.Menu.Container.List.Donations.Visible = not Attachment.Misc.HideDonations
 		Elements.Panel.Container.Body.About.List.Container.Credits.Description.Text = credits
 		Elements.Panel.Container.Body.Home.Top.Container.Title.Text = Players.LocalPlayer.Name
 		Elements.Panel.Container.Body.Home.Top.Container.Avatar.Icon.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
@@ -303,7 +304,7 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		Elements.Panel.Container.Body.Home.System.Container.Version.Value.Text, Elements.Panel.Container.Body.About.List.Container.Top.Text.Subtitle.Text = Remotes.Function:InvokeServer("getCurrentVersion")
 		Elements.Panel.Container.Body.About.List.Container.Top.Text.Subtitle.Text = Elements.Panel.Container.Body.About.List.Container.Top.Text.Subtitle.Text
 		updateInfo()
-		notifyClient("Commander", "Use the " .. Attachment.Keybind.Name .. " key to open")
+		notifyClient("Commander", "Use the " .. Attachment.UI.Keybind.Name .. " key to open")
 	end
 end)
 

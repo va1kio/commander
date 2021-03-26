@@ -13,6 +13,10 @@ local remotes = {
 local packages = {}
 local packagesButtons = {}
 local systemPackages = {}
+local doNotInject = {
+	"Settings",
+	"Credits"
+}
 local permissionTable = {}
 local disableTable = {}
 
@@ -89,10 +93,9 @@ local function loadPackages()
 	
 	for i,v in pairs(systemPackages) do
 		for index, value in pairs(systemPackages) do
-			if systemPackages[index] ~= v and typeof(value) == "table" then
+			if systemPackages[index] ~= v and typeof(v) ~= "function" and i ~= "Settings" then
 				v.Remotes = remotes
 				v[index] = value
-				warn("brew " .. index .. " for " .. i)
 			end
 		end
 	end
@@ -115,7 +118,7 @@ end
 
 loadPackages()
 
-systemPackages.Settings.UI.Credits = systemPackages.Credits
+systemPackages.Settings.Credits = systemPackages.Credits()
 if not script.Library.UI:FindFirstChild(systemPackages.Settings.UI.Theme) or systemPackages.Settings.UI.Theme == "Client" then
 	error("Please choose a valid theme!")
 end
@@ -171,7 +174,7 @@ local function setupUIForPlayer(Client)
 		UI.Name = "UI"
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
-		remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings.UI)
+		remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
 		availableAdmins = systemPackages.API.getAvailableAdmins()
 		
 		-- Filter out commands that the user doesn't have access to.
@@ -185,6 +188,10 @@ local function setupUIForPlayer(Client)
 		
 		remotes.Event:FireClient(Client, "fetchCommands", "n/a", packagesButtonsFiltered)
 		remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
+	end
+	
+	if not systemPackages.Settings.Misc.DisableCredits then
+		remotes.Event:FireClient(Client, "newNotify", "n/a", {From = "System", Content = "This game uses Commander 4 from Evo"})
 	end
 end
 
