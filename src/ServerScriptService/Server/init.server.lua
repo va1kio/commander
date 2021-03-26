@@ -171,7 +171,7 @@ local function setupUIForPlayer(Client)
 		UI.Name = "UI"
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
-		remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings.UI)
+		remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
 		availableAdmins = systemPackages.API.getAvailableAdmins()
 		
 		-- Filter out commands that the user doesn't have access to.
@@ -185,6 +185,10 @@ local function setupUIForPlayer(Client)
 		
 		remotes.Event:FireClient(Client, "fetchCommands", "n/a", packagesButtonsFiltered)
 		remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
+	end
+	
+	if not systemPackages.Settings.Misc.DisableCredits then
+		remotes.Event:FireClient(Client, "newNotify", "n/a", {From = "System", Content = "This game uses Commander 4 from Evo"})
 	end
 end
 

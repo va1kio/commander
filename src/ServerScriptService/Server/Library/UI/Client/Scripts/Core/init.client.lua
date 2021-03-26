@@ -105,11 +105,12 @@ local function init()
 	Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		if Type == "newMessage" then
 			makeMessage(Attachment.From, Attachment.Content)
+		elseif Type == "newNotify" then
+			notifyClient(Attachment.From, Attachment.Content)
+		elseif Type == "newHint" then
+			makeChatMessage(Attachment.From .. ":" .. Attachment.Content, Color3.fromRGB(255,255,255))
 		end
 	end)
-	
-	makeChatMessage("Powered by Commander from Evo")
-	notifyClient("System", "This game uses Commander 4 from Evo")
 end
 
 loadClasses()
