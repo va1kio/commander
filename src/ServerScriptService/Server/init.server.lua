@@ -13,6 +13,10 @@ local remotes = {
 local packages = {}
 local packagesButtons = {}
 local systemPackages = {}
+local doNotInject = {
+	"Settings",
+	"Credits"
+}
 local permissionTable = {}
 local disableTable = {}
 
@@ -89,10 +93,9 @@ local function loadPackages()
 	
 	for i,v in pairs(systemPackages) do
 		for index, value in pairs(systemPackages) do
-			if systemPackages[index] ~= v and typeof(v) ~= "function" then
+			if systemPackages[index] ~= v and typeof(v) ~= "function" and i ~= "Settings" then
 				v.Remotes = remotes
 				v[index] = value
-				warn("brew " .. index .. " for " .. i)
 			end
 		end
 	end

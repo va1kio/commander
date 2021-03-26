@@ -283,7 +283,7 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 			end
 		end)
 		
-		for i,v in pairs(Attachment.UI.Credits) do
+		for i,v in pairs(Attachment.Credits) do
 			credits = credits .. v .. "<br/>"
 		end
 		
