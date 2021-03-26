@@ -89,7 +89,7 @@ local function loadPackages()
 	
 	for i,v in pairs(systemPackages) do
 		for index, value in pairs(systemPackages) do
-			if systemPackages[index] ~= v and typeof(value) == "table" then
+			if systemPackages[index] ~= v and typeof(value) ~= "function" then
 				v.Remotes = remotes
 				v[index] = value
 				warn("brew " .. index .. " for " .. i)
@@ -115,7 +115,7 @@ end
 
 loadPackages()
 
-systemPackages.Settings.UI.Credits = systemPackages.Credits
+systemPackages.Settings.Credits = systemPackages.Credits()
 if not script.Library.UI:FindFirstChild(systemPackages.Settings.UI.Theme) or systemPackages.Settings.UI.Theme == "Client" then
 	error("Please choose a valid theme!")
 end
