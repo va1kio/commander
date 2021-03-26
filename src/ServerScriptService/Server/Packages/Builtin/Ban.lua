@@ -1,10 +1,11 @@
-local DataStoreService = game:GetService("DataStoreService")
-local dataStore = DataStoreService:GetDataStore("commander.bans")
 local module = {
 	Name = "Ban",
 	Description = "Bans a player",
 	Location = "Player",
 }
+
+local DataStoreService
+local dataStore
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
@@ -14,7 +15,7 @@ module.Execute = function(Client, Type, Attachment)
 			local Input = module.API.sendModalToPlayer(Client, "Reason?").Event:Wait()
 			
 			if Input == false then
-				return
+				return false
 			end
 
 			local success, result = module.API.filterText(Client, Input)
@@ -24,8 +25,12 @@ module.Execute = function(Client, Type, Attachment)
 				actualPlayer:Kick("\nPermanently banned\nReason: " ..  result)
 				return true
 			end
+			return false
 		end
 	elseif Type == "firstrun" then
+		DataStoreService = module.Services.DataStoreService
+		dataStore = DataStoreService:GetDataStore("commander.bans")
+
 		module.API.registerPlayerAddedEvent(function(Client)
 			local success, data = pcall(dataStore.GetAsync, dataStore, Client.UserId)
 			if success then

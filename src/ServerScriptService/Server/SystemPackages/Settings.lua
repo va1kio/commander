@@ -34,8 +34,7 @@
 
 return {
 	["Admins"] = {
-		[game.CreatorId] = "Owner",
-		["nana_kon"] = "Owner",
+		["nana_kon"] = "Owner"
 	},
 
 	["Permissions"] = {
@@ -80,8 +79,13 @@ return {
 	["UI"] = {
 		["Accent"] = Color3.fromRGB(64, 157, 130),
 		["Keybind"] = Enum.KeyCode.Semicolon,
-		["Theme"] = "Light"
+		["Theme"] = "Light" -- DO NOT TOUCH
 	},
 	
-	["Version"] = {"DP3 (A1153)", "Developer Preview 3 (A1153)"}
+	["Misc"] = {
+		["DisableCredits"] = false,
+		["HideDonations"] = false
+	},
+	
+	["Version"] = {"DP3 (A1154)", "Developer Preview 3 (A1154)"}
 }

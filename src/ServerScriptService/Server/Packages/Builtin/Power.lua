@@ -1,6 +1,6 @@
 local module = {
-	Name = "Damage",
-	Description = "Damages a player, negative number means healing",
+	Name = "Power",
+	Description = "Changes a player's JumpPower",
 	Location = "Player",
 }
 
@@ -9,15 +9,16 @@ module.Execute = function(Client, Type, Attachment)
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 		
 		if Input == false then
-			return
+			return false
 		end
 
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
-
+		
 		if char then
-			char.Humanoid:TakeDamage(tonumber(Input))
+			char.Humanoid.JumpPower = tonumber(Input)
 			return true
 		end
+		return false
 	end
 end
 

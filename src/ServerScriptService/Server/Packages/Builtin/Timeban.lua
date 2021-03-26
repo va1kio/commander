@@ -1,10 +1,11 @@
-local DataStoreService = game:GetService("DataStoreService")
-local dataStore = DataStoreService:GetDataStore("commander.bans")
 local module = {
 	Name = "Time ban",
 	Description = "Bans a player for a certain of time",
 	Location = "Player",
 }
+
+local DataStoreService
+local dataStore
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
@@ -14,13 +15,13 @@ module.Execute = function(Client, Type, Attachment)
 			local Input = module.API.sendModalToPlayer(Client, "Reason?").Event:Wait()
 			
 			if Input == false then
-				return
+				return false
 			end
 			
 			local Input2 = module.API.sendModalToPlayer(Client, "How many hours?").Event:Wait()
 			
 			if Input2 == false then
-				return
+				return false
 			end
 			
 			local success, result = module.API.filterText(Client, Input)
@@ -30,7 +31,11 @@ module.Execute = function(Client, Type, Attachment)
 				Client:Kick("\nBanned\nReason: " .. result .. "\n\nCome back at " .. os.date("%d %b, %Y (%a) %X", tick() + tonumber(Input2) * 60 * 60))
 				return true
 			end
+			return false
 		end
+	elseif Type == "firstrun" then
+		DataStoreService = module.Services.DataStoreService
+		dataStore = DataStoreService:GetDataStore("commander.bans")
 	end
 end
 

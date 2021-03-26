@@ -1,23 +1,18 @@
 local module = {
-	Name = "Speed",
-	Description = "Changes a player's WalkSpeed",
+	Name = "God",
+	Description = "Sets the player's health to math.huge, resulting in unlimited health.",
 	Location = "Player",
 }
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
-		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
-		
-		if Input == false then
-			return
-		end
-
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
-		
 		if char then
-			char.Humanoid.WalkSpeed = tonumber(Input)
+			char.Humanoid.MaxHealth = math.huge
+			char.Humanoid.Health = math.huge
 			return true
 		end
+		return false
 	end
 end
 

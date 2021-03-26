@@ -10,6 +10,9 @@ local Remotes = {
 	Event = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteEvent")
 }
 
+local Audio = Instance.new("Sound")
+Audio.Volume = 1
+Audio.Parent = script
 local Elements = script.Parent.Parent.Elements
 
 local function dropAllClasses(Child)
@@ -54,7 +57,7 @@ local function makeMessage(From: string, Content: string)
 		local guid = HttpService:GenerateGUID()
 		local closeButtonEvent
 		messages[#messages + 1] = guid
-		repeat wait() until messages[1] == guid
+		repeat wait() until messages[1] == guid		
 		local message = script.Message:Clone()
 		local isActive = true
 		message.Container.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Message from </font>" .. tostring(From)
@@ -91,9 +94,10 @@ local function makeMessage(From: string, Content: string)
 			Elements.List.Indicator.Visible = true
 		end
 
-		
+		Audio.SoundId = "rbxassetid://6518811702"
 		Classes.Tween(message, Classes.TweenInfo.Longer, {Size = UDim2.new(0.45, 0, 0, message.Container.Size.Y.Offset)})
 		Classes.Fader.FadeIn(message, 0.5)
+		Audio:Play()
 	end)()
 end
 
@@ -101,11 +105,12 @@ local function init()
 	Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		if Type == "newMessage" then
 			makeMessage(Attachment.From, Attachment.Content)
+		elseif Type == "newNotify" then
+			notifyClient(Attachment.From, Attachment.Content)
+		elseif Type == "newHint" then
+			makeChatMessage(Attachment.From .. ":" .. Attachment.Content, Color3.fromRGB(255,255,255))
 		end
 	end)
-	
-	makeChatMessage("Powered by Commander from Evo")
-	notifyClient("System", "This game uses Commander 4 from Evo")
 end
 
 loadClasses()

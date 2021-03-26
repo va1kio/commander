@@ -9,7 +9,7 @@ module.Execute = function(Client, Type, Attachment)
 		local Input = module.API.sendModalToPlayer(Client, "What's the message?").Event:Wait()
 		
 		if Input == false then
-			return
+			return false
 		end
 
 		local Status
@@ -21,6 +21,7 @@ module.Execute = function(Client, Type, Attachment)
 		else
 			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; TestFilter", Content = "Your message \"" .. tostring(Attachment) .. "\" failed to filter, please retry later."})
 		end
+		return false
 	end
 end
 

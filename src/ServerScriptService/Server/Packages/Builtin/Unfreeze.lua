@@ -1,16 +1,17 @@
 local module = {
-	Name = "Kill",
-	Description = "Kills a player with the Humanoid method",
+	Name = "Unfreeze",
+	Description = "Opposite of Freeze",
 	Location = "Player",
 }
 
 module.Execute = function(Client, Type, Attachment)			
 	if Type == "command" then
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
-		if char then
-			char.Humanoid.Health = 0
+		if char and char.PrimaryPart then
+			char.PrimaryPart.Anchored = false
 			return true
 		end
+		return false
 	end
 end
 

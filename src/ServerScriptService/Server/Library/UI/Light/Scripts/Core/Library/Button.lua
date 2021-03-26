@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local Audio = Instance.new("Sound")
 local Client = Players.LocalPlayer
 local Mouse = Client:GetMouse()
 local module = {}
@@ -14,6 +15,11 @@ end
 
 function module.register(Button, ReactionCallback)
 	local bindable = Instance.new("BindableEvent")
+	
+	if not ReactionCallback then
+		ReactionCallback = function() end
+	end
+	
 	if not Button:FindFirstChild("Trigger") then
 		Button.InputBegan:Connect(function(Object)
 			if Object.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -28,6 +34,7 @@ function module.register(Button, ReactionCallback)
 			if Object.UserInputType == Enum.UserInputType.MouseButton1 or Object.UserInputType == Enum.UserInputType.Touch then
 				if module.processClick(Mouse, Button) then
 					bindable:Fire(Mouse.X, Mouse.Y)
+					Audio:Play()
 				end
 			end
 		end)
@@ -48,11 +55,16 @@ function module.register(Button, ReactionCallback)
 			ReactionCallback(Button, "Over")
 			if module.processClick(Mouse, Button) then
 				bindable:Fire(Mouse.X, Mouse.Y)
+				Audio:Play()
 			end
 		end)
 	end
 	
 	return bindable.Event
 end
+
+Audio.Volume = 0.25
+Audio.SoundId = "rbxassetid://6518836794"
+Audio.Parent = script
 
 return module

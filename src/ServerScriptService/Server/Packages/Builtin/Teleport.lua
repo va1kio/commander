@@ -10,20 +10,16 @@ module.Execute = function(Client, Type, Attachment)
 		if char then
 			local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 			
-			if Input == false then
-				return
-			end
+			if not Input then return false end
 			
 			local char1 = module.API.getCharacter(module.API.getPlayerWithName(Input))
 			
-			if char1 then
-				local primaryPart = char.PrimaryPart
-				local primaryPart1 = char1.PrimaryPart
-				if primaryPart and primaryPart1 then
-					primaryPart.CFrame = primaryPart1.CFrame
-					return true
-				end
+			local primaryPart, primaryPart1 = char.PrimaryPart, char1 and char1.PrimaryPart
+			if primaryPart and primaryPart1 then
+				char:SetPrimaryPartCFrame(primaryPart1.CFrame:ToWorldSpace(CFrame.new(Vector3.new(0, 0, 5), primaryPart1.Position)))
+				return true
 			end
+			return false
 		end
 	end
 end

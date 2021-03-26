@@ -2,7 +2,7 @@
 	<Meta name="ExplicitAutoJoints">true</Meta>
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScrollingFrame" referent="RBX53015973d691496d837eada6a52e3586">
+	<Item class="ScrollingFrame" referent="RBXca65976dea1643929b5d14206ee284df">
 		<Properties>
 			<bool name="Active">false</bool>
 			<Vector2 name="AnchorPoint">
@@ -64,7 +64,7 @@
 			<float name="ScrollBarImageTransparency">0</float>
 			<int name="ScrollBarThickness">0</int>
 			<token name="ScrollingDirection">4</token>
-			<bool name="ScrollingEnabled">true</bool>
+			<bool name="ScrollingEnabled">false</bool>
 			<bool name="Selectable">false</bool>
 			<Ref name="SelectionImageObject">null</Ref>
 			<UDim2 name="Size">
@@ -82,7 +82,7 @@
 			<bool name="Visible">true</bool>
 			<int name="ZIndex">1</int>
 		</Properties>
-		<Item class="UIListLayout" referent="RBX3ab0927821714740be5a3b72f6a2ee94">
+		<Item class="UIListLayout" referent="RBXd34b3739395e43b4811fbd436ee5a616">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<token name="FillDirection">1</token>
@@ -98,7 +98,7 @@
 				<token name="VerticalAlignment">1</token>
 			</Properties>
 		</Item>
-		<Item class="UIPadding" referent="RBX9de3f1cdda9d4b9199fdb46ab7c5fc68">
+		<Item class="UIPadding" referent="RBX320baf4971c24e619656d999187f16c8">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<string name="Name">UIPadding</string>
@@ -122,7 +122,7 @@
 				<BinaryString name="Tags"></BinaryString>
 			</Properties>
 		</Item>
-		<Item class="TextLabel" referent="RBXf8b75a6aa46a41a58796204d89aae9ad">
+		<Item class="TextLabel" referent="RBX03c337fa1b67417f87e2c68025806612">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Vector2 name="AnchorPoint">
