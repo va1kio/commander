@@ -89,7 +89,7 @@ local function loadPackages()
 	
 	for i,v in pairs(systemPackages) do
 		for index, value in pairs(systemPackages) do
-			if systemPackages[index] ~= v and typeof(value) ~= "function" then
+			if systemPackages[index] ~= v and typeof(v) ~= "function" then
 				v.Remotes = remotes
 				v[index] = value
 				warn("brew " .. index .. " for " .. i)
