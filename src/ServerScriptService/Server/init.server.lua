@@ -13,10 +13,6 @@ local remotes = {
 local packages = {}
 local packagesButtons = {}
 local systemPackages = {}
-local doNotInject = {
-	"Settings",
-	"Credits"
-}
 local permissionTable = {}
 local disableTable = {}
 
@@ -25,7 +21,7 @@ remotes.Function.Parent, remotes.Event.Parent = remotefolder, remotefolder
 remotefolder.Parent = ReplicatedStorage
 remotefolder = nil
 
-for i,v in pairs(script.Packages:GetChildren()) do
+for i,v in pairs(script.Packages:GetDescendants()) do
 	if v:IsA("ModuleScript") then
 		local mod = require(v)
 		if mod.Execute and mod.Name and mod.Description and mod.Location then
@@ -100,7 +96,7 @@ local function loadPackages()
 		end
 	end
 	
-	for i,v in pairs(script.Packages:GetChildren()) do
+	for i,v in pairs(script.Packages:GetDescendants()) do
 		if v:IsA("ModuleScript") then
 			local mod = require(v)
 			mod.Services = systemPackages.Services

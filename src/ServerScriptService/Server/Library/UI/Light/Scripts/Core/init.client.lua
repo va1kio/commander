@@ -289,9 +289,10 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		
 		Classes.Donations.execute()
 		changeAccent(Attachment.UI.Accent)
-		Elements.Panel.Container.Menu.Container.List.Donations.Visible = not Attachment.Misc.HideDonations
+		Elements.Panel.Container.Menu.Container.List.Donate.Visible = not Attachment.Misc.HideDonations
 		Elements.Panel.Container.Body.About.List.Container.Credits.Description.Text = credits
 		Elements.Panel.Container.Body.Home.Top.Container.Title.Text = Players.LocalPlayer.Name
+		Elements.Panel.Container.Body.About.List.Container.Credits.Bottom.Title.Text = "Commander<br />© 2021 Evo Inc. All rights reserved."
 		Elements.Panel.Container.Body.Home.Top.Container.Avatar.Icon.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
 		coroutine.wrap(pcall)(function()
 			local Image, IsReady = Players:GetUserThumbnailAsync(Players.LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
