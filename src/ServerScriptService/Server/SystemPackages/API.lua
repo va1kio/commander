@@ -114,6 +114,14 @@ function module.filterText(From: player, Content: string)
 	return success, result
 end
 
+function module.newMessage(To: player|string, From: string, Content: string, Duration: number?)
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+	else
+		module.Remotes.Event:FireClient(player, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+	end
+end
+
 function module.checkHasPermission(ClientId: number, Command: string)
 	local clientAdminLevel = module.getAdminLevel(ClientId)
 
