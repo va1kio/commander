@@ -2,7 +2,7 @@
 
 # Commander
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build A1154](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phrase stable](https://img.shields.io/badge/Phrase-Stable-blue?style=for-the-badge)
+![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build A1154](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phase stable](https://img.shields.io/badge/Phase-Stable-blue?style=for-the-badge)
 
 Free & open-sourced administration panel for Roblox
 
