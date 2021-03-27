@@ -2,7 +2,7 @@
 
 # Commander ft. Latte
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 0.0.1](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phrase not done](https://img.shields.io/badge/Phrase-Not_done-red?style=for-the-badge)
+![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 0.0.1](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phase not done](https://img.shields.io/badge/Phase-Not_done-red?style=for-the-badge)
 
 Commander with Latte Framework
 
