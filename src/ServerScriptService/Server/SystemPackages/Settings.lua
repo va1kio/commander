@@ -16,7 +16,7 @@
 	## FAQs
 	
 	Q: How to add a new admin?
-	A: You can refer to our documentation (https://va1kio.github.io/commander-site/docs/#/README), or our tutorial (https://www.youtube.com/watch?v=Wq4974Bs39g)
+	A: You can refer to our documentation (https://va1kio.github.io/commander-site/docs/#/README)
 	
 	Q: How can I change the theme colour?
 	A: You can change it by modifying the Accent settings below
