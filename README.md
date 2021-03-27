@@ -1,21 +1,16 @@
-![commander banner](https://cdn.discordapp.com/attachments/813590068090372166/816336437922234418/Banner_2.png)
+![commander banner](https://cdn.discordapp.com/attachments/535357742765047818/825243051512823838/Banner.png)
 
-# Commander
+# Commander ft. Latte
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build A1154](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phrase stable](https://img.shields.io/badge/Phrase-Stable-blue?style=for-the-badge)
+![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 0.0.1](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phrase not done](https://img.shields.io/badge/Phrase-Not_done-red?style=for-the-badge)
 
-Free & open-sourced administration panel for Roblox
+Commander with Latte Framework
 
-## How to install?
+## Project goal
 
-There's a few ways to install Commander – either by importing manually, or syncing with Rojo.
-If you are importing it manually, consider watching this video: https://www.youtube.com/watch?v=qiy-Gi1h3zg
+This project is to enchance our current UI with Latte, so it will be extremely flexible and modular to use, as well as being much customisable without compromising the game's size.
 
-If you are syncing with Rojo, use the following commands in your terminal:
-```
-git clone https://github.com/va1kio/commander.git
-rojo serve
-```
+The current average theme size is around 1-2mb, but with Latte, this will be reduced into kilobytes, or even lesser.
 
 ## Documentation
 
