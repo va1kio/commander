@@ -19,7 +19,7 @@ module.newButton = function(Name: string, Position: number)
 		local Comp = Latte.Components.MenuButton.new(Name, Name, Elements.Panel.Container.Menu.Container.List, function()
 			module.Toggle()
 			Latte.Constructors.Window.SwitchPage(Name)
-			for i,v in pairs() do
+			for i,v in pairs(Buttons) do
 				if i ~= Name then
 					v.Toggle(false)
 				end
@@ -37,7 +37,7 @@ module.setup = function()
 	Latte = module.Latte
 	local Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6235536018", Elements.Panel.Container.Menu.Container.Top.Left, module.Toggle)
 	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
-	Elements.Panel.Container.Menu.container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
+	Elements.Panel.Container.Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
 	Elements.Panel.Container.Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
 end
 
