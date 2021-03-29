@@ -1,15 +1,7 @@
-local module = {}
-
-module.Linear = function(duration: number)
-	return TweenInfo.new(duration, Enum.EasingStyle.Linear)
-end
-
-module.Quint = function(duration: number)
-	return TweenInfo.new(duration, Enum.EasingStyle.Quint)
-end
-
-module.Sine = function(duration: number)
-	return TweenInfo.new(duration, Enum.EasingStyle.Sine)
-end
-
-return module
+return setmetatable({}, {
+	__index = function(_, key: string)
+		return function(duration: number, direction: string)
+			return TweenInfo.new(duration or 0, Enum.EasingStyle[key], Enum.EasingDirection[direction or "Out"])
+		end
+	end
+})
