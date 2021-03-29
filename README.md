@@ -8,13 +8,13 @@ Commander with Latte Framework
 
 ## Project goal
 
-This project is to enchance our current UI with Latte, so it will be extremely flexible and modular to use, as well as being much customisable without compromising the game's size.
+This project is to enchance our current UI with Latte, so it will be extremely flexible and modular to use, as well as being much customizable without compromising the game's size.
 
-The current average theme size is around 1-2mb, but with Latte, this will be reduced into kilobytes, or even lesser.
+The current average theme size is around 1-2mb, but with Latte, this will be reduced into kilobytes, or even smaller.
 
 ## Documentation
 
-Documentation can be found [here](https://va1kio.github.io/commander-site/docs/#/home)
+Documentation can be found [here](https://va1kio.github.io/commander-site/docs/#/home)!
 
 ## Useful links
 
