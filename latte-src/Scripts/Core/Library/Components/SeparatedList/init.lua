@@ -25,7 +25,7 @@ module.new = function(Name: string, Parent: instance)
 		end,
 	})
 	
-	return setmetatable(t, {
+	return setmetatable({}, {
 		__index = function(_, key: string)
 			return t[key]
 		end,
