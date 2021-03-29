@@ -11,6 +11,7 @@ module.Toggle = function()
 end
 
 module.SwitchPage = function(Page: string)
+	if tostring(currentPage):lower() == Page:lower() then return end
 	if currentPage then
 		Latte.Modules.Animator.Window.animateOut(currentPage, currentPage.UIScale)
 	end
@@ -22,7 +23,6 @@ end
 module.setup = function()
 	Elements = module.Elements
 	Latte = module.Latte
-	Elements.Panel.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Window.BackgroundColor
 end
 
 return module
