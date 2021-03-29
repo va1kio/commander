@@ -1,27 +1,32 @@
 local module = {}
 
-module.new = function(Name: string, Parent: instance)
+module.new = function(Name: string, Title: string?, Parent: instance)
 	local Comp = script.Comp:Clone()
+	Comp.Name = Name
+	Comp.Container.Title.Text = Title or Name
+	Comp.Parent = Parent
 	local ActualItems = {}
+	local Items = {}
 	local t = {
-		["Name"] = "",
+		["Name"] = Name,
+		["Title"] = Comp.Container.Title.Text,
 		["Items"] = {},
-		["Parent"] = nil
+		["Parent"] = Parent
 	}
 	
-	t.Items = setmetatable(ActualItems, {
+	t.Items = setmetatable({}, {
 		__index = function(_, key: string)
-			return t.Items[key]
+			return Items[key]
 		end,
 		
 		__newindex = function(_, key: string, value: string)
 			local Item = ActualItems[key] or script.Item:Clone()
-			t.Items[key] = value
+			Items[key] = value
 			Item.Name, Item.Title.Text = key, key
 			Item.Value.Text = value
 			ActualItems[key] = Item
-			Item.Parent = Comp
-			return t.Items[key]
+			Item.Parent = Comp.Container
+			return Items[key]
 		end,
 	})
 	
@@ -33,6 +38,7 @@ module.new = function(Name: string, Parent: instance)
 			if t[key] and key ~= "Items" then
 				t[key] = value
 				Comp.Name = t["Name"]
+				Comp.Container.Title.Text = t["Title"]
 				Comp.Parent = t["Parent"]
 				
 				if Comp.Parent == nil then
