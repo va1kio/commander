@@ -17,9 +17,8 @@ end
 function module.Window.animateOut(Object: guiobject, UIScale: uiscale, Duration: number|nil)
 	Duration = Duration or 0.3
 	module.Latte.Modules.Fader.FadeOut(Object, Duration/2)
-	module.Latte.Modules.Tween.new(UIScale, module.Latte.Modules.TweenInfo.Quint(Duration), {Scale = 0.95}).Completed:Connect(function()
-		Object.Visible = false
-	end)
+	module.Latte.Modules.Tween.new(UIScale, module.Latte.Modules.TweenInfo.Quint(Duration), {Scale = 0.95}).Completed:Wait()
+	Object.Visible = false
 end
 
 function module.Menu.animateIn(Object: guiobject, Duration: number|nil)
