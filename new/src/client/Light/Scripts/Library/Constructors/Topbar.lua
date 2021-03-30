@@ -19,9 +19,12 @@ local Buttons = {
 	}
 }
 
-module.setup = function()
+module.init = function()
 	Elements = module.Elements
 	Latte = module.Latte
+end
+
+module.setup = function()
 	Elements.Panel.Container.Top.Background.ImageColor3 = Latte.Modules.Stylesheet.Window.TopbarColor
 	Elements.Panel.Container.Top.Title.TextColor3 = Latte.Modules.Stylesheet.Window.TopbarElementsColor
 	for i,v in pairs(Buttons) do

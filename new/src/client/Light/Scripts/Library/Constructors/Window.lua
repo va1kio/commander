@@ -20,9 +20,13 @@ module.SwitchPage = function(Page: string)
 	Latte.Modules.Animator.Window.animateIn(currentPage, currentPage.UIScale)
 end
 
-module.setup = function()
+module.init = function()
 	Elements = module.Elements
 	Latte = module.Latte
+end
+
+module.setup = function()
+	
 end
 
 return module

@@ -1,7 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local Classes = {}
-local Remotes = ReplicatedStorage:WaitForChild("Commander Remotes")
 local Elements = script.Parent.Parent.Elements
 
 local function setupModules()
@@ -30,12 +28,16 @@ local function setupModules()
 			warn("Linking Latte to " .. i)
 			v.Latte = latteTable
 			if name == "Constructors" then
-				warn("Setting up constructor " .. i)
+				warn("Initialising up constructor " .. i)
 				v.Elements = Elements
-				v.setup()
+				v.init()
 			end
 		end
 	end
+	
+	warn("Done... calling .setup on constructors")
+	for _,v in pairs(Classes.Constructors) do
+		v.setup()
+	end
 end
-
 setupModules()

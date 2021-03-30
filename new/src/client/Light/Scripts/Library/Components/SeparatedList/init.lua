@@ -3,6 +3,7 @@ local module = {}
 module.new = function(Name: string, Title: string?, Parent: instance)
 	local Comp = script.Comp:Clone()
 	Comp.Name = Name
+	Comp.Container.Title.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.TitleColor
 	Comp.Container.Title.Text = Title or Name
 	Comp.Parent = Parent
 	local ActualItems = {}
@@ -21,6 +22,12 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 		
 		__newindex = function(_, key: string, value: string)
 			local Item = ActualItems[key] or script.Item:Clone()
+			if not ActualItems[key] then
+				Item.Title.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.TitleColor
+				Item.Value.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.ValueColor
+				Item.Accent.BackgroundColor3 = module.Latte.Modules.Stylesheet.Window.AccentColor
+			end
+			
 			Items[key] = value
 			Item.Name, Item.Title.Text = key, key
 			Item.Value.Text = value

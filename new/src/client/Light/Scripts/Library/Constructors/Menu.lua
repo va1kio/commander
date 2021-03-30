@@ -32,9 +32,12 @@ module.newButton = function(Name: string, Position: number)
 	end
 end
 
-module.setup = function()
+module.init = function()
 	Elements = module.Elements
 	Latte = module.Latte
+end
+
+module.setup = function()
 	local Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6235536018", Elements.Panel.Container.Menu.Container.Top.Left, module.Toggle)
 	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
 	Elements.Panel.Container.Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor

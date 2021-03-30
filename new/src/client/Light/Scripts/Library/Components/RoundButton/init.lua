@@ -8,7 +8,7 @@ module.new = function(Name: string, Image: string, Parent: instance, Callback: (
 	local Comp = script.Comp:Clone()
 	Comp.Name = Name
 	Comp.Image.Image = Image
-	Comp.Hover.ImageColor3 = module.Latte.Modules.Stylesheet.Button.RoundHoverColor
+	Comp.Hover.BackgroundColor3 = module.Latte.Modules.Stylesheet.Button.RoundHoverColor
 	
 	module.Latte.Modules.Trigger.new(Comp, reaction, 3, false):Connect(function()
 		Callback()

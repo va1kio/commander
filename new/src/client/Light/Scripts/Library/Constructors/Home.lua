@@ -3,6 +3,7 @@ local module, Elements, Latte, Page = {}, nil, nil, nil
 module.prepare = function()
 	local Top = Instance.new("Frame")
 	Top.BackgroundTransparency = 1
+	Top.BorderSizePixel = 0
 	Top.Name = "Top"
 	Top.Size = UDim2.new(1, 0, 0, 125)
 	Top.Parent = Page
@@ -38,7 +39,7 @@ module.prepare = function()
 
 	local Avatar = Instance.new("Frame")
 	Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
-	Avatar.BackgroundColor3 = Color3.fromRGB(190, 190, 190)
+	Avatar.BackgroundColor3 = Latte.Modules.Stylesheet.Home.AvatarBorder
 	Avatar.BorderSizePixel = 0
 	Avatar.Name = "Avatar"
 	Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -53,7 +54,7 @@ module.prepare = function()
 	Title.Name = "Title"
 	Title.Size = UDim2.new(1, 0, 0, 22)
 	Title.Text = Latte.Modules.Services.Players.LocalPlayer.Name
-	Title.TextColor3 = Color3.fromRGB(0, 0, 0)
+	Title.TextColor3 = Latte.Modules.Stylesheet.Home.UsernameColor
 	Title.TextSize = 18
 	Title.TextYAlignment = Enum.TextYAlignment.Bottom
 	Title.Parent = Container
@@ -65,7 +66,7 @@ module.prepare = function()
 	Subtitle.Name = "Subtitle"
 	Subtitle.Size = UDim2.new(1, 0, 0, 14)
 	Subtitle.Text = "Administrator"
-	Subtitle.TextColor3 = Color3.fromRGB(120, 120, 120)
+	Subtitle.TextColor3 = Latte.Modules.Stylesheet.Home.RankColor
 	Subtitle.TextSize = 12
 	Subtitle.TextWrapped = true
 	Subtitle.Parent = Container
@@ -76,7 +77,7 @@ module.prepare = function()
 
 	local Backdrop = Instance.new("Frame")
 	Backdrop.AnchorPoint = Vector2.new(0.5, 0.5)
-	Backdrop.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Backdrop.BackgroundColor3 = Latte.Modules.Stylesheet.Home.AvatarBackground
 	Backdrop.BorderSizePixel = 0
 	Backdrop.Name = "Backdrop"
 	Backdrop.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -111,12 +112,30 @@ module.prepare = function()
 	local System = Latte.Components.SeparatedList.new("System", "SYSTEM STATS", Page)
 	System.Items["Modules loaded"] = "0"
 	System.Items["Versison"] = "Commander ft. Latte"
+	
+	if Latte.Modules.Stylesheet.Home.TopUseAccentInstead then
+		local Accent = Instance.new("Frame")
+		Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
+		Accent.BorderSizePixel = 0
+		Accent.Size = UDim2.new(1, 0, 0, 1)
+		Accent.Position = UDim2.new(0, 0, 1, 0)
+		Accent.ZIndex = 3
+		Accent.Parent = Top
+		
+		Background.ImageTransparency = 1
+		Top.BackgroundTransparency = 0
+		Top.BackgroundColor3 = Latte.Modules.Stylesheet.Home.TopBackgroundColor
+	end
+end
+
+module.init = function()
+	Elements = module.Elements
+	Latte = module.Latte
 end
 
 module.setup = function()
-	Elements = module.Elements
-	Latte = module.Latte
 	Page = Latte.Components.Page.new("Home", Elements.Panel.Container.Body)
+	Page.UIListLayout.Padding = UDim.new(0, 24)
 	Latte.Constructors.Menu.newButton("Home", 1)
 	module.prepare()
 end
