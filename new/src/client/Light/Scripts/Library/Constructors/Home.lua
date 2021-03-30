@@ -111,7 +111,7 @@ module.prepare = function()
 	
 	local System = Latte.Components.SeparatedList.new("System", "SYSTEM STATS", Page)
 	System.Items["Modules loaded"] = "0"
-	System.Items["Versison"] = "Commander ft. Latte"
+	System.Items["Version"] = "Commander ft. Latte"
 	
 	if Latte.Modules.Stylesheet.Home.TopUseAccentInstead then
 		local Accent = Instance.new("Frame")
