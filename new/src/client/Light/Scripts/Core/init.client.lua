@@ -1,4 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Events = ReplicatedStorage:WaitForChild("Commander Remotes")
 local Classes = {}
 local Elements = script.Parent.Parent.Elements
 
@@ -30,6 +31,7 @@ local function setupModules()
 			if name == "Constructors" then
 				warn("Initialising up constructor " .. i)
 				v.Elements = Elements
+				v.Remotes = Events
 				v.init()
 			end
 		end
@@ -40,4 +42,6 @@ local function setupModules()
 		v.setup()
 	end
 end
+
 setupModules()
+Events.RemoteFunction:InvokeServer("setupUIForPlayer")

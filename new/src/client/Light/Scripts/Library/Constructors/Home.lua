@@ -1,4 +1,12 @@
 local module, Elements, Latte, Page = {}, nil, nil, nil
+local Settings, Packages = nil, {}
+local PlayersCount, AdministratorsCount, Level = 0, 0, ""
+local Server, System = nil, nil
+
+local function returnTime(Seconds: number)
+	local Hours = math.floor(Seconds / 3600)
+	return Hours, math.floor(Seconds / 60 - Hours * 60)
+end
 
 module.prepare = function()
 	local Top = Instance.new("Frame")
@@ -104,12 +112,12 @@ module.prepare = function()
 	UICorner3.CornerRadius = UDim.new(1, 0)
 	UICorner3.Parent = Icon
 	
-	local Server = Latte.Components.SeparatedList.new("Server", "SERVER STATS", Page)
+	Server = Latte.Components.SeparatedList.new("Server", "SERVER STATS", Page)
 	Server.Items["Players count"] = "1"
 	Server.Items["Administrators ingame"] = "1"
 	Server.Items["Server uptime"] = "00:00"
 	
-	local System = Latte.Components.SeparatedList.new("System", "SYSTEM STATS", Page)
+	System = Latte.Components.SeparatedList.new("System", "SYSTEM STATS", Page)
 	System.Items["Modules loaded"] = "0"
 	System.Items["Version"] = "Commander ft. Latte"
 	
@@ -128,6 +136,16 @@ module.prepare = function()
 	end
 end
 
+module.update = function()
+	Server.Items["Players count"] = PlayersCount
+	Server.Items["Administrators ingame"] = AdministratorsCount
+	
+	System.Items["Modules loaded"] = #Packages
+	if Settings then
+		System.Items["Version"] = Settings.Version[1]
+	end
+end
+
 module.init = function()
 	Elements = module.Elements
 	Latte = module.Latte
@@ -138,6 +156,29 @@ module.setup = function()
 	Page.UIListLayout.Padding = UDim.new(0, 24)
 	Latte.Constructors.Menu.newButton("Home", 1)
 	module.prepare()
+	
+	module.Remotes.RemoteEvent.OnClientEvent:Connect(function(Type, Protocol, Attachment)
+		if Type == "fetchCommands" then
+			Packages = Attachment
+		elseif Type == "fetchAdminLevel" then
+			Level = Attachment
+		elseif Type == "firstRun" then
+			Settings = Attachment
+		end
+		module.update()
+	end)
+	
+	PlayersCount = #Latte.Modules.Services.Players:GetPlayers()
+	AdministratorsCount = module.Remotes.RemoteFunction:InvokeServer("getAvailableAdmins")
+	module.update()
+	
+	coroutine.wrap(function()
+		while true do
+			local Hour, Minute = returnTime(workspace.DistributedGameTime)
+			Server.Items["Server uptime"] = Hour .. " hr(s), " .. Minute .. " min(s)"
+			wait(60)
+		end
+	end)()
 end
 
 return module
