@@ -10,6 +10,9 @@ module.Window.TopbarElementsColor = Color3.fromRGB(255, 255, 255)
 module.Window.AccentColor = Color3.fromRGB(205, 205, 205)
 module.Window.BackgroundColor = Color3.fromRGB(240, 240, 240)
 module.Window.ScrollBarColor = Color3.fromRGB(0, 0, 0)
+module.Window.TopbarBackgroundColorIfAccentUsed = Color3.fromRGB(255, 255, 255)
+module.Window.TopbarElementColorIfAccentUsed = Color3.fromRGB(150, 150, 150)
+module.Window.TopbarUseAccentInstead = true
 
 -- Button color
 module.Button = {}
