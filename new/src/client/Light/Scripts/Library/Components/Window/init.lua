@@ -1,6 +1,8 @@
 local module = {}
 
 local function stylise(UI: guiobject)
+	local Stylesheet = module.Latte.Modules.Stylesheet
+	UI.Container.BackgroundColor3 = Stylesheet.Window.BackgroundColor
 	if Stylesheet.Window.TopbarUseAccentInstead then
 		local Accent = Instance.new("Frame")
 		Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
