@@ -92,7 +92,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		["Events"] = {
 			["Toggled"] = Instance.new("BindableEvent")
 		},
-		["ShowMenu"] = false,
+		["ShowMenu"] = ShowMenu or false,
 		Menu = giveMenu(comp.Container.Menu)
 	}
 	
