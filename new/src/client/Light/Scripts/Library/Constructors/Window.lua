@@ -26,7 +26,7 @@ module.init = function()
 end
 
 module.setup = function()
-	
+	Elements.Panel.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Window.BackgroundColor
 end
 
 return module
