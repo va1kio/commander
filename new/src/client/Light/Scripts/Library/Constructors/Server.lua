@@ -2,7 +2,8 @@ local module, Elements, Latte, Page = {}, nil, nil, nil
 local Packages = {}
 
 module.prepare = function()
-	
+	local Padding = Latte.Components.Padding.new(Page)
+	Padding.Top = UDim.new(0, 24)
 end
 
 module.update = function()
