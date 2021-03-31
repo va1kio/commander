@@ -179,6 +179,9 @@ module.setup = function()
 			wait(60)
 		end
 	end)()
+	
+	Latte.Constructors.Menu.setActive("Home")
+	Latte.Constructors.Window.SwitchPage("Home")
 end
 
 return module
