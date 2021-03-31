@@ -16,14 +16,14 @@ end
 
 module.GlobalAllowed = true
 
-module:Assign = function(self, index: string, key: any)
+module.Assign = function(self, index: string, key: any)
 	if self.GlobalAllowed and self.Container then
 		self.Container[index] = key
 		updateGlobal()
 	end
 end
 
-module:Delete = function(self, key: string)
+module.Delete = function(self, key: string)
 	if self.GlobalAllowed and self.Container then
 		self.Container[key] = nil
 		updateGlobal()
