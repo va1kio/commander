@@ -12,6 +12,18 @@ module.Toggle = function()
 	isActive = not isActive
 end
 
+module.setActive = function(Name: string)
+	if Buttons[Name] then
+		for i,v in pairs(Buttons) do
+			if i ~= Name then
+				v.Toggle(false)
+			else
+				v.Toggle(true)
+			end
+		end
+	end
+end
+
 module.newButton = function(Name: string, Position: number)
 	if not Buttons[Name] then
 		Buttons[Name] = {}
