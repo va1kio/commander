@@ -119,7 +119,7 @@
 				<Ref name="SelectionImageObject">null</Ref>
 				<UDim2 name="Size">
 					<XS>1</XS>
-					<XO>-50</XO>
+					<XO>-48</XO>
 					<YS>0</YS>
 					<YO>14</YO>
 				</UDim2>
@@ -174,7 +174,7 @@
 				<int name="BorderSizePixel">0</int>
 				<bool name="ClipsDescendants">false</bool>
 				<bool name="Draggable">false</bool>
-				<int name="LayoutOrder">0</int>
+				<int name="LayoutOrder">1</int>
 				<string name="Name">Input</string>
 				<Ref name="NextSelectionDown">null</Ref>
 				<Ref name="NextSelectionLeft">null</Ref>
@@ -192,7 +192,7 @@
 				<Ref name="SelectionImageObject">null</Ref>
 				<UDim2 name="Size">
 					<XS>1</XS>
-					<XO>-50</XO>
+					<XO>-48</XO>
 					<YS>0</YS>
 					<YO>30</YO>
 				</UDim2>
@@ -357,6 +357,61 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
+		</Item>
+		<Item class="Frame" referent="RBX3ed1c23b01c34e3099f7f04b99740c9b">
+			<Properties>
+				<bool name="Active">false</bool>
+				<Vector2 name="AnchorPoint">
+					<X>0.5</X>
+					<Y>0.5</Y>
+				</Vector2>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<bool name="AutoLocalize">true</bool>
+				<token name="AutomaticSize">0</token>
+				<Color3 name="BackgroundColor3">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</Color3>
+				<float name="BackgroundTransparency">1</float>
+				<Color3 name="BorderColor3">
+					<R>0.105882362</R>
+					<G>0.164705887</G>
+					<B>0.207843155</B>
+				</Color3>
+				<token name="BorderMode">0</token>
+				<int name="BorderSizePixel">0</int>
+				<bool name="ClipsDescendants">false</bool>
+				<bool name="Draggable">false</bool>
+				<int name="LayoutOrder">2</int>
+				<string name="Name">Padding</string>
+				<Ref name="NextSelectionDown">null</Ref>
+				<Ref name="NextSelectionLeft">null</Ref>
+				<Ref name="NextSelectionRight">null</Ref>
+				<Ref name="NextSelectionUp">null</Ref>
+				<UDim2 name="Position">
+					<XS>0.5</XS>
+					<XO>0</XO>
+					<YS>0.5</YS>
+					<YO>0</YO>
+				</UDim2>
+				<Ref name="RootLocalizationTable">null</Ref>
+				<float name="Rotation">0</float>
+				<bool name="Selectable">false</bool>
+				<Ref name="SelectionImageObject">null</Ref>
+				<UDim2 name="Size">
+					<XS>1</XS>
+					<XO>-48</XO>
+					<YS>0</YS>
+					<YO>14</YO>
+				</UDim2>
+				<token name="SizeConstraint">0</token>
+				<int64 name="SourceAssetId">-1</int64>
+				<token name="Style">0</token>
+				<BinaryString name="Tags"></BinaryString>
+				<bool name="Visible">true</bool>
+				<int name="ZIndex">2</int>
+			</Properties>
 		</Item>
 	</Item>
 </roblox>

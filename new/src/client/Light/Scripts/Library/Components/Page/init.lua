@@ -5,6 +5,7 @@ module.new = function(Name: string, Parent: instance)
 	Comp.Name = Name
 	Comp.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 	Comp.ScrollBarImageColor3 = module.Latte.Modules.Stylesheet.Window.ScrollBarColor
+	Comp.CanvasSize = UDim2.new(0, 0, 0, 0)
 	Comp.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	Comp.Parent = Parent
 	

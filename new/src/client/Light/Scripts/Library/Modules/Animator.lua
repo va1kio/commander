@@ -3,7 +3,8 @@ module.Window = {}
 module.Menu = {}
 module.Button = {
 	["Round"] = {},
-	["Menu"] = {}
+	["Menu"] = {},
+	["Package"] = {}
 }
 
 function module.Window.animateIn(Object: guiobject, UIScale: uiscale, Duration: number|nil)
@@ -71,6 +72,21 @@ function module.Button.Menu.Over(Object: guiobject)
 	local veryShort = module.Latte.Modules.Stylesheet.Duration.VeryShort
 	local fadingTweenInfo = module.Latte.Modules.TweenInfo.Linear(veryShort)
 	module.Latte.Modules.Tween.new(Object, fadingTweenInfo, {BackgroundTransparency = 1})
+end
+
+function module.Button.Package.Hover(Object: guiobject)
+	Object.Container.BackgroundTransparency = 0
+	Object.Container.Accent.Visible = false
+	Object.Shadow.Visible = true
+end
+
+function module.Button.Package.Hold(Object: guiobject)
+end
+
+function module.Button.Package.Over(Object: guiobject)
+	Object.Container.BackgroundTransparency = 1
+	Object.Container.Accent.Visible = true
+	Object.Shadow.Visible = false
 end
 
 return module

@@ -49,6 +49,18 @@ module.TextField.TitleColor = module.SeparatedList.TitleColor
 module.TextField.ContentColor = Color3.fromRGB(0, 0, 0)
 module.TextField.PlaceholderColor = Color3.fromRGB(150, 150, 150)
 
+-- PackageButton component color
+module.PackageButton = {}
+module.PackageButton.TitleColor = module.TextField.ContentColor
+module.PackageButton.DescriptionColor = module.SeparatedList.Item.TitleColor
+module.PackageButton.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
+
+-- OverlayInput component color
+module.OverlayInput = {}
+module.OverlayInput.TitleColor = module.SeparatedList.Item.TitleColor
+module.OverlayInput.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
+module.OverlayInput.InputBackgroundColor = module.Window.BackgroundColor
+
 -- Duration for tweens
 module.Duration = {
 	VeryShort = 0.15,

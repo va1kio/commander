@@ -50,8 +50,9 @@ module.init = function()
 end
 
 module.setup = function()
-	local Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6235536018", Elements.Panel.Container.Menu.Container.Top.Left, module.Toggle)
+	local Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6521420400", Elements.Panel.Container.Menu.Container.Top.Left, module.Toggle)
 	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
+	Exit.Image.Size = UDim2.new(0.3, 0, 0.3, 0)
 	Elements.Panel.Container.Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
 	Elements.Panel.Container.Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
 end

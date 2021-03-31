@@ -26,6 +26,10 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 	comp.Input.Box.TextColor3 = Stylesheet.TextField.ContentColor
 	comp.Input.Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
 	
+	t.Events.ContentChanged:Connect(function()
+		t.Content = comp.Input.Box.Text
+	end)
+	
 	cook()
 	return setmetatable({}, {
 		__index = function(_, key: string)
