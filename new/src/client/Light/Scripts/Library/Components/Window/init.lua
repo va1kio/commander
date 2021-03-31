@@ -24,9 +24,10 @@ module.new = function(Name: string, Title: string?, Size: UDim2?, Parent: instan
 	local comp = script.Comp:Clone()
 	local Toggled = false
 	local t = {
-		["Title"] = Title,
+		["Title"] = Title or Name,
 		["Description"] = Description,
 		["Parent"] = Parent,
+		["CurrentPage"] = nil,
 		["Pages"] = comp.Container.Body,
 		["Events"] = {
 			["Toggled"] = Instance.new("BindableEvent")
@@ -44,6 +45,16 @@ module.new = function(Name: string, Title: string?, Size: UDim2?, Parent: instan
 			Comp.Image.ImageColor3 = Stylesheet.Window.TopbarElementsColor
 		end
 		Comp = nil
+	end
+	
+	t.switchPage = function(Page: name)
+		if tostring(t.CurrentPage):lower() == Page:lower() then return end
+		if t.CurrentPage then
+			Latte.Modules.Animator.Window.animateOut(t.CurrentPage, t.CurrentPage.UIScale)
+		end
+		
+		t.CurrentPage = Elements.Panel.Container.Body[Page]
+		Latte.Modules.Animator.Window.animateIn(t.CurrentPage, t.CurrentPage.UIScale)
 	end
 	
 	t.Toggle = function()
