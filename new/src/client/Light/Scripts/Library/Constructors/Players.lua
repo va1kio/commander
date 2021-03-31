@@ -33,9 +33,8 @@ module.init = function()
 end
 
 module.setup = function()
-	Page = Latte.Components.Page.new("Players", Elements.Panel.Container.Body)
+	Page = Latte.Constructors.Window.Window.newPage("Players", true, 2)
 	Page.UIListLayout.Padding = UDim.new(0, 0)
-	Latte.Constructors.Menu.newButton("Players", 2)
 	module.prepare()
 	
 	module.Remotes.RemoteEvent.OnClientEvent:Connect(function(Type, Protocol, Attachment)

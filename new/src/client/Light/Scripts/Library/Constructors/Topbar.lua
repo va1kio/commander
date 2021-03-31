@@ -25,6 +25,7 @@ module.init = function()
 end
 
 module.setup = function()
+	--[[
 	if Latte.Modules.Stylesheet.Window.TopbarUseAccentInstead then
 		local Accent = Instance.new("Frame")
 		Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
@@ -52,6 +53,7 @@ module.setup = function()
 		end
 		Comp = nil
 	end
+	--]]
 end
 
 return module

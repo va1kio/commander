@@ -12,7 +12,7 @@ module.setup = function()
 		if Type == "modal" then
 			if not isActive then
 				isActive = true
-				local Comp = Latte.Components.OverlayInput.new(Attachment or "Input required", Elements.Panel.Container)
+				local Comp = Latte.Components.OverlayInput.new(Attachment or "Input required", Latte.Constructors.Window.Window.Pages.Parent)
 				local Input = Comp.Events.Dismissed.Event:Wait()
 				module.Remotes.RemoteEvent:FireServer("input", Protocol, Input)
 				isActive = false

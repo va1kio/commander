@@ -152,9 +152,8 @@ module.init = function()
 end
 
 module.setup = function()
-	Page = Latte.Components.Page.new("Home", Elements.Panel.Container.Body)
+	Page = Latte.Constructors.Window.Window.newPage("Home", true, 1)
 	Page.UIListLayout.Padding = UDim.new(0, 24)
-	Latte.Constructors.Menu.newButton("Home", 1)
 	module.prepare()
 	
 	module.Remotes.RemoteEvent.OnClientEvent:Connect(function(Type, Protocol, Attachment)
@@ -180,8 +179,8 @@ module.setup = function()
 		end
 	end)()
 	
-	Latte.Constructors.Menu.setActive("Home")
-	Latte.Constructors.Window.SwitchPage("Home")
+	Latte.Constructors.Window.Window.Menu.setActive("Home")
+	Latte.Constructors.Window.Window.switchPage("Home")
 end
 
 return module

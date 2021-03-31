@@ -28,13 +28,14 @@ local function setupModules()
 		for i, v in pairs(entry) do
 			warn("Linking Latte to " .. i)
 			v.Latte = latteTable
-			if name == "Constructors" then
-				warn("Initialising up constructor " .. i)
-				v.Elements = Elements
-				v.Remotes = Events
-				v.init()
-			end
 		end
+	end
+	
+	for i,v in pairs(Classes.Constructors) do
+		warn("Initialising up constructor " .. i)
+		v.Elements = Elements
+		v.Remotes = Events
+		v.init()
 	end
 	
 	warn("Done... calling .setup on constructors")
@@ -45,3 +46,4 @@ end
 
 setupModules()
 Events.RemoteFunction:InvokeServer("setupUIForPlayer")
+Classes.Constructors.Window.Window.Toggle()

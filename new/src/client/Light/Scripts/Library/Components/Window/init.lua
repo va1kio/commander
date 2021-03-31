@@ -22,23 +22,30 @@ local function stylise(UI: guiobject)
 end
 
 local function giveMenu(Menu: guiobject)
+	local Latte = module.Latte
 	local t = {}
 	t.Buttons = {}
 	t.isActive = false
 	
+	local Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6521420400", Menu.Container.Top.Left, t.Toggle)
+	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
+	Exit.Image.Size = UDim2.new(0.3, 0, 0.3, 0)
+	Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
+	Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
+	
 	t.Toggle = function()
-		if isActive then
+		if t.isActive then
 			Latte.Modules.Animator.Menu.animateOut(Menu)
 		else
 			Latte.Modules.Animator.Menu.animateIn(Menu)
 		end
 		
-		isActive = not isActive
+		t.isActive = not t.isActive
 	end
 	
 	t.setActive = function(Name: string)
-		if Buttons[Name] then
-			for i,v in pairs(Buttons) do
+		if t.Buttons[Name] then
+			for i,v in pairs(t.Buttons) do
 				if i ~= Name then
 					v.Toggle(false)
 				else
@@ -49,35 +56,36 @@ local function giveMenu(Menu: guiobject)
 	end
 	
 	t.newButton = function(Name: string, Position: number, Callback)
-		if not Buttons[Name] then
-			Buttons[Name] = {}
+		if not t.Buttons[Name] then
+			t.Buttons[Name] = {}
 			
-			local Comp = Latte.Components.MenuButton.new(Name, Name, Menu.Container.List, function()
-				module.Toggle()
+			local comp = Latte.Components.MenuButton.new(Name, Name, Menu.Container.List, function()
+				t.Toggle()
 				Callback()
-				for i,v in pairs(Buttons) do
+				for i,v in pairs(t.Buttons) do
 					if i ~= Name then
 						v.Toggle(false)
 					end
 				end
 			end)
 			
-			Buttons[Name].Toggle = Comp.setActive
-			Comp.Object.LayoutOrder = Position
-			Comp = nil
+			t.Buttons[Name].Toggle = comp.setActive
+			comp.Object.LayoutOrder = Position
+			comp = nil
 		end
 	end
 	
 	return t
 end
 
-module.new = function(Name: string, Title: string?, Size: Vector2?, Parent: instance)
-	local Stylesheet = module.Latte.Modules.Stylesheet
+module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Boolean?, Parent: instance)
+	local Latte = module.Latte
+	local Stylesheet = Latte.Modules.Stylesheet
 	local comp = script.Comp:Clone()
-	local Toggled = false
+	local Toggled = true
 	local t = {
 		["Title"] = Title or Name,
-		["Size"] = Size or comp.UISizeConstraint.MaxSize
+		["Size"] = Size or comp.UISizeConstraint.MaxSize,
 		["Parent"] = Parent,
 		["CurrentPage"] = nil,
 		["Pages"] = comp.Container.Body,
@@ -89,25 +97,27 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, Parent: inst
 	}
 	
 	t.newButton = function(Name: string, Image: string, Side: string, Position: number, Callback)
-		local ActualSide = Comp.Container.Top:FindFirstChild(Side)
-		local Comp = Latte.Components.RoundButton.new(Name, Image, ActualSide, Callback)
-		Comp.LayoutOrder = Position
+		local ActualSide = comp.Container.Top:FindFirstChild(Side)
+		local comp = Latte.Components.RoundButton.new(Name, Image, ActualSide, Callback)
+		comp.LayoutOrder = Position
 		
 		if Stylesheet.Window.TopbarUseAccentInstead then
-			Comp.Image.ImageColor3 = Stylesheet.Window.TopbarElementColorIfAccentUsed
+			comp.Image.ImageColor3 = Stylesheet.Window.TopbarElementColorIfAccentUsed
 		else
-			Comp.Image.ImageColor3 = Stylesheet.Window.TopbarElementsColor
+			comp.Image.ImageColor3 = Stylesheet.Window.TopbarElementsColor
 		end
-		Comp = nil
+		return comp
 	end
 	
 	t.newPage = function(Name: string, InMenu: boolean?, Position: number?)
-		Latte.Components.Page.new(Name, t.Pages)
+		local page = Latte.Components.Page.new(Name, t.Pages)
 		if InMenu then
-			Menu.newButton(Name, Position or 1, function()
+			t.Menu.newButton(Name, Position or 1, function()
 				t.switchPage(Name)
 			end)
 		end
+		
+		return page
 	end
 	
 	t.switchPage = function(Page: string)
@@ -116,32 +126,31 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, Parent: inst
 			Latte.Modules.Animator.Window.animateOut(t.CurrentPage, t.CurrentPage.UIScale)
 		end
 		
-		t.CurrentPage = Elements.Panel.Container.Body[Page]
+		t.CurrentPage = t.Pages[Page]
 		Latte.Modules.Animator.Window.animateIn(t.CurrentPage, t.CurrentPage.UIScale)
 	end
 	
 	t.Toggle = function()
 		if Toggled then
-			Latte.Modules.Animator.Window.animateOut(Comp, Comp.UIScale)
+			Latte.Modules.Animator.Window.animateOut(comp, comp.UIScale)
 		else
-			Latte.Modules.Animator.Window.animateIn(Comp, Comp.UIScale)
+			Latte.Modules.Animator.Window.animateIn(comp, comp.UIScale)
 		end
 		
 		Toggled = not Toggled
-		Events.Toggled:Fire(Toggled)
+		t.Events.Toggled:Fire(Toggled)
 	end
 	
 	local function cook()
 		comp.Container.Top.Title.Text = t.Title
 		comp.UISizeConstraint.MaxSize = t.Size
 		comp.Parent = t.Parent
-		if t.ShowMenu then
-			comp.Container.Top.Left.Menu.Visible = true
-		end
+		comp.Container.Top.Left.Menu.Visible = t.ShowMenu
 	end
 	
 	t.newButton("Exit", "rbxassetid://6235536018", "Right", 1, t.Toggle)
-	t.newButton("Menu", "rbxassetid://6272739995", "Left", 1, t.Menu.Toggle).Visible = false
+	t.newButton("Menu", "rbxassetid://6272739995", "Left", 1, t.Menu.Toggle)
+	t.Toggle()
 	stylise(comp)
 	cook()
 	return setmetatable({}, {
