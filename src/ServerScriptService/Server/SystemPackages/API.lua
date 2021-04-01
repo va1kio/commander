@@ -259,17 +259,24 @@ end
 
 local function makeBindable(func)
 	local Bindable = Instance.new("BindableFunction")
-	Bindable.OnInvoke = sandboxFunc(func)
+	Bindable.OnInvoke = not table.find(module, func) and func or sandboxFunc(func)
 	return Bindable
 end
 
 local globalAPI = setmetatable({
-	checkHasPermission = makeBindable(module.checkHasPermission),
-	checkAdmin = makeBindable(module.checkAdmin),
-	getAdminLevel = makeBindable(module.getAdminLevel),
-	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
+	checkHasPermission = makeBindable(sandboxFunc(module.checkHasPermission)),
+	checkAdmin = makeBindable(sandboxFunc(module.checkAdmin)),
+	getAdminLevel = makeBindable(sandboxFunc(module.getAdminLevel)),
+	getAvailableAdmins = makeBindable(sandboxFunc(module.getAvailableAdmins)),
+	getAdmins = function()
+		local Tbl = {}
+		for k, v in pairs(module.getAdmins()) do
+			tbl[k] = v
+		end
+		return setmetatable(Tbl, {__metatable = "The metatable is locked"})
+	end
 }, {
-	__metatable = "This table is read only.",
+	__metatable = "The metatable is locked",
 	__newindex = function() return end
 })
 
