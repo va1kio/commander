@@ -268,13 +268,13 @@ local globalAPI = setmetatable({
 	checkAdmin = makeBindable(sandboxFunc(module.checkAdmin)),
 	getAdminLevel = makeBindable(sandboxFunc(module.getAdminLevel)),
 	getAvailableAdmins = makeBindable(sandboxFunc(module.getAvailableAdmins)),
-	getAdmins = function()
+	getAdmins = makeBindable(function()
 		local Tbl = {}
 		for k, v in pairs(module.getAdmins()) do
 			tbl[k] = v
 		end
 		return setmetatable(Tbl, {__metatable = "The metatable is locked"})
-	end
+	end)
 }, {
 	__metatable = "The metatable is locked",
 	__newindex = function() return end
