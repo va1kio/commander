@@ -74,6 +74,18 @@ function module.Button.Menu.Over(Object: guiobject)
 	module.Latte.Modules.Tween.new(Object, fadingTweenInfo, {BackgroundTransparency = 1})
 end
 
+module.Button.Flat.Hover(Object: guiobject)
+	module.Button.Menu.Hover(Object.Hover)
+end
+
+module.Button.Flat.Hold(Object: guiobject)
+	module.Button.Menu.Hold(Object.Hover)
+end
+
+module.Button.Flat.Over(Object: guiobject)
+	module.Button.Menu.Over(Object.Hover)
+end
+
 function module.Button.Package.Hover(Object: guiobject)
 	Object.Container.BackgroundTransparency = 0
 	Object.Container.Accent.Visible = false
