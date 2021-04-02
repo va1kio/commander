@@ -24,15 +24,23 @@ module.new = function(Title: string, Parent: instance)
 		comp.Parent = t.Parent
 	end
 	
-	local function dismiss()
+	local function dismiss(Input: string|Boolean)
 		if not isDismissed then
 			module.Latte.Modules.Animator.Window.animateOut(comp, comp.Container.UIScale)
-			t.Events.Dismissed:Fire(comp.Container.View.Input.Input.Text)
+			t.Events.Dismissed:Fire(Input)
 			isDismissed = true
 		end
 	end
 	
-	exit = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Container.View.Top, dismiss)
+	local function wrapFunc(func, arguments)
+		return setmetatable({}, {
+			__call = function()
+				func(table.unpack(arguments))
+			end
+		})
+	end
+	
+	exit = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Container.View.Top, wrapFunc(dismiss, {false}))
 	comp.BackgroundTransparency = 0.5
 	comp.Container.Visible = true
 	comp.Container.View.Top.Title.TextColor3 = Stylesheet.OverlayInput.TitleColor
