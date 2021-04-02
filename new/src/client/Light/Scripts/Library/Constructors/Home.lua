@@ -18,7 +18,7 @@ module.prepare = function()
 
 	local Background = Instance.new("ImageLabel")
 	Background.BackgroundTransparency = 1
-	Background.Image = "rbxasset://textures/AvatarEditorImages/AvatarEditor_LightTheme.png"
+	Background.Image = Latte.Modules.Stylesheet.Home.TopImage
 	Background.Name = "Background"
 	Background.ScaleType = Enum.ScaleType.Crop
 	Background.Size = UDim2.new(1, 0, 1, 0)
