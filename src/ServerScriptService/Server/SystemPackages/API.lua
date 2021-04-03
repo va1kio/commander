@@ -271,7 +271,7 @@ local globalAPI = setmetatable({
 	getAdmins = makeBindable(function()
 		local Tbl = {}
 		for k, v in pairs(module.getAdmins()) do
-			tbl[k] = v
+			Tbl[k] = v
 		end
 		return setmetatable(Tbl, {__metatable = "The metatable is locked"})
 	end)
