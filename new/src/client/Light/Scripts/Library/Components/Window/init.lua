@@ -26,10 +26,7 @@ local function giveMenu(Menu: guiobject)
 	local t = {}
 	t.Buttons = {}
 	t.isActive = false
-	
-	local Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6521420400", Menu.Container.Top.Left, t.Toggle)
-	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
-	Exit.Image.Size = UDim2.new(0.3, 0, 0.3, 0)
+	local Exit
 	Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
 	Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
 	
@@ -74,7 +71,9 @@ local function giveMenu(Menu: guiobject)
 			comp = nil
 		end
 	end
-	
+	Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6521420400", Menu.Container.Top.Left, t.Toggle)
+	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
+	Exit.Image.Size = UDim2.new(0.3, 0, 0.3, 0)
 	return t
 end
 
