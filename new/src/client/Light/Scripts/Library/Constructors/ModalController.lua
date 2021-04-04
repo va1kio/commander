@@ -14,7 +14,7 @@ module.setup = function()
 				isActive = true
 				local Comp = Latte.Components.OverlayInput.new(Attachment or "Input required", Latte.Constructors.Window.Window.Pages.Parent)
 				local Input = Comp.Events.Dismissed.Event:Wait()
-				module.Remotes.RemoteEvent:FireServer("input", Protocol, Input)
+				module.Remotes.RemoteFunction:InvokeServer("input", Protocol, Input)
 				isActive = false
 			end
 		end
