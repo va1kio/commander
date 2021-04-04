@@ -63,6 +63,13 @@ module.Donate.TopImage = module.Home.TopImage
 module.Donate.TopUseAccentInstead = module.Home.TopUseAccentInstead
 module.Donate.TopBackgroundColor = module.Home.TopBackgroundColor
 
+-- About constructor color
+module.About = {}
+module.About.IconColor = module.ThemeColor
+module.About.TitleColor = module.Donate.TitleColor
+module.About.ParagraphColor = module.Donate.ParagraphColor
+module.About.SubtitleColor = module.TextField.PlaceholderColor
+
 -- Duration for tweens
 module.Duration = {
 	VeryShort = 0.15,
