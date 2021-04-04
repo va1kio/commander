@@ -4,7 +4,8 @@ module.Menu = {}
 module.Button = {
 	["Round"] = {},
 	["Menu"] = {},
-	["Package"] = {}
+	["Package"] = {},
+	["Flat"] = {}
 }
 
 function module.Window.animateIn(Object: guiobject, UIScale: uiscale, Duration: number|nil)
