@@ -38,7 +38,8 @@ module.new = function(Title: string, Parent: instance)
 	end)
 	
 	exit = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Container.View.Top, dismiss, {Text = nil})
-	submit = FlatButton.new("Submit", "Submit", comp.Container.View.Bottom, dismiss, comp.Container.View.Input.Input).Size = UDim2.new(0, 75, 1, 0)
+	submit = FlatButton.new("Submit", "Submit", comp.Container.View.Bottom, dismiss, comp.Container.View.Input.Input)
+	submit.Size = UDim2.new(0, 75, 1, 0)
 	comp.BackgroundTransparency = 0.5
 	comp.Container.Visible = true
 	comp.Container.View.Top.Title.TextColor3 = Stylesheet.OverlayInput.TitleColor
