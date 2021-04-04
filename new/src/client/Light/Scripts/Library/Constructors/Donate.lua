@@ -29,6 +29,11 @@ module.prepare = function()
 	Container.Parent = Top
 	
 	local UIGradient = Instance.new("UIGradient")
+	UIGradient.Rotation = 90
+	UIGradient.Transparency = NumberSequence.new{
+		NumberSequenceKeypoint.new(0, 0),
+		NumberSequenceKeypoint.new(1, 1)
+	}
 	UIGradient.Parent = Background
 	
 	local Icon = Instance.new("ImageLabel")
