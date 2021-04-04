@@ -1,7 +1,7 @@
 local module = {}
 
 local reaction = function(Button: guiobject, State: string)
-	module.Latte.Modules.Animator.Button.Flat[State](Button)
+	module.Latte.Modules.Animator.Button.Outlined[State](Button)
 end
 
 module.new = function(Name: string, Text: string?, Parent: instance, Callback: (string) -> void)
