@@ -74,6 +74,9 @@ module.prepare = function()
 	Subtitle.TextYAlignment = Enum.TextYAlignment.Bottom
 	Subtitle.Parent = Container
 	
+	local Padding = Latte.Components.Padding.new(Page)
+	Padding.Bottom = UDim.new(0, 10)
+	
 	if Latte.Modules.Stylesheet.Donate.TopUseAccentInstead then
 		local Accent = Instance.new("Frame")
 		Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
