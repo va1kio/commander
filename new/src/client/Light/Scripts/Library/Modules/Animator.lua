@@ -5,7 +5,8 @@ module.Button = {
 	["Round"] = {},
 	["Menu"] = {},
 	["Package"] = {},
-	["Flat"] = {}
+	["Flat"] = {},
+	["Outlined"] = {}
 }
 
 function module.Window.animateIn(Object: guiobject, UIScale: uiscale, Duration: number|nil)
@@ -85,6 +86,18 @@ end
 
 function module.Button.Flat.Over(Object: guiobject)
 	module.Button.Menu.Over(Object.Hover)
+end
+
+function module.Button.Outlined.Hover(Object: guiobject)
+	module.Button.Menu.Hover(Object.Background)
+end
+
+function module.Button.Outlined.Hold(Object: guiobject)
+	module.Button.Menu.Hold(Object.Background)
+end
+
+function module.Button.Outlined.Over(Object: guiobject)
+	module.Button.Menu.Over(Object.Background)
 end
 
 function module.Button.Package.Hover(Object: guiobject)
