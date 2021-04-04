@@ -93,7 +93,7 @@ module.prepare = function()
 	
 	for i,v in pairs(Items) do
 		local Button = Latte.Components.OutlinedButton.new(i, "Donate " .. tostring(i) .. " Robux", Page, function()
-			Latte.Services.MarketplaceService:PromptGamePassPurchase(Latte.Services.Players.LocalPlayer, v)
+			Latte.Modules.Services.MarketplaceService:PromptGamePassPurchase(Latte.Services.Players.LocalPlayer, v)
 		end)
 		
 		Button.Size = UDim2.new(1, -20, 0, Button.Size.Y.Offset)
