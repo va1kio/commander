@@ -81,12 +81,14 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 	local Latte = module.Latte
 	local Stylesheet = Latte.Modules.Stylesheet
 	local comp = script.Comp:Clone()
+	Latte.Modules.Dragger.new(comp.Container.Top, comp)
 	local Toggled = true
 	local t = {
 		["Title"] = Title or Name,
 		["Size"] = Size or comp.UISizeConstraint.MaxSize,
 		["Parent"] = Parent,
 		["CurrentPage"] = nil,
+		["ZIndex"] = 1,
 		["Pages"] = comp.Container.Body,
 		["Events"] = {
 			["Toggled"] = Instance.new("BindableEvent")
@@ -145,6 +147,12 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		comp.UISizeConstraint.MaxSize = t.Size
 		comp.Parent = t.Parent
 		comp.Container.Top.Left.Menu.Visible = t.ShowMenu
+		comp.ZIndex = t.ZIndex
+		
+		if t.Parent == nil then
+			comp:Destroy()
+			t = nil
+		end
 	end
 	
 	t.newButton("Exit", "rbxassetid://6235536018", "Right", 1, t.Toggle)
