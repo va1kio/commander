@@ -5,11 +5,12 @@ module.new = function(Title: string, Parent: instance)
 	local Stylesheet = module.Latte.Modules.Stylesheet
 	local Trigger = module.Latte.Modules.Trigger
 	local RoundButton = module.Latte.Components.RoundButton
-	--local ContainedButton = module.Latte.Components.ContainedButton
+	local FlatButton = module.Latte.Components.FlatButton
 	local isDismissed = false
 	
 	local comp = script.Comp:Clone()
 	local exit
+	local submit
 	local t = {
 		["Title"] = Title,
 		["Text"] = "",
@@ -24,23 +25,20 @@ module.new = function(Title: string, Parent: instance)
 		comp.Parent = t.Parent
 	end
 	
-	local function dismiss(Input: string|Boolean)
+	local function dismiss(Input)
 		if not isDismissed then
 			module.Latte.Modules.Animator.Window.animateOut(comp, comp.Container.UIScale)
-			t.Events.Dismissed:Fire(Input)
+			t.Events.Dismissed:Fire(Input.Text)
 			isDismissed = true
 		end
 	end
 	
-	local function wrapFunc(func, arguments)
-		return setmetatable({}, {
-			__call = function()
-				func(table.unpack(arguments))
-			end
-		})
-	end
+	comp.Container.View.Input.Input:GetPropertyChangedSignal("Text"):Connect(function()
+		t.Text = comp.Container.View.Input.Input.Text
+	end)
 	
-	exit = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Container.View.Top, wrapFunc(dismiss, {false}))
+	exit = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Container.View.Top, dismiss, {Text = nil})
+	submit = FlatButton.new("Submit", "Submit", comp.Container.View.Bottom, dismiss, comp.Container.View.Input.Input).Size = UDim2.new(0, 75, 1, 0)
 	comp.BackgroundTransparency = 0.5
 	comp.Container.Visible = true
 	comp.Container.View.Top.Title.TextColor3 = Stylesheet.OverlayInput.TitleColor
