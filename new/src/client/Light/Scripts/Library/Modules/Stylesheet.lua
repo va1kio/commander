@@ -61,6 +61,14 @@ module.OverlayInput.TitleColor = module.SeparatedList.Item.TitleColor
 module.OverlayInput.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
 module.OverlayInput.InputBackgroundColor = module.Window.BackgroundColor
 
+-- Donate constructor color
+module.Donate = {}
+module.Donate.TitleColor = Color3.fromRGB(250, 250, 250)
+module.Donate.ParagraphColor = Color3.fromRGB(150, 150, 150)
+module.Donate.TopImage = module.Home.TopImage
+module.Donate.TopUseAccentInstead = module.Home.TopUseAccentInstead
+module.Donate.TopBackgroundColor = module.Home.TopBackgroundColor
+
 -- Duration for tweens
 module.Duration = {
 	VeryShort = 0.15,

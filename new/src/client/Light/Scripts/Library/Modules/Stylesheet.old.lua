@@ -55,11 +55,13 @@ module.PackageButton.TitleColor = module.TextField.ContentColor
 module.PackageButton.DescriptionColor = module.SeparatedList.Item.TitleColor
 module.PackageButton.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
 
--- OverlayInput component color
-module.OverlayInput = {}
-module.OverlayInput.TitleColor = module.SeparatedList.Item.TitleColor
-module.OverlayInput.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
-module.OverlayInput.InputBackgroundColor = module.Window.BackgroundColor
+-- Donate constructor color
+module.Donate = {}
+module.Donate.TitleColor = Color3.fromRGB(0, 0, 0)
+module.Donate.ParagraphColor = Color3.fromRGB(120, 120, 120)
+module.Donate.TopImage = module.Home.TopImage
+module.Donate.TopUseAccentInstead = module.Home.TopUseAccentInstead
+module.Donate.TopBackgroundColor = module.Home.TopBackgroundColor
 
 -- Duration for tweens
 module.Duration = {
