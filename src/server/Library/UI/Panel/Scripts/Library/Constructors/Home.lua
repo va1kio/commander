@@ -164,6 +164,11 @@ module.setup = function()
 		elseif Type == "firstRun" then
 			Settings = Attachment
 			Latte.Constructors.Window.notifyUser(nil, "Press the \"" .. Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander.")
+			Latte.Modules.Services.UserInputService.InputBegan:Connect(function(Input, isGameProcessed)
+				if Input.KeyCode == Settings.UI.Keybind and not isGameProcessed then
+					Latte.Constructors.Window.Toggle()
+				end
+			end)
 		end
 		module.update()
 	end)
