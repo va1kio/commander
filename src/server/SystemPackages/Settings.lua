@@ -77,7 +77,7 @@ module.Permissions = {
 module.UI = {
 	["Accent"] = Color3.fromRGB(64, 157, 130),
 	["Keybind"] = Enum.KeyCode.Semicolon,
-	["Theme"] = "Minimal Dark"
+	["Theme"] = "Material"
 }
 
 module.Misc = {
@@ -85,6 +85,6 @@ module.Misc = {
 	["HideDonations"] = false
 }
 
-module.Version = {"0.9.0", "0.9.0 (Beta Build)"}
+module.Version = {"1.0.0", "1.0.0 (Beta Build)"}
 
 return module
