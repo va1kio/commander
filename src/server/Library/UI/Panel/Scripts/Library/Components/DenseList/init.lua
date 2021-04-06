@@ -20,12 +20,12 @@ module.new = function(Name: string, Parent: instance)
 		__newindex = function(_, key: string, value: string)
 			local Item = ActualItems[key] or script.Item:Clone()
 			if not ActualItems[key] then
-				Item.Content.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.TitleColor
+				Item.Container.Content.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.TitleColor
 				Item.Accent.BackgroundColor3 = module.Latte.Modules.Stylesheet.Window.AccentColor
 			end
 			
 			Items[key] = value
-			Item.Name, Item.Content.Text = key, value
+			Item.Name, Item.Container.Content.Text = key, value
 			ActualItems[key] = Item
 			Item.Parent = Comp
 			return Items[key]
