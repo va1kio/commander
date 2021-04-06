@@ -8,8 +8,9 @@ module.new = function(Name: string, Text: string?, Parent: instance, Callback: (
 	local Comp = script.Comp:Clone()
 	Comp.Name = Name
 	Comp.Container.Title.Text = Text or Name
-	Comp.BackgroundColor3 = module.Latte.Modules.Stylesheet.ThemeColor
+	Comp.Background.BackgroundColor3 = module.Latte.Modules.Stylesheet.ThemeColor
 	Comp.Background.Outline.ImageColor3 = module.Latte.Modules.Stylesheet.ThemeColor
+	Comp.Container.Title.TextColor3 = module.Latte.Modules.Stylesheet.ThemeColor
 	
 	module.Latte.Modules.Trigger.new(Comp, reaction, 3, false):Connect(function()
 		Callback()
