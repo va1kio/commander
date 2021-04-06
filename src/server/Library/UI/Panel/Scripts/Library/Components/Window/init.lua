@@ -149,6 +149,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 	end
 	
 	local function cook()
+		comp.Name = t.Title
 		comp.Container.Top.Title.Text = t.Title
 		comp.UISizeConstraint.MaxSize = t.Size
 		comp.Parent = t.Parent
