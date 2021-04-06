@@ -1,12 +1,12 @@
 local module, Elements, Latte, Page = {}, nil, nil, nil
 local Items = {
-	["50"] = 6502090560,
-	["150"] = 6502091736,
-	["350"] = 6502092150
+	{Value = "50", Id = 6502090560},
+	{Value = "150", Id = 6502091736},
+	{Value = "300", Id = 6502092150},
+	{Value = "1000", Id = 6502104947}
 }
 
 module.prepare = function()
-	local Number = 1
 	local Top = Instance.new("Frame")
 	Top.BackgroundTransparency = 1
 	Top.Name = "Top"
@@ -97,13 +97,12 @@ module.prepare = function()
 	end
 	
 	for i,v in pairs(Items) do
-		local Button = Latte.Components.OutlinedButton.new(i, "Donate " .. tostring(i) .. " Robux", Page, function()
-			Latte.Modules.Services.MarketplaceService:PromptGamePassPurchase(Latte.Modules.Services.Players.LocalPlayer, v)
+		local Button = Latte.Components.OutlinedButton.new(v.Value, "Donate " .. tostring(v.Value) .. " Robux", Page, function()
+			Latte.Modules.Services.MarketplaceService:PromptGamePassPurchase(Latte.Modules.Services.Players.LocalPlayer, v.Id)
 		end)
 		
 		Button.Size = UDim2.new(1, -20, 0, Button.Size.Y.Offset)
-		Button.LayoutOrder = Number
-		Number += 1
+		Button.LayoutOrder = i + 1
 	end
 end
 
