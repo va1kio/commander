@@ -11,6 +11,8 @@ module.new = function(Title: string, Description: string, Parent: instance)
 	local t = {
 		["Title"] = Title,
 		["Description"] = Description,
+		["Visible"] = true,
+		["Object"] = comp,
 		["Parent"] = Parent,
 		["Events"] = {
 			["Clicked"] = Instance.new("BindableEvent")
@@ -18,6 +20,8 @@ module.new = function(Title: string, Description: string, Parent: instance)
 	}
 	
 	local function cook()
+		comp.Name = t.Title
+		comp.Visible = t.Visible
 		comp.Container.Text.Title.Text = t.Title
 		comp.Container.Text.Description.Text = t.Description
 		comp.Parent = t.Parent

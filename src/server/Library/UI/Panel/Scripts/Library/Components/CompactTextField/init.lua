@@ -4,6 +4,7 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 	local Stylesheet = module.Latte.Modules.Stylesheet
 	local RoundButton = module.Latte.Components.RoundButton
 	local comp = script.Comp:Clone()
+	local ContentChanged = Instance.new("BindableEvent")
 	local clearAll
 	local t = {
 		["Title"] = Title,
@@ -11,11 +12,12 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 		["Content"] = "",
 		["Parent"] = Parent,
 		["Events"] = {
-			["ContentChanged"] = comp.Input.Box:GetPropertyChangedSignal("Text")
+			["ContentChanged"] = ContentChanged.Event
 		}
 	}
 	
 	local function cook()
+		comp.Name = t.Title
 		comp.Title.Text = t.Title
 		comp.Input.Box.PlaceholderText = t.Placeholder
 		comp.Input.Box.Text = t.Content
@@ -32,8 +34,9 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 	comp.Input.Box.TextColor3 = Stylesheet.TextField.ContentColor
 	comp.Input.Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
 	
-	t.Events.ContentChanged:Connect(function()
+	comp.Input.Box:GetPropertyChangedSignal("Text"):Connect(function()
 		t.Content = comp.Input.Box.Text
+		ContentChanged:Fire(t.Content)
 	end)
 	
 	cook()

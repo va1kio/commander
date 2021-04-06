@@ -9,6 +9,7 @@ module.new = function(Title: string, Parent: instance)
 	local isDismissed = false
 	
 	local comp = script.Comp:Clone()
+	comp.Name = "Modal"
 	local exit
 	local submit
 	local t = {
