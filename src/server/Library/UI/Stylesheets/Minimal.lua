@@ -12,7 +12,7 @@ module.Window.BackgroundColor = Color3.fromRGB(240, 240, 240)
 module.Window.ScrollBarColor = Color3.fromRGB(0, 0, 0)
 module.Window.TopbarBackgroundColorIfAccentUsed = Color3.fromRGB(255, 255, 255)
 module.Window.TopbarElementColorIfAccentUsed = Color3.fromRGB(150, 150, 150)
-module.Window.TopbarUseAccentInstead = false
+module.Window.TopbarUseAccentInstead = true
 
 -- Button color
 module.Button = {}
@@ -33,7 +33,7 @@ module.Home.RankColor = Color3.fromRGB(120, 120, 120)
 module.Home.AvatarBorder = module.Window.AccentColor
 module.Home.AvatarBackground = Color3.fromRGB(255, 255, 255)
 module.Home.TopImage = "rbxasset://textures/AvatarEditorImages/AvatarEditor_LightTheme.png"
-module.Home.TopUseAccentInstead = false
+module.Home.TopUseAccentInstead = true
 module.Home.TopBackgroundColor = Color3.fromRGB(250, 250, 250)
 
 -- SeparatedList component color
