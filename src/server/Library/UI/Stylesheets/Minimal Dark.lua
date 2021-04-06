@@ -1,7 +1,7 @@
 local module = {}
 
 -- Primary color
-module.ThemeColor = Color3.fromRGB(64, 157, 130)
+module.ThemeColor = script.ThemeColor.Value or Color3.fromRGB(64, 157, 130)
 
 -- Window color
 module.Window = {}
