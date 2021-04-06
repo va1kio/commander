@@ -120,8 +120,12 @@ systemPackages.Settings.Credits = systemPackages.Credits()
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
 	error("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
 else
+	local themeColorValue = Instance.new("Color3Value")
+	themeColorValue.Name = "ThemeColor"
+	themeColorValue.Value = systemPackages.Settings.UI.Accent
 	currentTheme = script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme):Clone()
 	currentTheme.Name = "Stylesheet"
+	themeColorValue.Parent = currentTheme
 	currentTheme.Parent = script.Library.UI.Panel.Scripts.Library.Modules
 end
 
@@ -176,6 +180,8 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			
 			remotes.Event:FireClient(Client, "fetchCommands", "n/a", packagesButtonsFiltered)
 			remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
+		elseif Type == "getSettings" then
+			return systemPackages.Settings
 		end
 	end
 end
