@@ -29,7 +29,7 @@ local function giveMenu(Menu: guiobject)
 	t.Buttons = {}
 	t.isActive = false
 	local Exit
-	Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
+	Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.AccentColor
 	Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
 	
 	t.Toggle = function()

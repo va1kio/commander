@@ -23,6 +23,7 @@ module.Button.ModalHoverColor = module.ThemeColor
 -- Menu constructor color
 module.Menu = {}
 module.Menu.BackgroundColor = Color3.fromRGB(35, 35, 35)
+module.Menu.AccentColor = module.Window.AccentColor
 module.Menu.DefaultTextColor = Color3.fromRGB(125, 125, 125)
 module.Menu.ExitColor = module.Menu.DefaultTextColor
 

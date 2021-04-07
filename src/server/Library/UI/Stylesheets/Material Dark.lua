@@ -23,6 +23,7 @@ module.Button.ModalHoverColor = module.ThemeColor
 -- Menu constructor color
 module.Menu = {}
 module.Menu.BackgroundColor = Color3.fromRGB(35, 35, 35)
+module.Menu.AccentColor = module.Window.AccentColor
 module.Menu.DefaultTextColor = Color3.fromRGB(125, 125, 125)
 module.Menu.ExitColor = module.Menu.DefaultTextColor
 
@@ -54,6 +55,12 @@ module.PackageButton = {}
 module.PackageButton.TitleColor = module.TextField.ContentColor
 module.PackageButton.DescriptionColor = module.SeparatedList.Item.TitleColor
 module.PackageButton.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
+
+-- OverlayInput component color
+module.OverlayInput = {}
+module.OverlayInput.TitleColor = module.SeparatedList.Item.TitleColor
+module.OverlayInput.BackgroundColor = module.Window.TopbarBackgroundColorIfAccentUsed
+module.OverlayInput.InputBackgroundColor = module.Window.BackgroundColor
 
 -- Donate constructor color
 module.Donate = {}

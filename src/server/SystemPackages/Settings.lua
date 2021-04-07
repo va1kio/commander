@@ -85,6 +85,6 @@ module.Misc = {
 	["HideDonations"] = false
 }
 
-module.Version = {"0.9.6", "0.9.6 (Beta Build)"}
+module.Version = {"1.0.0", "1.0.0 (Stable Build)"}
 
 return module

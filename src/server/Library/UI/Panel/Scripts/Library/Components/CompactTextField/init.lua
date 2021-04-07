@@ -29,6 +29,7 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 	end)
 	clearAll.Position = UDim2.new(1, 0, 0, 0)
 	clearAll.AnchorPoint = Vector2.new(1, 0)
+	clearAll.Image.ImageColor3 = Stylesheet.TextField.PlaceholderColor
 	comp.Title.TextColor3 = Stylesheet.TextField.TitleColor
 	comp.Input.Box.PlaceholderColor3 = Stylesheet.TextField.PlaceholderColor
 	comp.Input.Box.TextColor3 = Stylesheet.TextField.ContentColor
