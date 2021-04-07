@@ -141,7 +141,7 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 				if status then
 					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
 				elseif status == nil then
-					remotes.Event:FireClient(Client, "newMessage", "", {From = "System; " .. packages[Protocol].Name, Content = "This command may have failed due to incompatability issue, this will not be logged."})
+					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name .. " (TRY)", {Attachment})
 				end
 			else
 				warn(Client.UserId, "does not have permission to run", Protocol)
@@ -188,6 +188,7 @@ end
 
 local function setupUIForPlayer(Client)
 	local UI = script.Library.UI.Client:Clone()
+	UI.ResetOnSpawn = false
 	UI.Scripts.Core.Disabled = false
 	UI.Parent = Client.PlayerGui
 	
@@ -195,6 +196,7 @@ local function setupUIForPlayer(Client)
 		isPlayerAddedFired = true
 		UI = script.Library.UI.Panel:Clone()
 		UI.Name = "Panel"
+		UI.ResetOnSpawn = false
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
 	end

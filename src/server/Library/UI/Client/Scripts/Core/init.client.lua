@@ -52,7 +52,8 @@ local function makeChatMessage(Text: string, Color: Color3)
 	})
 end
 
-local function makeMessage(From: string, Content: string)
+local function makeMessage(From: string, Content: string, Duration: number?)
+	Duration = Duration or 5
 	coroutine.wrap(function()
 		local guid = HttpService:GenerateGUID()
 		local closeButtonEvent
@@ -83,7 +84,7 @@ local function makeMessage(From: string, Content: string)
 		end)
 		
 		coroutine.wrap(function()
-			wait(5)
+			wait(Duration)
 			close()
 		end)()
 		
@@ -104,7 +105,7 @@ end
 local function init()
 	Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		if Type == "newMessage" then
-			makeMessage(Attachment.From, Attachment.Content)
+			makeMessage(Attachment.From, Attachment.Content, Attachment.Duration)
 		elseif Type == "newNotify" then
 			notifyClient(Attachment.From, Attachment.Content)
 		elseif Type == "newHint" then
