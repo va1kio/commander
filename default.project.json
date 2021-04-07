@@ -1,11 +1,12 @@
 {
-  "name": "project",
+  "name": "Commander 4",
   "tree": {
     "$className": "DataModel",
     "ServerScriptService": {
       "$className": "ServerScriptService",
-      "$ignoreUnknownInstances": true,
-      "$path": "src/ServerScriptService"
+      "Server": {
+        "$path": "src/server"
+      }
     }
   }
 }
