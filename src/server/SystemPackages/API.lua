@@ -3,8 +3,10 @@ local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local GroupService = game:GetService("GroupService")
 
+-- TODO: Update group cache over interval?
 local module = {}
 local t = {}
+local groupCache = {}
 
 function module.sendModalToPlayer(Player: player, Title: string)
 	local Bindable = Instance.new("BindableEvent")
@@ -114,6 +116,14 @@ function module.filterText(From: player, Content: string)
 	return success, result
 end
 
+function module.newMessage(To: player|string, From: string, Content: string, Duration: number?)
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+	else
+		module.Remotes.Event:FireClient(player, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+	end
+end
+
 function module.checkHasPermission(ClientId: number, Command: string)
 	local clientAdminLevel = module.getAdminLevel(ClientId)
 
@@ -155,8 +165,12 @@ function module.getAdminLevel(ClientId: number)
 				-- less than or greater than the rank (inclusive).
 				-- If no "<" or ">" is provided it must be an exact match.
 				local groupId, condition, rankId = string.match(i, "(%d+):([<>]?)(%d+)");
-				local playerGroups = GroupService:GetGroupsAsync(ClientId) or {};
+				local playerGroups = groupCache[ClientId] or GroupService:GetGroupsAsync(ClientId) or {};
 				local selectedGroup;
+
+				if playerGroups and not groupCache[ClientId] then
+					groupCache[ClientId] = playerGroups
+				end
 
 				for _, y in ipairs(playerGroups) do
 					if y.Id == tonumber(groupId) then
@@ -245,17 +259,24 @@ end
 
 local function makeBindable(func)
 	local Bindable = Instance.new("BindableFunction")
-	Bindable.OnInvoke = sandboxFunc(func)
+	Bindable.OnInvoke = not table.find(module, func) and func or sandboxFunc(func)
 	return Bindable
 end
 
 local globalAPI = setmetatable({
-	checkHasPermission = makeBindable(module.checkHasPermission),
-	checkAdmin = makeBindable(module.checkAdmin),
-	getAdminLevel = makeBindable(module.getAdminLevel),
-	getAvailableAdmins = makeBindable(module.getAvailableAdmins)
+	checkHasPermission = makeBindable(sandboxFunc(module.checkHasPermission)),
+	checkAdmin = makeBindable(sandboxFunc(module.checkAdmin)),
+	getAdminLevel = makeBindable(sandboxFunc(module.getAdminLevel)),
+	getAvailableAdmins = makeBindable(sandboxFunc(module.getAvailableAdmins)),
+	getAdmins = makeBindable(function()
+		local Tbl = {}
+		for k, v in pairs(module.getAdmins()) do
+			Tbl[k] = v
+		end
+		return setmetatable(Tbl, {__metatable = "The metatable is locked"})
+	end)
 }, {
-	__metatable = "This table is read only.",
+	__metatable = "The metatable is locked",
 	__newindex = function() return end
 })
 

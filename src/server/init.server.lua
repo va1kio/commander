@@ -24,16 +24,18 @@ remotefolder = nil
 
 for i,v in pairs(script.Packages:GetDescendants()) do
 	if v:IsA("ModuleScript") then
-		local mod = require(v)
-		if mod.Execute and mod.Name and mod.Description and mod.Location then
-			packagesButtons[#packagesButtons + 1] = {
-				Name = mod.Name,
-				Protocol = mod.Name,
-				Description = mod.Description,
-				Location = mod.Location,
-				PackageId = v.Name
-			}
-		end
+		pcall(function()
+			local mod = require(v)
+			if mod.Execute and mod.Name and mod.Description and mod.Location then
+				packagesButtons[#packagesButtons + 1] = {
+					Name = mod.Name,
+					Protocol = mod.Name,
+					Description = mod.Description,
+					Location = mod.Location,
+					PackageId = v.Name
+				}
+			end
+		end)
 	end
 end
 
@@ -99,16 +101,18 @@ local function loadPackages()
 	
 	for i,v in pairs(script.Packages:GetDescendants()) do
 		if v:IsA("ModuleScript") then
-			local mod = require(v)
-			mod.Services = systemPackages.Services
-			mod.API = systemPackages.API
-			mod.Remotes = remotes
-			mod.fetchLogs = script.waypointBindable
-			mod.PackageId = v.Name
-			if mod and mod.Name and mod.Description and mod.Location then
-				packages[mod.Name] = mod
-			end
-			mod.Execute(nil, "firstrun")
+			pcall(function()
+				local mod = require(v)
+				mod.Services = systemPackages.Services
+				mod.API = systemPackages.API
+				mod.Remotes = remotes
+				mod.fetchLogs = script.waypointBindable
+				mod.PackageId = v.Name
+				if mod and mod.Name and mod.Description and mod.Location then
+					packages[mod.Name] = mod
+				end
+				mod.Execute(nil, "firstrun")
+			end)
 		end
 	end
 end
@@ -141,7 +145,7 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 				if status then
 					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
 				elseif status == nil then
-					remotes.Event:FireClient(Client, "newMessage", "", {From = "System; " .. packages[Protocol].Name, Content = "This command may have failed due to incompatability issue, this will not be logged."})
+					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name .. " (TRY)", {Attachment})
 				end
 			else
 				warn(Client.UserId, "does not have permission to run", Protocol)
@@ -188,6 +192,7 @@ end
 
 local function setupUIForPlayer(Client)
 	local UI = script.Library.UI.Client:Clone()
+	UI.ResetOnSpawn = false
 	UI.Scripts.Core.Disabled = false
 	UI.Parent = Client.PlayerGui
 	
@@ -195,6 +200,7 @@ local function setupUIForPlayer(Client)
 		isPlayerAddedFired = true
 		UI = script.Library.UI.Panel:Clone()
 		UI.Name = "Panel"
+		UI.ResetOnSpawn = false
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
 	end
