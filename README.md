@@ -1,8 +1,8 @@
 ![commander banner](https://cdn.discordapp.com/attachments/813590068090372166/816336437922234418/Banner_2.png)
 
-# Commander Preview
+# Commander
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 1.0.0](https://img.shields.io/badge/latest_build-0.9.7-brightgreen?style=for-the-badge) ![phase Stable](https://img.shields.io/badge/Phase-Beta-blueviolet?style=for-the-badge)
+![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 1.0.0](https://img.shields.io/badge/latest_build-1.0.0-brightgreen?style=for-the-badge) ![phase Stable](https://img.shields.io/badge/Phase-Stable-blueviolet?style=for-the-badge)
 
 Free & open-sourced administration panel for Roblox
 
@@ -13,7 +13,7 @@ If you are importing it manually, consider watching this video: https://www.yout
 
 If you are syncing with Rojo, use the following commands in your terminal:
 ```
-git clone -b preview https://github.com/va1kio/commander.git
+git clone https://github.com/va1kio/commander.git
 rojo serve
 ```
 
