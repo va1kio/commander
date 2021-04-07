@@ -1,8 +1,10 @@
 local module = {}
 
+-- Style window object.
 local function stylise(UI: guiobject)
 	local Stylesheet = module.Latte.Modules.Stylesheet
 	UI.Container.BackgroundColor3 = Stylesheet.Window.BackgroundColor
+
 	if Stylesheet.Window.TopbarUseAccentInstead then
 		local Accent = Instance.new("Frame")
 		Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
@@ -23,11 +25,14 @@ local function stylise(UI: guiobject)
 	end
 end
 
+-- Populate menu container.
 local function giveMenu(Menu: guiobject)
 	local Latte = module.Latte
+
 	local t = {}
 	t.Buttons = {}
 	t.isActive = false
+
 	local Exit
 	Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
 	Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
@@ -73,9 +78,11 @@ local function giveMenu(Menu: guiobject)
 			comp = nil
 		end
 	end
+
 	Exit = Latte.Components.RoundButton.new("Exit", "rbxassetid://6521420400", Menu.Container.Top.Left, t.Toggle)
 	Exit.Image.ImageColor3 = Latte.Modules.Stylesheet.Menu.ExitColor
 	Exit.Image.Size = UDim2.new(0.3, 0, 0.3, 0)
+
 	return t
 end
 
@@ -85,7 +92,8 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 	local comp = script.Comp:Clone()
 	Latte.Modules.Dragger.new(comp.Container.Top, comp)
 	local Toggled = true
-	local t = {
+
+	local window = {
 		["Title"] = Title or Name,
 		["Size"] = Size or comp.UISizeConstraint.MaxSize,
 		["Parent"] = Parent,
@@ -96,10 +104,10 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 			["Toggled"] = Instance.new("BindableEvent")
 		},
 		["ShowMenu"] = ShowMenu or false,
-		Menu = giveMenu(comp.Container.Menu)
+		["Menu"] = giveMenu(comp.Container.Menu)
 	}
 	
-	t.newButton = function(Name: string, Image: string, Side: string, Position: number, Callback)
+	window.newButton = function(Name: string, Image: string, Side: string, Position: number, Callback)
 		local ActualSide = comp.Container.Top:FindFirstChild(Side)
 		local comp = Latte.Components.RoundButton.new(Name, Image, ActualSide, Callback)
 		comp.LayoutOrder = Position
@@ -112,28 +120,47 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		return comp
 	end
 	
-	t.newPage = function(Name: string, InMenu: boolean?, Position: number?)
-		local page = Latte.Components.Page.new(Name, t.Pages)
+	window.newPage = function(Name: string, InMenu: boolean?, Position: number?)
+		local page = Latte.Components.Page.new(Name, window.Pages)
+
 		if InMenu then
-			t.Menu.newButton(Name, Position or 1, function()
-				t.switchPage(Name)
+			window.Menu.newButton(Name, Position or 1, function()
+				window.switchPage(Name)
 			end)
 		end
 		
 		return page
 	end
-	
-	t.switchPage = function(Page: string)
-		if tostring(t.CurrentPage):lower() == Page:lower() then return end
-		if t.CurrentPage then
-			Latte.Modules.Animator.Window.animateOut(t.CurrentPage, t.CurrentPage.UIScale)
+
+	window.removePage = function(Name: string, NewPage: string)
+		local page = window.Pages:FindFirstChild(Name)
+
+		if not page then return end
+
+		if window.CurrentPage == page then
+			window.switchPage(NewPage)
 		end
-		
-		t.CurrentPage = t.Pages[Page]
-		Latte.Modules.Animator.Window.animateIn(t.CurrentPage, t.CurrentPage.UIScale)
+
+		if window.Menu.Buttons[Name] ~= nil then
+			window.Menu.Buttons[Name]:Destroy()
+			window.Menu.Buttons[Name] = nil
+		end
+
+		page:Destroy()
 	end
 	
-	t.Toggle = function(Override: boolean?)
+	window.switchPage = function(Page: string)
+		if tostring(window.CurrentPage):lower() == Page:lower() then return end
+
+		if window.CurrentPage then
+			Latte.Modules.Animator.Window.animateOut(window.CurrentPage, window.CurrentPage.UIScale)
+		end
+		
+		window.CurrentPage = window.Pages[Page]
+		Latte.Modules.Animator.Window.animateIn(window.CurrentPage, window.CurrentPage.UIScale)
+	end
+	
+	window.Toggle = function(Override: boolean?)
 		if Override then
 			Latte.Modules.Animator.Window.animateIn(comp, comp.UIScale)
 		elseif Override == false then
@@ -145,37 +172,39 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		end
 
 		Toggled = Override or not Toggled
-		t.Events.Toggled:Fire(Toggled)
+		window.Events.Toggled:Fire(Toggled)
 	end
 	
+	-- Fix data.
 	local function cook()
-		comp.Name = t.Title
-		comp.Container.Top.Title.Text = t.Title
-		comp.UISizeConstraint.MaxSize = t.Size
-		comp.Parent = t.Parent
-		comp.Container.Top.Left.Menu.Visible = t.ShowMenu
-		comp.ZIndex = t.ZIndex
+		comp.Name = window.Title
+		comp.Container.Top.Title.Text = window.Title
+		comp.UISizeConstraint.MaxSize = window.Size
+		comp.Parent = window.Parent
+		comp.Container.Top.Left.Menu.Visible = window.ShowMenu
+		comp.ZIndex = window.ZIndex
 		
-		if t.Parent == nil then
+		if window.Parent == nil then
 			comp:Destroy()
-			t = nil
+			window = nil
 		end
 	end
 	
-	t.newButton("Exit", "rbxassetid://6235536018", "Right", 1, t.Toggle)
-	t.newButton("Menu", "rbxassetid://6272739995", "Left", 1, t.Menu.Toggle)
-	t.Toggle()
+	window.newButton("Exit", "rbxassetid://6235536018", "Right", 1, window.Toggle)
+	window.newButton("Menu", "rbxassetid://6272739995", "Left", 1, window.Menu.Toggle)
+	window.Toggle()
 	stylise(comp)
 	cook()
+
 	return setmetatable({}, {
 		__index = function(_, key: string)
-			return t[key]
+			return window[key]
 		end,
 		__newindex = function(_, key: string, value: any)
-			if t[key] then
-				t[key] = value
+			if window[key] then
+				window[key] = value
 				cook()
-				return t[key]
+				return window[key]
 			end
 		end,
 	})
