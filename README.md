@@ -2,7 +2,7 @@
 
 # Commander
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build A1154](https://img.shields.io/badge/latest_build-A1154-brightgreen?style=for-the-badge) ![phase stable](https://img.shields.io/badge/Phase-Stable-blue?style=for-the-badge)
+![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 1.0.0](https://img.shields.io/badge/latest_build-1.0.0-brightgreen?style=for-the-badge) ![phase Stable](https://img.shields.io/badge/Phase-Stable-blueviolet?style=for-the-badge)
 
 Free & open-sourced administration panel for Roblox
 
@@ -16,6 +16,8 @@ If you are syncing with Rojo, use the following commands in your terminal:
 git clone https://github.com/va1kio/commander.git
 rojo serve
 ```
+
+Alternatively, you can also use our module loader, which allows Commander to be always up-to-date, link to the loader is [here](https://www.roblox.com/library/6648688759/)
 
 ## Documentation
 
