@@ -96,12 +96,18 @@ module.prepare = function()
 	local Icon = Instance.new("ImageLabel")
 	Icon.AnchorPoint = Vector2.new(0.5, 0.5)
 	Icon.BackgroundTransparency = 1
-	Icon.Image = "rbxthumb://type=AvatarHeadShot&id=" .. Latte.Modules.Services.Players.LocalPlayer.UserId .. "&w=420&h=420"
 	Icon.Name = "Icon"
 	Icon.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Icon.ScaleType = Enum.ScaleType.Fit
 	Icon.Size = UDim2.new(1, -2, 1, -2)
 	Icon.ZIndex = 2
+	Icon.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+	coroutine.wrap(xpcall)(function()
+		local Image, IsReady = Latte.Modules.Services.Players:GetUserThumbnailAsync(Latte.Modules.Services.Players.LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+		if IsReady and Image then
+			Icon.Image = Image
+		end
+	end, warn)
 	Icon.Parent = Avatar
 
 	local UICorner2 = Instance.new("UICorner")
