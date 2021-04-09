@@ -10,7 +10,7 @@ module.Button = {
 }
 
 function module.Window.animateIn(Object: guiobject, UIScale: uiscale, Duration: number|nil)
-	Duration = Duration or 0.3
+	Duration = Duration or module.Latte.Modules.Stylesheet.Duration.Short
 	UIScale.Scale = 0.95
 	Object.Visible = true
 	module.Latte.Modules.Fader.FadeIn(Object, Duration/2)
@@ -18,20 +18,20 @@ function module.Window.animateIn(Object: guiobject, UIScale: uiscale, Duration: 
 end
 
 function module.Window.animateOut(Object: guiobject, UIScale: uiscale, Duration: number|nil)
-	Duration = Duration or 0.3
+	Duration = Duration or module.Latte.Modules.Stylesheet.Duration.Short
 	module.Latte.Modules.Fader.FadeOut(Object, Duration/2)
 	module.Latte.Modules.Tween.new(UIScale, module.Latte.Modules.TweenInfo.Quint(Duration), {Scale = 0.95}).Completed:Wait()
 	Object.Visible = false
 end
 
 function module.Menu.animateIn(Object: guiobject, Duration: number|nil)
-	Duration = Duration or 0.3
+	Duration = Duration or module.Latte.Modules.Stylesheet.Duration.Short
 	module.Latte.Modules.Fader.FadeIn(Object, Duration/2)
 	module.Latte.Modules.Tween.new(Object, module.Latte.Modules.TweenInfo.Quint(Duration), {Position = UDim2.new(0, 0, 0, 0)})
 end
 
 function module.Menu.animateOut(Object: guiobject, Duration: number|nil)
-	Duration = Duration or 0.3
+	Duration = Duration or module.Latte.Modules.Stylesheet.Duration.Short
 	module.Latte.Modules.Fader.FadeOut(Object, Duration/2)
 	module.Latte.Modules.Tween.new(Object, module.Latte.Modules.TweenInfo.Quint(Duration), {Position = UDim2.new(-0.35, -2, 0, 0)})
 end
