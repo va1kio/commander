@@ -57,7 +57,7 @@ module.prepare = function()
 
 	local Title = Instance.new("TextLabel")
 	Title.BackgroundTransparency = 1
-	Title.Font = Enum.Font.Gotham
+	Title.Font = Latte.Modules.Stylesheet.Fonts.Book
 	Title.LayoutOrder = 1
 	Title.Name = "Title"
 	Title.Size = UDim2.new(1, 0, 0, 22)
@@ -69,7 +69,7 @@ module.prepare = function()
 
 	local Subtitle = Instance.new("TextLabel")
 	Subtitle.BackgroundTransparency = 1
-	Subtitle.Font = Enum.Font.GothamSemibold
+	Subtitle.Font = Latte.Modules.Stylesheet.Fonts.Semibold
 	Subtitle.LayoutOrder = 2
 	Subtitle.Name = "Subtitle"
 	Subtitle.Size = UDim2.new(1, 0, 0, 14)

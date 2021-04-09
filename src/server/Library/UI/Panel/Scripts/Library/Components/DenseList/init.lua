@@ -25,6 +25,7 @@ module.new = function(Name: string, Parent: instance)
 			end
 			
 			Items[key] = value
+			Item.Container.Content.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 			Item.Name, Item.Container.Content.Text = key, value
 			ActualItems[key] = Item
 			Item.Parent = Comp

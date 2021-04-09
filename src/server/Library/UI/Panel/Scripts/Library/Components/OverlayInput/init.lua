@@ -51,6 +51,8 @@ module.new = function(Title: string, Parent: instance)
 	comp.Container.View.Input.Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
 	comp.Container.View.Input.Input.TextColor3 = Stylesheet.TextField.ContentColor
 	comp.Container.View.Input.Input.PlaceholderColor3 = Stylesheet.TextField.PlaceholderColor
+	comp.Container.View.Input.Input.Font = Stylesheet.Fonts.Book
+	comp.Container.View.Top.Title.Font = Stylesheet.Fonts.Book
 	exit.Position = UDim2.new(1, 0, 0, 0)
 	exit.AnchorPoint = Vector2.new(1, 0)
 	
