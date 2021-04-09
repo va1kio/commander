@@ -10,11 +10,7 @@ local remotes = {
 	Event = Instance.new("RemoteEvent")
 }
 
-local packages = {}
-local packagesButtons = {}
-local systemPackages = {}
-local permissionTable = {}
-local disableTable = {}
+local packages, packagesButtons, systemPackages, permissionTable, disableTable = {}, {}, {}, {}, {}
 local currentTheme = nil
 
 remotefolder.Name = "Commander Remotes"
@@ -80,7 +76,6 @@ local function loadPackages()
 		if v:IsA("ModuleScript") then
 			local name = v.Name
 			v = require(v)
-			warn("loaded systemPackage " .. name)
 			systemPackages[name] = v
 		end
 	end
@@ -100,7 +95,7 @@ local function loadPackages()
 	end
 	
 	for i,v in pairs(script.Packages:GetDescendants()) do
-		if v:IsA("ModuleScript") then
+		if v:IsA("ModuleScript") and not v.Parent:IsA("ModuleScript") then
 			pcall(function()
 				local mod = require(v)
 				mod.Services = systemPackages.Services
@@ -118,7 +113,6 @@ local function loadPackages()
 end
 
 loadPackages()
-
 systemPackages.Settings.Credits = systemPackages.Credits()
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then

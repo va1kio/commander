@@ -81,10 +81,9 @@ module.UI = {
 }
 
 module.Misc = {
-	["DisableCredits"] = false,
-	["HideDonations"] = false
+	["DisableCredits"] = false
 }
 
-module.Version = {"1.0.0", "1.0.0 (Stable Build)"}
+module.Version = {"1.0.0", "1.0.0 (Stable Build)", "Myrica"}
 
 return module
