@@ -100,6 +100,7 @@ local function loadPackages()
 				local mod = require(v)
 				mod.Services = systemPackages.Services
 				mod.API = systemPackages.API
+				mod.Settings = systemPackages.Settings
 				mod.Remotes = remotes
 				mod.fetchLogs = script.waypointBindable
 				mod.PackageId = v.Name

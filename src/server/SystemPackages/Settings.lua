@@ -81,9 +81,12 @@ module.UI = {
 }
 
 module.Misc = {
-	["DisableCredits"] = false
+	["DisableCredits"] = false,
+	["DataStoresKey"] = {
+		["Ban"] = "commander.bans"
+	}
 }
 
-module.Version = {"1.0.0", "1.0.0 (Stable Build)", "Myrica"}
+module.Version = {"1.1.0", "1.1.0 (Stable Build)", "Myrica"}
 
 return module

@@ -28,15 +28,15 @@ module.Execute = function(Client, Type, Attachment)
 			success = pcall(dataStore.SetAsync, dataStore, player, {End = os.time() + tonumber(Input2) * 60 * 60, Reason = result})
 			
 			if actualPlayer and success then
-				Client:Kick("\nBanned\nReason: " .. result .. "\n\nCome back at " .. os.date("%d %b, %Y (%a) %X", tick() + tonumber(Input2) * 60 * 60))
+				actualPlayer:Kick("\nBanned\nReason: " .. result .. "\n\nCome back at " .. os.date("%d %b, %Y (%a) %X", tick() + tonumber(Input2) * 60 * 60))
 				return true
 			end
 			return false
 		end
 	elseif Type == "firstrun" then
 		DataStoreService = module.Services.DataStoreService
-		dataStore = DataStoreService:GetDataStore("commander.bans")
+		dataStore = DataStoreService:GetDataStore(module.Settings.Misc.DataStoresKey.Ban or "commander.bans")
 	end
 end
 
-return module
+return
