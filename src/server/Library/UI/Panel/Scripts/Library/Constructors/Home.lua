@@ -57,7 +57,7 @@ module.prepare = function()
 
 	local Title = Instance.new("TextLabel")
 	Title.BackgroundTransparency = 1
-	Title.Font = Latte.Modules.Stylesheet.Fonts.Book
+	Title.Font = Enum.Font.Gotham
 	Title.LayoutOrder = 1
 	Title.Name = "Title"
 	Title.Size = UDim2.new(1, 0, 0, 22)
@@ -69,7 +69,7 @@ module.prepare = function()
 
 	local Subtitle = Instance.new("TextLabel")
 	Subtitle.BackgroundTransparency = 1
-	Subtitle.Font = Latte.Modules.Stylesheet.Fonts.Semibold
+	Subtitle.Font = Enum.Font.GothamSemibold
 	Subtitle.LayoutOrder = 2
 	Subtitle.Name = "Subtitle"
 	Subtitle.Size = UDim2.new(1, 0, 0, 14)
@@ -96,18 +96,12 @@ module.prepare = function()
 	local Icon = Instance.new("ImageLabel")
 	Icon.AnchorPoint = Vector2.new(0.5, 0.5)
 	Icon.BackgroundTransparency = 1
+	Icon.Image = "rbxthumb://type=AvatarHeadShot&id=" .. Latte.Modules.Services.Players.LocalPlayer.UserId .. "&w=420&h=420"
 	Icon.Name = "Icon"
 	Icon.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Icon.ScaleType = Enum.ScaleType.Fit
 	Icon.Size = UDim2.new(1, -2, 1, -2)
 	Icon.ZIndex = 2
-	Icon.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
-	coroutine.wrap(xpcall)(function()
-		local Image, IsReady = Latte.Modules.Services.Players:GetUserThumbnailAsync(Latte.Modules.Services.Players.LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-		if IsReady and Image then
-			Icon.Image = Image
-		end
-	end, warn)
 	Icon.Parent = Avatar
 
 	local UICorner2 = Instance.new("UICorner")
@@ -143,10 +137,10 @@ module.prepare = function()
 end
 
 module.update = function()
-	Server.Items["Players count"] = PlayersCount
-	Server.Items["Administrators ingame"] = AdministratorsCount
+	Server.Items["Players count"] = PlayersCount or 0
+	Server.Items["Administrators ingame"] = AdministratorsCount or 0
 	
-	System.Items["Modules loaded"] = #Packages
+	System.Items["Modules loaded"] = #Packages or 0
 	if Settings then
 		System.Items["Version"] = Settings.Version[1]
 	end
