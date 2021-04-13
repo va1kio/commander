@@ -1,4 +1,4 @@
-![commander banner](https://cdn.discordapp.com/attachments/813590068090372166/816336437922234418/Banner_2.png)
+![commander banner](https://cdn.discordapp.com/attachments/813583766039560206/831496945604100136/Banner.png)
 
 # Commander
 
