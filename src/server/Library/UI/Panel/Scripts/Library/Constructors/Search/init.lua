@@ -49,10 +49,11 @@ module.setup = function()
 						SearchComp.Visible = false
 						Searchbox.Input.Text = ""
 						Latte.Constructors.Window.SwitchPage(Location.Name)
+						Latte.Constructors.Window.Window.Menu.setActive(Location.Name)
 						
-						-- TODO: Find a better solution to do autoscroll on this
-						Location.CanvasPosition = Vector2.new(0, Location.Name == "Players" and Location:FindFirstChild("TARGET").AbsoluteSize.Y + 24 + Location:FindFirstChild(v).Size.Y.Offset * (Location:FindFirstChild(v).LayoutOrder-1) or 24 + Location:FindFirstChild(v).Size.Y.Offset * (Location:FindFirstChild(v).LayoutOrder-1))
-						warn(Location.CanvasPosition)
+						wait(Latte.Modules.Stylesheet.Duration.Short)
+						Location.CanvasPosition = Vector2.new(0, 0)
+						Latte.Modules.Tween.new(Location, Latte.Modules.TweenInfo.Quint(Latte.Modules.Stylesheet.Duration.Short) ,{CanvasPosition = Vector2.new(0, Location:FindFirstChild(v).AbsolutePosition.Y - 78)})
 					end)
 					
 					Item.LayoutOrder = i
@@ -72,7 +73,7 @@ module.setup = function()
 		Searchbox.Input:CaptureFocus()
 		Searchbox.Visible = true
 		SearchComp.Visible = true
-	end)
+	end).Image.Size = UDim2.new(0.35, 0, 0.35, 0)
 	
 	QuitSearch.ZIndex = 3
 	QuitSearch.Image.ImageColor3 = Color3.fromRGB(150, 150, 150)
