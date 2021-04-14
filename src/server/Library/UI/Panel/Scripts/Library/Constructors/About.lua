@@ -1,4 +1,4 @@
-local module, Page, Latte, Elements = {}, nil, nil, nil
+local module, Page, Latte, Elements, Settings = {}, nil, nil, nil, {}
 
 module.prepare = function()
 	local Top = Instance.new("Frame")
