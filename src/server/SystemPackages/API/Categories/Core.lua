@@ -1,5 +1,6 @@
 local module = {}
-local Services = require(script.Parent.Parent.Parent.Services)
+local import = nil
+local Services = nil
 
 function module.isPlayerAuthorized(Player: number)
 	
@@ -15,6 +16,11 @@ end
 
 function module.fetchAvailAdmins()
 	
+end
+
+function module.init()
+	import = module.Import
+	Services = import(Services)
 end
 
 return module

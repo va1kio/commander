@@ -1,5 +1,6 @@
 local module = {}
-local Services = require(script.Parent.Parent.Parent.Services)
+local import = nil
+local Services = nil
 
 function module.getPlayerWithName(Name: string)
 	for _,v in pairs(Services.Players:GetPlayers()) do
@@ -38,3 +39,10 @@ end
 function module.sendHint(Player: player, From: string, Content: string, Color: color3?)
 	
 end
+
+function module.init()
+	import = module.Import
+	Services = import(Services)
+end
+
+return module
