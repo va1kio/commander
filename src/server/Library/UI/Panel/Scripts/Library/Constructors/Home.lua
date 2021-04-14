@@ -187,7 +187,9 @@ module.setup = function()
 	coroutine.wrap(function()
 		while true do
 			local Hour, Minute = returnTime(workspace.DistributedGameTime)
-			Server.Items["Server uptime"] = Hour .. " hr(s), " .. Minute .. " min(s)"
+			Hour = Hour > 1 and Hour .. " hrs, " or Hour .. " hr, "
+			Minute = Minute > 1 and Minute .. " mins" or Minute .. " min"
+			Server.Items["Server uptime"] = Hour .. Minute
 			wait(60)
 		end
 	end)()
