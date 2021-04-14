@@ -32,8 +32,9 @@
 local module = {}
 
 module.Admins = {
-	["nana_kon"] = "Owner"
+	["nana_kon"] = "Owner" -- ["Name"] = "Permission",
 }
+-- Permission options can be found below: Moderator, Admin, Owner
 
 module.Permissions = {
 	["Moderator"] = {
@@ -77,7 +78,7 @@ module.Permissions = {
 module.UI = {
 	["Accent"] = Color3.fromRGB(64, 157, 130),
 	["Keybind"] = Enum.KeyCode.Semicolon,
-	["Theme"] = "Material"
+	["Theme"] = "Minimal"
 }
 
 module.Misc = {
