@@ -164,6 +164,8 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			return systemPackages.Settings.Version[1], systemPackages.Settings.Version[2]
 		elseif Type == "getHasPermission" then
 			return systemPackages.API.checkHasPermission(Client.UserId, Protocol)
+		elseif Type == "getElapsedTime" then
+			return workspace.DistributedGameTime
 		elseif Type == "setupUIForPlayer" then
 			remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
 			availableAdmins = systemPackages.API.getAvailableAdmins()

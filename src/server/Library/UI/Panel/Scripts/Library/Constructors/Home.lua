@@ -185,12 +185,14 @@ module.setup = function()
 	module.update()
 	
 	coroutine.wrap(function()
+		local Time = module.Remotes.RemoteFunction:InvokeServer("getElapsedTime")
 		while true do
-			local Hour, Minute = returnTime(workspace.DistributedGameTime)
+			local Hour, Minute = returnTime(Time)
 			Hour = Hour > 1 and Hour .. " hrs, " or Hour .. " hr, "
 			Minute = Minute > 1 and Minute .. " mins" or Minute .. " min"
 			Server.Items["Server uptime"] = Hour .. Minute
-			wait(60)
+			Time += 1
+			wait(1)
 		end
 	end)()
 	
