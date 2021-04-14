@@ -14,6 +14,7 @@ module.update = function()
 			Comp.Events.Clicked.Event:Connect(function()
 				module.Remotes.RemoteFunction:InvokeServer("command", v.Protocol)
 			end)
+			Comp.Object.LayoutOrder = i + 1
 		end
 	end
 end
