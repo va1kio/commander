@@ -29,7 +29,7 @@ module.Execute = function(Client, Type, Attachment)
 		end
 	elseif Type == "firstrun" then
 		DataStoreService = module.Services.DataStoreService
-		dataStore = DataStoreService:GetDataStore("commander.bans")
+		dataStore = DataStoreService:GetDataStore(module.Settings.Misc.DataStoresKey.Ban or "commander.bans")
 
 		module.API.registerPlayerAddedEvent(function(Client)
 			local success, data = pcall(dataStore.GetAsync, dataStore, Client.UserId)

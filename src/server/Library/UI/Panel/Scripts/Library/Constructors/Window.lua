@@ -12,7 +12,7 @@ end
 module.init = function()
 	Elements = module.Elements
 	Latte = module.Latte
-	module.Window = Latte.Components.Window.new("Panel", "Commander <b>4</b>", nil, true, Elements)
+	module.Window = Latte.Components.Window.new("Panel", "Commander", nil, true, Elements)
 end
 
 module.notifyUser = function(Title: string?, Content: string, Duration: number?)

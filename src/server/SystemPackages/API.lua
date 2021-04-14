@@ -120,7 +120,7 @@ function module.newMessage(To: player|string, From: string, Content: string, Dur
 	if tostring(To):lower() == "all" then
 		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
 	else
-		module.Remotes.Event:FireClient(player, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+		module.Remotes.Event:FireClient(To, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
 	end
 end
 

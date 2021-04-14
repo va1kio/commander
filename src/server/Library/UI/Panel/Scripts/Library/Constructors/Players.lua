@@ -57,6 +57,8 @@ module.update = function()
 					Latte.Constructors.Window.notifyUser(nil, "Player parameter must not be empty!")
 				end
 			end)
+			
+			Comp.Object.LayoutOrder = i + 1
 		end
 	end
 end

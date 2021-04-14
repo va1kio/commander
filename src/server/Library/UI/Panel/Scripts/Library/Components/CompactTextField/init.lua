@@ -32,6 +32,7 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 	clearAll.Image.ImageColor3 = Stylesheet.TextField.PlaceholderColor
 	comp.Title.TextColor3 = Stylesheet.TextField.TitleColor
 	comp.Input.Box.PlaceholderColor3 = Stylesheet.TextField.PlaceholderColor
+	comp.Input.Box.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 	comp.Input.Box.TextColor3 = Stylesheet.TextField.ContentColor
 	comp.Input.Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
 	

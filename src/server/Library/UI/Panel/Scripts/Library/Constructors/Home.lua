@@ -2,6 +2,7 @@ local module, Elements, Latte, Page = {}, nil, nil, nil
 local Settings, Packages = nil, {}
 local PlayersCount, AdministratorsCount, Level = 0, 0, ""
 local Server, System = nil, nil
+local isFirstTime = true
 
 local function returnTime(Seconds: number)
 	local Hours = math.floor(Seconds / 3600)
@@ -137,10 +138,10 @@ module.prepare = function()
 end
 
 module.update = function()
-	Server.Items["Players count"] = PlayersCount
-	Server.Items["Administrators ingame"] = AdministratorsCount
+	Server.Items["Players count"] = PlayersCount or 0
+	Server.Items["Administrators ingame"] = AdministratorsCount or 0
 	
-	System.Items["Modules loaded"] = #Packages
+	System.Items["Modules loaded"] = #Packages or 0
 	if Settings then
 		System.Items["Version"] = Settings.Version[1]
 	end
@@ -163,11 +164,13 @@ module.setup = function()
 			Level = Attachment
 		elseif Type == "firstRun" then
 			Settings = Attachment
-			Latte.Constructors.Window.notifyUser(nil, "Press the \"" .. Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander.")
-			Latte.Modules.TButton.new(Elements.Topbar.Right.Commander):Connect(function()
-				Latte.Constructors.Window.Toggle()
-			end)
-			
+			if isFirstTime then
+				isFirstTime = false
+				Latte.Constructors.Window.notifyUser(nil, "Press the \"" .. Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander.")
+				Latte.Modules.TButton.new(Elements.Topbar.Right.Commander):Connect(function()
+					Latte.Constructors.Window.Toggle()
+				end)
+			end
 			Latte.Modules.Services.UserInputService.InputBegan:Connect(function(Input, isGameProcessed)
 				if Input.KeyCode == Settings.UI.Keybind and not isGameProcessed then
 					Latte.Constructors.Window.Toggle()
@@ -184,7 +187,9 @@ module.setup = function()
 	coroutine.wrap(function()
 		while true do
 			local Hour, Minute = returnTime(workspace.DistributedGameTime)
-			Server.Items["Server uptime"] = Hour .. " hr(s), " .. Minute .. " min(s)"
+			Hour = Hour > 1 and Hour .. " hrs, " or Hour .. " hr, "
+			Minute = Minute > 1 and Minute .. " mins" or Minute .. " min"
+			Server.Items["Server uptime"] = Hour .. Minute
 			wait(60)
 		end
 	end)()
