@@ -1,6 +1,7 @@
 local module = {}
-local Services = require(script.Parent.Services)
-local Enums = require(script.Parent.Enums)
+local import = require(script.Parent.Import)
+local Services = import("Services")
+local Enums = import("Enums")
 module.__index = module
 
 function module.new(Name: string?, Description: string?, ContextType)
