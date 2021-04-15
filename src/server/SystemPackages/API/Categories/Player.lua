@@ -11,11 +11,7 @@ function module.getPlayerWithName(Name: string)
 end
 
 function module.getPlayerWithId(Id: number)
-	for _,v in pairs(Services.Players:GetPlayers()) do
-		if v.UserId == id then
-			return v
-		end
-	end
+	return Services.Players:GetPlayerByUserId(Id)
 end
 
 function module.getCharacter(Player: player)
