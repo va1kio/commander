@@ -42,7 +42,7 @@ end
 
 function module.init()
 	import = module.Import
-	Services = import(Services)
+	Services = import("Services")
 end
 
 return module
