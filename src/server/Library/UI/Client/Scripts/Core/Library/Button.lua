@@ -14,11 +14,11 @@ end
 
 function module.register(Button, ReactionCallback)
 	local bindable = Instance.new("BindableEvent")
-	
+
 	if not ReactionCallback then
 		ReactionCallback = function() end
 	end
-	
+
 	Button.InputBegan:Connect(function(Object)
 		if Object.UserInputType == Enum.UserInputType.MouseButton1 then
 			ReactionCallback(Button, "Hold")
@@ -26,7 +26,7 @@ function module.register(Button, ReactionCallback)
 			ReactionCallback(Button, "Hover")
 		end
 	end)
-	
+
 	Button.InputEnded:Connect(function(Object)
 		ReactionCallback(Button, "Over")
 		if Object.UserInputType == Enum.UserInputType.MouseButton1 or Object.UserInputType == Enum.UserInputType.Touch then
@@ -36,7 +36,7 @@ function module.register(Button, ReactionCallback)
 			end
 		end
 	end)
-	
+
 	return bindable.Event
 end
 

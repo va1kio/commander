@@ -4,7 +4,7 @@ local module = {
 	Location = "Player",
 }
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client, "What's the message?").Event:Wait()
 
@@ -14,7 +14,7 @@ module.Execute = function(Client, Type, Attachment)
 
 		local Status
 		Status, Input = module.API.filterText(Client, Input)
-		
+
 		if Status then
 			module.API.doThisToPlayers(Client, Attachment, function(Player)
 				module.Remotes.Event:FireClient(Player, "newMessage", "", {From = "System", Content = Input})

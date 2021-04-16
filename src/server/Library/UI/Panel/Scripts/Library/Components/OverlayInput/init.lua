@@ -7,7 +7,7 @@ module.new = function(Title: string, Parent: instance)
 	local RoundButton = module.Latte.Components.RoundButton
 	local FlatButton = module.Latte.Components.FlatButton
 	local isDismissed = false
-	
+
 	local comp = script.Comp:Clone()
 	comp.Name = "Modal"
 	local exit
@@ -20,12 +20,12 @@ module.new = function(Title: string, Parent: instance)
 			["Dismissed"] = Instance.new("BindableEvent")
 		}
 	}
-	
+
 	local function cook()
 		comp.Container.View.Top.Title.Text = t.Title
 		comp.Parent = t.Parent
 	end
-	
+
 	local function dismiss(Input)
 		if not isDismissed then
 			module.Latte.Modules.Animator.Window.animateOut(comp, comp.Container.UIScale)
@@ -33,11 +33,11 @@ module.new = function(Title: string, Parent: instance)
 			isDismissed = true
 		end
 	end
-	
+
 	comp.Container.View.Input.Input:GetPropertyChangedSignal("Text"):Connect(function()
 		t.Text = comp.Container.View.Input.Input.Text
 	end)
-	
+
 	exit = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Container.View.Top, dismiss, {Text = nil})
 	submit = FlatButton.new("Submit", "Submit", comp.Container.View.Bottom, dismiss, comp.Container.View.Input.Input)
 	submit.Size = UDim2.new(0, 75, 1, 0)
@@ -55,7 +55,7 @@ module.new = function(Title: string, Parent: instance)
 	comp.Container.View.Top.Title.Font = Stylesheet.Fonts.Book
 	exit.Position = UDim2.new(1, 0, 0, 0)
 	exit.AnchorPoint = Vector2.new(1, 0)
-	
+
 	cook()
 	module.Latte.Modules.Animator.Window.animateIn(comp, comp.Container.UIScale)
 	return setmetatable({}, {

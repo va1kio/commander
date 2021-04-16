@@ -14,7 +14,7 @@ return setmetatable({},{
 		else
 			object = game.GetService(game, key)
 		end
-		
+
 		return object
 	end
 })

@@ -15,7 +15,7 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 			["ContentChanged"] = ContentChanged.Event
 		}
 	}
-	
+
 	local function cook()
 		comp.Name = t.Title
 		comp.Title.Text = t.Title
@@ -23,7 +23,7 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 		comp.Input.Box.Text = t.Content
 		comp.Parent = t.Parent
 	end
-	
+
 	clearAll = RoundButton.new("Exit", "rbxassetid://6235536018", comp.Input, function()
 		comp.Input.Box.Text = ""
 	end)
@@ -35,12 +35,12 @@ module.new = function(Title: string, Placeholder: string, Parent: instance)
 	comp.Input.Box.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 	comp.Input.Box.TextColor3 = Stylesheet.TextField.ContentColor
 	comp.Input.Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
-	
+
 	comp.Input.Box:GetPropertyChangedSignal("Text"):Connect(function()
 		t.Content = comp.Input.Box.Text
 		ContentChanged:Fire(t.Content)
 	end)
-	
+
 	cook()
 	return setmetatable({}, {
 		__index = function(_, key: string)

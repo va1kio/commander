@@ -13,7 +13,7 @@ local function stylise(UI: guiobject)
 		Accent.Position = UDim2.new(0, 0, 1, 0)
 		Accent.ZIndex = 3
 		Accent.Parent = UI.Container.Top
-		
+
 		UI.Container.TopbarShadow.Visible = false
 		UI.Container.Top.BackgroundColor3 = Stylesheet.Window.TopbarBackgroundColorIfAccentUsed
 		UI.Container.Top.Background.ImageColor3 = Stylesheet.Window.TopbarBackgroundColorIfAccentUsed
@@ -36,17 +36,17 @@ local function giveMenu(Menu: guiobject)
 	local Exit
 	Menu.Container.Top.Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.AccentColor
 	Menu.Container.BackgroundColor3 = Latte.Modules.Stylesheet.Menu.BackgroundColor
-	
+
 	t.Toggle = function()
 		if t.isActive then
 			Latte.Modules.Animator.Menu.animateOut(Menu)
 		else
 			Latte.Modules.Animator.Menu.animateIn(Menu)
 		end
-		
+
 		t.isActive = not t.isActive
 	end
-	
+
 	t.setActive = function(Name: string)
 		if t.Buttons[Name] then
 			for i,v in pairs(t.Buttons) do
@@ -58,11 +58,11 @@ local function giveMenu(Menu: guiobject)
 			end
 		end
 	end
-	
+
 	t.newButton = function(Name: string, Position: number, Callback)
 		if not t.Buttons[Name] then
 			t.Buttons[Name] = {}
-			
+
 			local comp = Latte.Components.MenuButton.new(Name, Name, Menu.Container.List, function()
 				t.Toggle()
 				Callback()
@@ -72,7 +72,7 @@ local function giveMenu(Menu: guiobject)
 					end
 				end
 			end)
-			
+
 			t.Buttons[Name].Toggle = comp.setActive
 			comp.Object.LayoutOrder = Position
 			comp = nil
@@ -106,12 +106,12 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		["ShowMenu"] = ShowMenu or false,
 		["Menu"] = giveMenu(comp.Container.Menu)
 	}
-	
+
 	window.newButton = function(Name: string, Image: string, Side: string, Position: number, Callback)
 		local ActualSide = comp.Container.Top:FindFirstChild(Side)
 		local comp = Latte.Components.RoundButton.new(Name, Image, ActualSide, Callback)
 		comp.LayoutOrder = Position
-		
+
 		if Stylesheet.Window.TopbarUseAccentInstead then
 			comp.Image.ImageColor3 = Stylesheet.Window.TopbarElementColorIfAccentUsed
 		else
@@ -119,7 +119,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		end
 		return comp
 	end
-	
+
 	window.newPage = function(Name: string, InMenu: boolean?, Position: number?)
 		local page = Latte.Components.Page.new(Name, window.Pages)
 
@@ -128,7 +128,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 				window.switchPage(Name)
 			end)
 		end
-		
+
 		return page
 	end
 
@@ -148,18 +148,18 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 
 		page:Destroy()
 	end
-	
+
 	window.switchPage = function(Page: string)
 		if tostring(window.CurrentPage):lower() == Page:lower() then return end
 
 		if window.CurrentPage then
 			Latte.Modules.Animator.Window.animateOut(window.CurrentPage, window.CurrentPage.UIScale)
 		end
-		
+
 		window.CurrentPage = window.Pages[Page]
 		Latte.Modules.Animator.Window.animateIn(window.CurrentPage, window.CurrentPage.UIScale)
 	end
-	
+
 	window.Toggle = function(Override: boolean?)
 		if Override then
 			Latte.Modules.Animator.Window.animateIn(comp, comp.UIScale)
@@ -174,7 +174,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		Toggled = Override or not Toggled
 		window.Events.Toggled:Fire(Toggled)
 	end
-	
+
 	-- Fix data.
 	local function cook()
 		comp.Name = window.Title
@@ -183,13 +183,13 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		comp.Parent = window.Parent
 		comp.Container.Top.Left.Menu.Visible = window.ShowMenu
 		comp.ZIndex = window.ZIndex
-		
+
 		if window.Parent == nil then
 			comp:Destroy()
 			window = nil
 		end
 	end
-	
+
 	comp.Container.Top.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Semibold
 	window.newButton("Exit", "rbxassetid://6235536018", "Right", 1, window.Toggle)
 	window.newButton("Menu", "rbxassetid://6272739995", "Left", 1, window.Menu.Toggle)

@@ -21,7 +21,7 @@ function module.FadeIn(Object: instance, FadeTime: number|nil)
 			if v:GetAttribute("InitialTransparency") then
 				module.Latte.Modules.Tween.new(v, TI, {[Property] = v:GetAttribute("InitialTransparency")})
 			else
-				v:SetAttribute("InitialTransparency", v[Property])				
+				v:SetAttribute("InitialTransparency", v[Property])
 				v[Property] = 1
 				module.Latte.Modules.Tween.new(v, TI, {[Property] = v:GetAttribute("InitialTransparency")})
 			end

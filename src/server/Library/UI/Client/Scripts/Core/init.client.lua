@@ -58,7 +58,7 @@ local function makeMessage(From: string, Content: string, Duration: number?)
 		local guid = HttpService:GenerateGUID()
 		local closeButtonEvent
 		messages[#messages + 1] = guid
-		repeat wait() until messages[1] == guid		
+		repeat wait() until messages[1] == guid
 		local message = script.Message:Clone()
 		local isActive = true
 		message.Container.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Message from </font>" .. tostring(From)
@@ -66,7 +66,7 @@ local function makeMessage(From: string, Content: string, Duration: number?)
 		message.Parent = Elements.List
 		message.Container.Size = UDim2.new(1, 0, 0, math.floor(message.Container.Body.Container.Content.TextBounds.Y) + 56)
 		message.Size = UDim2.new(0.45, 0, 0, 0)
-		
+
 		local function close()
 			if messages[1] == guid then
 				isActive = false
@@ -78,16 +78,16 @@ local function makeMessage(From: string, Content: string, Duration: number?)
 				table.remove(messages, 1)
 			end
 		end
-		
+
 		closeButtonEvent = Classes.Button.register(message.Container.Top.Exit):Connect(function()
 			close()
 		end)
-		
+
 		coroutine.wrap(function()
 			wait(Duration)
 			close()
 		end)()
-		
+
 		if #messages == 1 then
 			Elements.List.Indicator.Visible = false
 		else

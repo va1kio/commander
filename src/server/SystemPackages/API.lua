@@ -62,7 +62,7 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 			end
 		end
 	end
-	
+
 	if string.match(Player, ",") then
 		for PlayerName in string.gmatch(Player, "([^,]+)(,? ?)") do
 			runOnName(PlayerName)
@@ -112,7 +112,7 @@ function module.filterText(From: player, Content: string)
 	if success and result then
 		result = result:GetNonChatStringForBroadcastAsync()
 	end
-			
+
 	return success, result
 end
 
@@ -185,7 +185,7 @@ function module.getAdminLevel(ClientId: number)
 				end
 
 				local difference = selectedGroup.Rank - tonumber(rankId);
-				
+
 				if (condition == "" and difference == 0)
 					or (condition == ">" and difference >= 0)
 					or (condition == "<" and difference <= 0) then

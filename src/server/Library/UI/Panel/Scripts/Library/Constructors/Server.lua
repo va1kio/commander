@@ -28,7 +28,7 @@ module.setup = function()
 	Page = Latte.Constructors.Window.Window.newPage("Server", true, 2)
 	Page.UIListLayout.Padding = UDim.new(0, 0)
 	module.prepare()
-	
+
 	module.Remotes.RemoteEvent.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		if Type == "fetchCommands" then
 			Packages = Attachment

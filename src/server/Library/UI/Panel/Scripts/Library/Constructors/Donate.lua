@@ -13,7 +13,7 @@ module.prepare = function()
 	Top.Name = "Top"
 	Top.Size = UDim2.new(1, 0, 0, 200)
 	Top.Parent = Page
-	
+
 	local Background = Instance.new("ImageLabel")
 	Background.BackgroundTransparency = 1
 	Background.Image = Latte.Modules.Stylesheet.Home.TopImage
@@ -21,14 +21,14 @@ module.prepare = function()
 	Background.ScaleType = Enum.ScaleType.Crop
 	Background.Size = UDim2.new(1, 0, 1, 0)
 	Background.Parent = Top
-	
+
 	local Container = Instance.new("Frame")
 	Container.BackgroundTransparency = 1
 	Container.Name = "Container"
 	Container.Size = UDim2.new(1, 0, 1, 0)
 	Container.ZIndex = 2
 	Container.Parent = Top
-	
+
 	local UIGradient = Instance.new("UIGradient")
 	UIGradient.Rotation = 90
 	UIGradient.Transparency = NumberSequence.new{
@@ -36,7 +36,7 @@ module.prepare = function()
 		NumberSequenceKeypoint.new(1, 1)
 	}
 	UIGradient.Parent = Background
-	
+
 	local Icon = Instance.new("ImageLabel")
 	Icon.AnchorPoint = Vector2.new(0.5, 0.5)
 	Icon.BackgroundTransparency = 1
@@ -46,13 +46,13 @@ module.prepare = function()
 	Icon.ScaleType = Enum.ScaleType.Fit
 	Icon.Size = UDim2.new(0, 80, 0, 80)
 	Icon.Parent = Container
-	
+
 	local UIListLayout = Instance.new("UIListLayout")
 	UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 	UIListLayout.Parent = Container
-	
+
 	local Title = Instance.new("TextLabel")
 	Title.BackgroundTransparency = 1
 	Title.BorderSizePixel = 0
@@ -65,7 +65,7 @@ module.prepare = function()
 	Title.TextSize = 18
 	Title.TextWrapped = true
 	Title.Parent = Container
-	
+
 	local Subtitle = Instance.new("TextLabel")
 	Subtitle.BackgroundTransparency = 1
 	Subtitle.BorderSizePixel = 0
@@ -79,10 +79,10 @@ module.prepare = function()
 	Subtitle.TextWrapped = true
 	Subtitle.TextYAlignment = Enum.TextYAlignment.Bottom
 	Subtitle.Parent = Container
-	
+
 	local Padding = Latte.Components.Padding.new(Page)
 	Padding.Bottom = UDim.new(0, 10)
-	
+
 	if Latte.Modules.Stylesheet.Donate.TopUseAccentInstead then
 		local Accent = Instance.new("Frame")
 		Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
@@ -91,17 +91,17 @@ module.prepare = function()
 		Accent.Position = UDim2.new(0, 0, 1, 0)
 		Accent.ZIndex = 3
 		Accent.Parent = Top
-		
+
 		Background.ImageTransparency = 1
 		Top.BackgroundTransparency = 0
 		Top.BackgroundColor3 = Latte.Modules.Stylesheet.Donate.TopBackgroundColor
 	end
-	
+
 	for i,v in pairs(Items) do
 		local Button = Latte.Components.OutlinedButton.new(v.Value, "Donate " .. tostring(v.Value) .. " Robux", Page, function()
 			Latte.Modules.Services.MarketplaceService:PromptGamePassPurchase(Latte.Modules.Services.Players.LocalPlayer, v.Id)
 		end)
-		
+
 		Button.Size = UDim2.new(1, -20, 0, Button.Size.Y.Offset)
 		Button.LayoutOrder = i + 1
 	end

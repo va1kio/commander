@@ -7,7 +7,7 @@ local function fetch(Input: string)
 	for i,v in pairs(Latte.Modules.Services.Players:GetPlayers()) do
 		table.insert(t, #t+1, v.Name)
 	end
-	
+
 	matchObject = Latte.Modules.Matcher.new(t, true, true)
 	return matchObject:match(Input)[1]
 end
@@ -19,7 +19,7 @@ module.prepare = function()
 	Suggestion.Object.Visible = false
 	Padding.Top = UDim.new(0, 24)
 	Padding.Bottom = UDim.new(0, 24)
-	
+
 	TextField.Events.ContentChanged:Connect(function()
 		local Text = string.gsub(TextField.Content, "%s", "")
 		if Text and string.len(Text) >= 1 then
@@ -35,7 +35,7 @@ module.prepare = function()
 			Suggestion.Object.Visible = false
 		end
 	end)
-	
+
 	Suggestion.Events.Clicked.Event:Connect(function()
 		TextField.Content = Suggestion.Title
 		Suggestion.Object.Visible = false
@@ -57,7 +57,7 @@ module.update = function()
 					Latte.Constructors.Window.notifyUser(nil, "Player parameter must not be empty!")
 				end
 			end)
-			
+
 			Comp.Object.LayoutOrder = i + 1
 		end
 	end
@@ -72,7 +72,7 @@ module.setup = function()
 	Page = Latte.Constructors.Window.Window.newPage("Players", true, 2)
 	Page.UIListLayout.Padding = UDim.new(0, 0)
 	module.prepare()
-	
+
 	module.Remotes.RemoteEvent.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		if Type == "fetchCommands" then
 			Packages = Attachment
