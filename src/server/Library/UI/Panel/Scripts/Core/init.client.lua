@@ -27,13 +27,13 @@ local function setupModules()
 			v.Latte = latteTable
 		end
 	end
-	
+
 	for i,v in pairs(Classes.Constructors) do
 		v.Elements = Elements
 		v.Remotes = Events
 		v.init()
 	end
-	
+
 	for _,v in pairs(Classes.Constructors) do
 		v.setup()
 	end

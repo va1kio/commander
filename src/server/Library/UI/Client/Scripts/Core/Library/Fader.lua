@@ -20,7 +20,7 @@ function module.FadeIn(Object, FadeTime)
 			if v:GetAttribute("InitialTransparency") then
 				module.Tween(v, TI, {[Property] = v:GetAttribute("InitialTransparency")})
 			else
-				v:SetAttribute("InitialTransparency", v[Property])				
+				v:SetAttribute("InitialTransparency", v[Property])
 				v[Property] = 1
 				module.Tween(v, TI, {[Property] = v:GetAttribute("InitialTransparency")})
 			end

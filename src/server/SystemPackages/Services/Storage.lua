@@ -38,7 +38,7 @@ module.Create = function(name: string)
 			__newindex = function() return end
 		})
 		updateGlobal()
-		
+
 		return Storages[name]
 	end
 end

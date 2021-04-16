@@ -112,16 +112,16 @@ module.prepare = function()
 	local UICorner3 = Instance.new("UICorner")
 	UICorner3.CornerRadius = UDim.new(1, 0)
 	UICorner3.Parent = Icon
-	
+
 	Server = Latte.Components.SeparatedList.new("Server", "SERVER STATS", Page)
 	Server.Items["Players count"] = "1"
 	Server.Items["Administrators ingame"] = "1"
 	Server.Items["Server uptime"] = "00:00"
-	
+
 	System = Latte.Components.SeparatedList.new("System", "SYSTEM STATS", Page)
 	System.Items["Modules loaded"] = "0"
 	System.Items["Version"] = "Commander ft. Latte"
-	
+
 	if Latte.Modules.Stylesheet.Home.TopUseAccentInstead then
 		local Accent = Instance.new("Frame")
 		Accent.BackgroundColor3 = Latte.Modules.Stylesheet.Window.AccentColor
@@ -130,7 +130,7 @@ module.prepare = function()
 		Accent.Position = UDim2.new(0, 0, 1, 0)
 		Accent.ZIndex = 3
 		Accent.Parent = Top
-		
+
 		Background.ImageTransparency = 1
 		Top.BackgroundTransparency = 0
 		Top.BackgroundColor3 = Latte.Modules.Stylesheet.Home.TopBackgroundColor
@@ -140,7 +140,7 @@ end
 module.update = function()
 	Server.Items["Players count"] = PlayersCount or 0
 	Server.Items["Administrators ingame"] = AdministratorsCount or 0
-	
+
 	System.Items["Modules loaded"] = #Packages or 0
 	if Settings then
 		System.Items["Version"] = Settings.Version[1]
@@ -156,7 +156,7 @@ module.setup = function()
 	Page = Latte.Constructors.Window.Window.newPage("Home", true, 1)
 	Page.UIListLayout.Padding = UDim.new(0, 24)
 	module.prepare()
-	
+
 	module.Remotes.RemoteEvent.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		if Type == "fetchCommands" then
 			Packages = Attachment
@@ -179,11 +179,11 @@ module.setup = function()
 		end
 		module.update()
 	end)
-	
+
 	PlayersCount = #Latte.Modules.Services.Players:GetPlayers()
 	AdministratorsCount = module.Remotes.RemoteFunction:InvokeServer("getAvailableAdmins")
 	module.update()
-	
+
 	coroutine.wrap(function()
 		local Time = module.Remotes.RemoteFunction:InvokeServer("getElapsedTime")
 		while true do
@@ -195,7 +195,7 @@ module.setup = function()
 			wait(1)
 		end
 	end)()
-	
+
 	Latte.Constructors.Window.Window.Menu.setActive("Home")
 	Latte.Constructors.Window.Window.switchPage("Home")
 end

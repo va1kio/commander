@@ -7,7 +7,7 @@ local module = {
 local DataStoreService
 local dataStore
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local player = module.API.getUserIdWithName(Attachment)
 		if typeof(player) == "number" then

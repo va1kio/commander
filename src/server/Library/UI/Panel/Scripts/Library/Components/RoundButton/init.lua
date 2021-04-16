@@ -9,11 +9,11 @@ module.new = function(Name: string, Image: string, Parent: instance, Callback: (
 	Comp.Name = Name
 	Comp.Image.Image = Image
 	Comp.Hover.BackgroundColor3 = module.Latte.Modules.Stylesheet.Button.RoundHoverColor
-	
+
 	module.Latte.Modules.Trigger.new(Comp, reaction, 3, false):Connect(function()
 		Callback(Arguments)
 	end)
-	
+
 	Comp.Parent = Parent
 	return Comp
 end

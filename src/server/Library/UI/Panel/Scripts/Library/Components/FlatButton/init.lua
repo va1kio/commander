@@ -11,11 +11,11 @@ module.new = function(Name: string, Text: string?, Parent: instance, Callback, A
 	Comp.Hover.BackgroundColor3 = module.Latte.Modules.Stylesheet.ThemeColor
 	Comp.Title.TextColor3 = module.Latte.Modules.Stylesheet.ThemeColor
 	Comp.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Semibold
-	
+
 	module.Latte.Modules.Trigger.new(Comp, reaction, 3, false):Connect(function()
 		Callback(Arguments)
 	end)
-	
+
 	Comp.Parent = Parent
 	return Comp
 end

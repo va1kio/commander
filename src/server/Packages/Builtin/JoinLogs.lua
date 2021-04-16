@@ -5,7 +5,7 @@ local module = {
 }
 local t = {}
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		module.API.sendListToPlayer(Client, "Join logs", t)
 		return true

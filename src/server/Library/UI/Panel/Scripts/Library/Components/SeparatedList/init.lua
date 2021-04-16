@@ -14,12 +14,12 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 		["Items"] = {},
 		["Parent"] = Parent
 	}
-	
+
 	t.Items = setmetatable({}, {
 		__index = function(_, key: string)
 			return Items[key]
 		end,
-		
+
 		__newindex = function(_, key: string, value: string)
 			local Item = ActualItems[key] or script.Item:Clone()
 			if not ActualItems[key] then
@@ -29,7 +29,7 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 				Item.Value.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.ValueColor
 				Item.Accent.BackgroundColor3 = module.Latte.Modules.Stylesheet.Window.AccentColor
 			end
-			
+
 			Items[key] = value
 			Item.Name, Item.Title.Text = key, key
 			Item.Value.Text = value
@@ -38,7 +38,7 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 			return Items[key]
 		end,
 	})
-	
+
 	return setmetatable({}, {
 		__index = function(_, key: string)
 			return t[key]
@@ -50,7 +50,7 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 				Comp.Container.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 				Comp.Container.Title.Text = t["Title"]
 				Comp.Parent = t["Parent"]
-				
+
 				if Comp.Parent == nil then
 					Comp:Destroy()
 					t = nil
