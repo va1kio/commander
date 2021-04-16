@@ -114,7 +114,7 @@ local function loadPackages()
 end
 
 loadPackages()
-systemPackages.Settings.Credits = systemPackages.Credits()
+systemPackages.Settings.Credits = systemPackages.GetCredits()
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
 	error("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
