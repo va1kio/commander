@@ -62,7 +62,7 @@ module.prepare = function()
 	Title.Size = UDim2.new(1, 0, 0, 18)
 	Title.Text = "Donation, please!"
 	Title.TextColor3 = Latte.Modules.Stylesheet.Donate.TitleColor
-	Title.TextSize = 18
+	Title.TextSize = 16
 	Title.TextWrapped = true
 	Title.Parent = Container
 	
