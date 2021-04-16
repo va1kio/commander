@@ -21,10 +21,13 @@ module.setup = function()
 	local Top = Latte.Constructors.Window.Window.Pages.Parent.Top
 	local Linear = Latte.Modules.TweenInfo.Linear(Latte.Modules.Stylesheet.Duration.Short)
 	local SearchComp = script.SearchComp:Clone()
+	local UICorner = Instance.new("UICorner")
 	local Searchbox = script.SearchBox:Clone()
 	local QuitSearch = nil
+	UICorner.CornerRadius = UDim.new(0, 6)
 	SearchComp.Visible = false
 	Searchbox.Visible = false
+	UICorner.Parent = SearchComp
 	Searchbox.Parent = Top
 	SearchComp.Parent = Top.Parent
 	
@@ -53,7 +56,8 @@ module.setup = function()
 						
 						wait(Latte.Modules.Stylesheet.Duration.Short)
 						Location.CanvasPosition = Vector2.new(0, 0)
-						Latte.Modules.Tween.new(Location, Latte.Modules.TweenInfo.Quint(Latte.Modules.Stylesheet.Duration.Short) ,{CanvasPosition = Vector2.new(0, Location:FindFirstChild(v).AbsolutePosition.Y - 78)})
+						-- TODO: Find a better way to do this, the current method is pretty hardcoded.
+						Latte.Modules.Tween.new(Location, Latte.Modules.TweenInfo.Quint(Latte.Modules.Stylesheet.Duration.Short) ,{CanvasPosition = Vector2.new(0, Location:FindFirstChild(v).AbsolutePosition.Y - 155)})
 					end)
 					
 					Item.LayoutOrder = i
