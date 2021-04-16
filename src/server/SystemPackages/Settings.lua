@@ -88,6 +88,6 @@ module.Misc = {
 	}
 }
 
-module.Version = {"1.1.1", "1.1.1 (Stable Build)", "Myrica"}
+module.Version = {"1.2.0", "1.2.0 (Preview Build)", "Myrica"}
 
 return module

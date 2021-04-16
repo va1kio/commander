@@ -1,8 +1,8 @@
 ![commander banner](https://cdn.discordapp.com/attachments/813590068090372166/816336437922234418/Banner_2.png)
 
-# Commander
+# Commander Preview
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 1.0.0](https://img.shields.io/badge/latest_build-1.0.0-brightgreen?style=for-the-badge) ![phase Stable](https://img.shields.io/badge/Phase-Stable-blueviolet?style=for-the-badge)
+![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 1.2.0](https://img.shields.io/badge/latest_build-1.2.0-brightgreen?style=for-the-badge) ![phase Preview](https://img.shields.io/badge/Phase-Preview-yellow?style=for-the-badge)
 
 Free & open-sourced administration panel for Roblox
 
@@ -13,7 +13,7 @@ If you are importing it manually, consider watching this video: https://www.yout
 
 If you are syncing with Rojo, use the following commands in your terminal:
 ```
-git clone https://github.com/va1kio/commander.git
+git clone -b preview https://github.com/va1kio/commander.git
 rojo serve
 ```
 
@@ -21,12 +21,12 @@ Alternatively, you can also use our module loader, which allows Commander to be 
 
 ## Documentation
 
-Documentation can be found [here](https://va1kio.github.io/commander-site/docs/#/home)
+Documentation can be found [here](https://commander-4.vercel.app)
 
 ## Useful links
 
 [Website](https://va1kio.github.io/commander-site/)
 
-[Devforum](https://devforum.roblox.com/t/dp2-commander-easy-to-use-administration-panel/503290/)
+[Devforum](https://devforum.roblox.com/t/thread/503290/)
 
 [Discord](https://discord.gg/RzxxD7YCaU)
