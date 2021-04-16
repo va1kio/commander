@@ -62,9 +62,9 @@ module.prepare = function()
 	Title.LayoutOrder = 1
 	Title.Name = "Title"
 	Title.Size = UDim2.new(1, 0, 0, 26)
-	Title.Text = Latte.Modules.Services.Players.LocalPlayer.Name
+	Title.Text = Latte.Modules.Services.Players.LocalPlayer.DisplayName .. " (@" .. Latte.Modules.Services.Players.LocalPlayer.Name .. ")"
 	Title.TextColor3 = Latte.Modules.Stylesheet.Home.UsernameColor
-	Title.TextSize = 18
+	Title.TextSize = 16
 	Title.TextYAlignment = Enum.TextYAlignment.Bottom
 	Title.Parent = Container
 
