@@ -58,22 +58,22 @@ module.prepare = function()
 
 	local Title = Instance.new("TextLabel")
 	Title.BackgroundTransparency = 1
-	Title.Font = Enum.Font.Gotham
+	Title.Font = Latte.Modules.Stylesheet.Fonts.Book
 	Title.LayoutOrder = 1
 	Title.Name = "Title"
-	Title.Size = UDim2.new(1, 0, 0, 22)
-	Title.Text = Latte.Modules.Services.Players.LocalPlayer.Name
+	Title.Size = UDim2.new(1, 0, 0, 26)
+	Title.Text = Latte.Modules.Services.Players.LocalPlayer.DisplayName .. " (@" .. Latte.Modules.Services.Players.LocalPlayer.Name .. ")"
 	Title.TextColor3 = Latte.Modules.Stylesheet.Home.UsernameColor
-	Title.TextSize = 18
+	Title.TextSize = 16
 	Title.TextYAlignment = Enum.TextYAlignment.Bottom
 	Title.Parent = Container
 
 	local Subtitle = Instance.new("TextLabel")
 	Subtitle.BackgroundTransparency = 1
-	Subtitle.Font = Enum.Font.GothamSemibold
+	Subtitle.Font = Latte.Modules.Stylesheet.Fonts.Semibold
 	Subtitle.LayoutOrder = 2
 	Subtitle.Name = "Subtitle"
-	Subtitle.Size = UDim2.new(1, 0, 0, 14)
+	Subtitle.Size = UDim2.new(1, 0, 0, 16)
 	Subtitle.Text = "Administrator"
 	Subtitle.TextColor3 = Latte.Modules.Stylesheet.Home.RankColor
 	Subtitle.TextSize = 12
@@ -140,6 +140,7 @@ end
 module.update = function()
 	Server.Items["Players count"] = PlayersCount or 0
 	Server.Items["Administrators ingame"] = AdministratorsCount or 0
+	Page.Top.Container.Subtitle.Text = Level
 	
 	System.Items["Modules loaded"] = #Packages or 0
 	if Settings then
