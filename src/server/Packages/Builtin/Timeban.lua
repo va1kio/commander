@@ -39,4 +39,4 @@ module.Execute = function(Client, Type, Attachment)
 	end
 end
 
-return
+return module
