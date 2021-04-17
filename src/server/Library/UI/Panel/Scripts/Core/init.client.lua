@@ -1,44 +1,44 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Events = ReplicatedStorage:WaitForChild("Commander Remotes")
-local Classes = {}
-local Elements = script.Parent.Parent.Elements
+local events = ReplicatedStorage:WaitForChild("Commander Remotes")
+local classes = {}
+local elements = script.Parent.Parent.Elements
 
 local function setupModules()
 	local latteTable = {}
 	for _, folder in pairs(script.Parent.Library:GetChildren()) do
-		Classes[folder.Name] = {}
-		for i,v in pairs(folder:GetChildren()) do
-			if v:IsA("ModuleScript") and type(require(v)) == "table" then
-				Classes[folder.Name][v.Name] = require(v)
+		classes[folder.Name] = {}
+		for _, module in pairs(folder:GetChildren()) do
+			if module:IsA("ModuleScript") and type(require(module)) == "table" then
+				classes[folder.Name][module.Name] = require(module)
 			end
 		end
 	end
 
-	for name, entry in pairs(Classes) do
+	for name, entry in pairs(classes) do
 		latteTable[name] = setmetatable({},{
 			__index = function(self, key: string)
-				return Classes[name][key]
+				return classes[name][key]
 			end
 		})
 	end
 
-	for name, entry in pairs(Classes) do
-		for i, v in pairs(entry) do
-			v.Latte = latteTable
+	for name, entry in pairs(classes) do
+		for _, module in pairs(entry) do
+			module.Latte = latteTable
 		end
 	end
 	
-	for i,v in pairs(Classes.Constructors) do
-		v.Elements = Elements
-		v.Remotes = Events
-		v.init()
+	for _, constructor in pairs(classes.Constructors) do
+		constructor.Elements = elements
+		constructor.Remotes = events
+		constructor.init()
 	end
 	
-	for _,v in pairs(Classes.Constructors) do
-		v.setup()
+	for _, constructor in pairs(classes.Constructors) do
+		constructor.setup()
 	end
 end
 
 setupModules()
-Events.RemoteFunction:InvokeServer("setupUIForPlayer")
-Classes.Constructors.Window.Window.Toggle()
+events.RemoteFunction:InvokeServer("setupUIForPlayer")
+classes.Constructors.Window.Window.Toggle()
