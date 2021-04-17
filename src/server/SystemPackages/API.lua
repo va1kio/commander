@@ -32,10 +32,9 @@ API.Players = {
 }
 
 local function containsDisallowed(tbl)
-	for _, v in ipairs(tbl) do
-		if type(v) == "table" or typeof(v) == "userdata" or type(v) == "function" or type(v) == "thread" then
-			return true
-		end
+	local allowedTypes = {"table", "userdata", "function", "thread"}
+	for _, value in ipairs(tbl) do
+		return allowedTypes[type(value)] ~= nil
 	end
 end
 
@@ -73,9 +72,8 @@ function API.Players.sendList(Player: player, Title: string, Attachment)
 	module.Remotes.Event:FireClient(Player, "newList", Title, Attachment)
 end
 
-function API.Players.executeWithPrefix(Client: player, Player: player, Callback)
+function API.Players.executeWithPrefix(Client: player, Player: string, Callback)
 	Player = string.lower(Player)
-
 	local clientAdminLevel = API.Players.getAdminLevel(Client.UserId)
 
 	if clientAdminLevel
@@ -85,32 +83,50 @@ function API.Players.executeWithPrefix(Client: player, Player: player, Callback)
 	end
 
 	local function runOnName(Player)
-		if Player == "all" then
-			for _, v in ipairs(Players:GetPlayers()) do
-				Callback(v)
-			end
-		elseif Player == "others" then
-			for _, v in ipairs(Players:GetPlayers()) do
-				if v ~= Client then
-					Callback(v)
+		local prefixes = {
+			["all"] = function()
+				for _, player in ipairs(Players:GetPlayers()) do
+					Callback(player)
 				end
-			end
-		elseif Player == "me" then
-			Callback(Client)
-		elseif Player == "admins" or Player == "nonadmins" then
-			for _, v in ipairs(Players:GetPlayers()) do
-				local isAdmin = API.Players.getAdminStatus(v.UserId)
-				if Player == "admins" and isAdmin or Player == "nonadmins" and not isAdmin then
-					Callback(v)
+			end,
+
+			["others"] = function()
+				for _, player in ipairs(Player:GetPlayers()) do
+					if player ~= Client then
+						Callback(player)
+					end
 				end
+			end,
+
+			["me"] = function()
+				Callback(Client)
+			end,
+
+			["admins"] = function()
+				for _, player in ipairs(Players:GetPlayers()) do
+					if API.Players.getAdminStatus(player.UserId) then
+						Callback(player)
+					end
+				end
+			end,
+
+			["nonadmins"] = function()
+				for _, player in ipairs(Players:GetPlayers()) do
+					if not API.Players.getAdminStatus(player.UserId) then
+						Callback(player)
+					end
+				end
+			end,
+
+			["random"] = function()
+				Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
 			end
-		elseif Player == "random" then
-			Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+		}
+
+		if prefixes[tostring(Player)] then
+			prefixes[tostring(Player)]()
 		else
-			Player = API.Players.getPlayerByName(Player)
-			if Player then
-				Callback(Player)
-			end
+			Callback(API.Players.getPlayerByName(Player))
 		end
 	end
 	
