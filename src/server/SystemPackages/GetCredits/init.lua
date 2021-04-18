@@ -1,7 +1,11 @@
 local HttpService = game:GetService("HttpService")
 
+local commanderBuild = require(script.Parent.Settings).Version
+
+local branchName = commanderBuild[2]:match("Preview") ~= nil and "preview" or "main"
+
 local BACKUP_CREDITS = require(script.Credits)
-local CREDITS_URL = "https://raw.githubusercontent.com/va1kio/commander/main/src/server/SystemPackages/GetCredits/Credits.lua"
+local CREDITS_URL = "https://raw.githubusercontent.com/va1kio/commander/" .. branchName .. "/src/server/SystemPackages/GetCredits/Credits.json"
 
 return function()
 	local success, result = pcall(function()
