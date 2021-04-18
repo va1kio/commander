@@ -23,6 +23,7 @@ API.Players = {
 		["newMessage"] = "message",
 		["newHint"] = "hint",
 		["newNotify"] = "notify",
+		["newNotifyWithAction"] = "notifyWithAction",
 		["checkHasPermission"] = "checkPermission",
 		["checkAdmin"] = "getAdminStatus",
 		["getAdminLevel"] = "getAdminLevel",
@@ -206,6 +207,21 @@ function API.Players.notify(To: player|string, From: string, Content: string)
 	else
 		module.Remotes.Event:FireClient(To, "newNotify", "", {["From"] = From, ["Content"] = Content})
 	end
+end
+
+function API.Players.notifyWithAction(To: player|string, Type, From: string, Content: string)
+	local Bindable = Instance.new("BindableEvent")
+	local GUID = HttpService:GenerateGUID()
+	Bindable.Name = GUID
+	
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, {["From"] = From, ["Content"] = Content})
+	else
+		module.Remotes.Event:FireClient(To, "newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, {["From"] = From, ["Content"] = Content})
+	end
+	
+	Bindable.Parent = script.Parent.Parent.Bindables
+	return Bindable
 end
 
 function API.Players.checkPermission(ClientId: number, Command: string)

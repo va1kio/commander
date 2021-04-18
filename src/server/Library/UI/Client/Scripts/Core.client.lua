@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = {
 	Event = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteEvent"),
-	Function = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteEvent"),
+	Function = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteFunction"),
 }
 local Elements = script.Parent.Parent.Elements
 local Library = script.Parent.Library
@@ -31,5 +31,31 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 	elseif Type == "newNotify" then
 		local notification = Notification.new(Attachment.From, Attachment.Content, Elements.List)
 		notification:deploy()
+		
+		local interacted = notification.onDismiss.Event:Wait()
+		if interacted then
+			local expanded = ExpandedNotification.new(Attachment.From, Attachment.Content, Elements)
+			expanded._object.Bottom.Primary.Content.Text = "Okay"
+			expanded:deploy()
+		end
+	elseif Type == "newNotifyWithAction" then
+		local notification = Notification.new(Attachment.From, Attachment.Content, Elements.List)
+		notification:deploy()
+		
+		local interacted = notification.onDismiss.Event:Wait()
+		if interacted then
+			local expanded = ExpandedNotification.new(Attachment.From, Attachment.Content, Elements)
+			expanded._object.Bottom.Primary.Content.Text = Protocol.Type
+			expanded:deploy()
+			
+			local response = expanded.onDismiss.Event:Wait()
+			if Protocol.Type:lower() == "reply" and response ~= false then
+				local reply = ReplyBox.new(Attachment.From, Elements)
+				reply:deploy()
+				Remotes.Function:InvokeServer("notifyCallback", Protocol.GUID, reply.onDismiss.Event:Wait())
+			else
+				Remotes.Function:InvokeServer("notifyCallback", Protocol.GUID, response)
+			end
+		end
 	end
 end)

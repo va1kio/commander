@@ -133,7 +133,7 @@ script.waypointBindable.OnInvoke = function()
 end
 
 remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
-	if systemPackages.API.checkAdmin(Client.UserId) then
+	if systemPackages.API.checkAdmin(Client.UserId) and Type ~= "notifyCallback" then
 		if Type == "command" and packages[Protocol] then
 			if systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
 				local status = packages[Protocol].Execute(Client, Type, Attachment)
@@ -185,6 +185,17 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			return systemPackages.Settings
 		end
 	end
+	
+	if Type == "notifyCallback" then
+		-- bindable aren't really good for this, yikes
+		local Event = script.Bindables:FindFirstChild(Protocol)
+		if Event and Attachment then
+			Event:Fire(Attachment or false)
+			Event:Destroy()
+		else
+			return false
+		end
+	end
 end
 
 local function setupUIForPlayer(Client)
@@ -200,15 +211,17 @@ local function setupUIForPlayer(Client)
 		UI.ResetOnSpawn = false
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
+		systemPackages.API.Players.notify(Client, "System", "Press the \"" .. systemPackages.Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander")
+	end
+	
+	if not systemPackages.Settings.Misc.DisableCredits then
+		systemPackages.API.Players.notify(Client, "System", "This game uses Commander 4 from Evo")
 	end
 end
 
 Players.PlayerAdded:Connect(function(Client)
 	setupUIForPlayer(Client)
 	availableAdmins = systemPackages.API.getAvailableAdmins()
-	if not systemPackages.Settings.Misc.DisableCredits then
-		remotes.Event:FireClient(Client, "newNotify", "n/a", {From = "System", Content = "This game uses Commander 4 from Evo"})
-	end
 end)
 
 Players.PlayerRemoving:Connect(function(Client)
