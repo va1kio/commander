@@ -13,7 +13,7 @@ This document (CONTRIBUTING.md) includes guidelines, coding styleguides, resourc
   * [Others](#Others)
 - [Coding convention](#Coding-convention)
 - [Resources](#Resources)
-  * [Documentation](https://commander-4.vercal.app)
+  * [Documentation](https://commander-4.vercel.app)
   
 ## Contributing
 ### Reporting a bug
@@ -61,4 +61,4 @@ If none of your contribution falls under this document, please create an issue f
 We uses Roblox's Lua Styleguide, visit it at [here](https://roblox.github.io/lua-style-guide/)
 
 ## Resources
-* [Documentation](https://commander-4.vercal.app)
+* [Documentation](https://commander-4.vercel.app)
