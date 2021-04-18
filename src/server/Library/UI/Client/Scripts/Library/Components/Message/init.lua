@@ -10,7 +10,7 @@ local defaultDuration = 10
 
 function module.new(from: string, content: string, duration: number?, parent: instance)
 	local component = script.Comp:Clone()
-	component.Name = script.Parent.Name
+	component.Name = script.Name
 	component.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Message from </font>" .. from
 	component.Content.Text = content
 	component.Top.Time.Text = duration or defaultDuration

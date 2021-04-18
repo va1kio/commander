@@ -9,7 +9,7 @@ local tweeninfo = require(modules.TweenInfo)
 
 function module.new(from: string, parent: instance)
 	local component = script.Comp:Clone()
-	component.Name = script.Parent.Name
+	component.Name = script.Name
 	component.Container.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Replying to </font>" .. from
 	component.Parent = parent
 	return setmetatable({

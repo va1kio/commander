@@ -9,8 +9,9 @@ local tweeninfo = require(modules.TweenInfo)
 
 function module.new(from: string, content: string, parent: instance)
 	local component = script.Comp:Clone()
-	component.Name = script.Parent.Name
+	component.Name = script.Name
 	component.Container.Top.Title.Text = from
+	component.Container.UISizeConstraint.MaxSize = Vector2.new("inf", 120)
 	component.Container.Body.Content.Text = content
 	component.Parent = parent
 	return setmetatable({
@@ -43,6 +44,10 @@ function module:deploy()
 	
 	self._object.Container.MouseButton1Click:Connect(function()
 		self:dismiss(true)
+	end)
+	
+	self._object.Container.Top.Exit.Button.MouseButton1Click:Connect(function()
+		self:dismiss(false)
 	end)
 end
 

@@ -9,7 +9,7 @@ local tweeninfo = require(modules.TweenInfo)
 
 function module.new(from: string, content: string, parent: instance)
 	local component = script.Comp:Clone()
-	component.Name = script.Parent.Name
+	component.Name = script.Name
 	component.Container.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Message from </font>" .. from
 	component.Container.Body.Content.Text = content
 	component.Parent = parent
