@@ -24,7 +24,7 @@ module.Execute = function(Client, Type, Attachment)
 			end)
 			return true
 		else
-			module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System", Content = "Your bubble chat request to \"" .. tostring(Attachment) .. "\" failed to filter, please retry later."})
+			module.API.Players.message(Client, "System", "Your bubble chat request to \"" .. tostring(Attachment) .. "\" failed to filter, please retry later")
 		end
 		return false
 	end

@@ -16,7 +16,7 @@ module.Execute = function(Client, Type, Attachment)
 		local success, result = module.API.filterText(Client, Input)
 		
 		if success and result then
-			module.Remotes.Event:FireAllClients("newMessage", "", {From = "System", Content = "This server will be shutting down in 5 seconds"})
+			module.API.Players.message("all", "System", "Shutting down in 5")
 			wait(5)
 			for i,v in pairs(Players:GetPlayers()) do
 				v:Kick(result)
