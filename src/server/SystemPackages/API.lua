@@ -21,6 +21,7 @@ API.Players = {
 		["getCharacter"] = "getCharacter",
 		["filterText"] = "filterString",
 		["newMessage"] = "message",
+		["newHint"] = "hint"
 		["newNotify"] = "notify",
 		["checkHasPermission"] = "checkPermission",
 		["checkAdmin"] = "getAdminStatus",
@@ -185,9 +186,17 @@ end
 
 function API.Players.message(To: player|string, From: string, Content: string, Duration: number?)
 	if tostring(To):lower() == "all" then
-		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
 	else
-		module.Remotes.Event:FireClient(To, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+		module.Remotes.Event:FireClient(To, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+	end
+end
+
+function API.Players.hint(To: player|string, From: string, Content: string, Duration: number?)
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newHint", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+	else
+		module.Remotes.Event:FireClient(To, "newHint", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
 	end
 end
 
