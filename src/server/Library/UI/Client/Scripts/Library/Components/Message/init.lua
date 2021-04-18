@@ -15,6 +15,7 @@ function module.new(from: string, content: string, duration: number?, parent: in
 	component.Content.Text = content
 	component.Top.Time.Text = duration or defaultDuration
 	component.Parent = parent
+	fade:Set(component, 1)
 	return setmetatable({
 		_object = component,
 		interval = duration or defaultDuration,
@@ -51,7 +52,6 @@ end
 function module:deploy()
 	self._object.Visible = true
 	self._object.Position = UDim2.new(0, 0, 0.4, 0)
-	fade:Set(self._object, 1, tweeninfo.Linear(0))
 	tween.new(self._object, tweeninfo.Quint(0.3), {
 		Position = UDim2.new(0, 0, 0.5, 0)
 	})
@@ -66,5 +66,7 @@ function module:deploy()
 		self:dismiss()
 	end)
 end
+
+fade:Set(script.Comp, 1)
 
 return module

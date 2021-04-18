@@ -14,6 +14,7 @@ function module.new(from: string, content: string, duration: number?, parent: in
 	component.Top.Title.Text = "<font face=\"Gotham\" color=\"rgb(200,200,200)\">Hint from </font>" .. from
 	component.Content.Text = content
 	component.Parent = parent
+	fade:Set(component, 1)
 	return setmetatable({
 		_object = component,
 		interval = duration or defaultDuration,
@@ -52,7 +53,6 @@ end
 function module:deploy()
 	self._object.Visible = true
 	self._object.Position = UDim2.new(0, 0, 0, 0)
-	fade:Set(self._object, 1, tweeninfo.Linear(0))
 	tween.new(self._object, tweeninfo.Quint(0.3), {
 		Position = UDim2.new(0, 0, 0, -36),
 		AnchorPoint = Vector2.new(0, 0)

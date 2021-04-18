@@ -14,6 +14,7 @@ function module.new(from: string, content: string, parent: instance)
 	component.Container.UISizeConstraint.MaxSize = Vector2.new("inf", 120)
 	component.Container.Body.Content.Text = content
 	component.Parent = parent
+	fade:Set(component, 1)
 	return setmetatable({
 		_object = component,
 		onDismiss = Instance.new("BindableEvent"),
@@ -36,7 +37,7 @@ end
 function module:deploy()
 	self._object.Visible = true
 	self._object.Container.Position = UDim2.new(1, 0, 0, 0)
-	fade:Set(self._object.Container, 1, tweeninfo.Linear(0))
+	
 	tween.new(self._object.Container, tweeninfo.Quint(0.3), {
 		Position = UDim2.new(0, 0, 0, 0)
 	})
