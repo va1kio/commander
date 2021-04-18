@@ -41,4 +41,3 @@ end
 
 setupModules()
 events.RemoteFunction:InvokeServer("setupUIForPlayer")
-classes.Constructors.Window.Window.Toggle()
