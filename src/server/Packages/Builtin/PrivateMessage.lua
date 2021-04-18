@@ -7,7 +7,7 @@ local module = {
 function process(From, Type, To, Content)
 	local response = module.API.Players.notifyWithAction(To, Type, From.Name, Content).Event:Wait()
 	if type(response) == "string" then
-		status, response = module.API.filterText(From, response)
+		local status, response = module.API.filterText(From, response)
 		process(To, Type, From, response)
 	end
 end
