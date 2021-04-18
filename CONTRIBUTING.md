@@ -9,7 +9,7 @@ This document (CONTRIBUTING.md) includes guidelines, coding styleguides, resourc
 - [Contributing](#Contributing)
   * [Reporting a bug](#Reporting-a-bug)
   * [Patching a bug](#Patching-a-bug)
-  * [Suggesting new feature](#Suggesting-new-feature)
+  * [Suggesting new features](#Suggesting-new-features)
   * [Others](#Others)
 - [Coding convention](#Coding-convention)
 - [Resources](#Resources)
