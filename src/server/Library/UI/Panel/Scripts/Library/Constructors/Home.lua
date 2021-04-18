@@ -167,7 +167,6 @@ module.setup = function()
 			Settings = Attachment
 			if isFirstTime then
 				isFirstTime = false
-				Latte.Constructors.Window.notifyUser(nil, "Press the \"" .. Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander.")
 				Latte.Modules.TButton.new(Elements.Topbar.Right.Commander):Connect(function()
 					Latte.Constructors.Window.Toggle()
 				end)
