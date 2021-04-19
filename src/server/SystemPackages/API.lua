@@ -34,9 +34,9 @@ API.Players = {
 }
 
 local function containsDisallowed(tbl)
-	local allowedTypes = {"table", "userdata", "function", "thread"}
+	local allowedTypes = {"table", "function", "thread"}
 	for _, value in ipairs(tbl) do
-		return allowedTypes[type(value)] ~= nil
+		return typeof(value) == "userdata" or allowedTypes[type(value)] ~= nil
 	end
 end
 
@@ -74,7 +74,8 @@ function API.Players.sendList(Player: player, Title: string, Attachment)
 	module.Remotes.Event:FireClient(Player, "newList", Title, Attachment)
 end
 
-function API.Players.executeWithPrefix(Client: player, Player: string, Callback)
+function API.Players.GetPlayersFromNameSelector(Client: player, Player: string)
+	local playerList = {}
 	Player = string.lower(Player)
 	local clientAdminLevel = API.Players.getAdminLevel(Client.UserId)
 
@@ -84,30 +85,30 @@ function API.Players.executeWithPrefix(Client: player, Player: string, Callback)
 		return false
 	end
 
-	local function runOnName(Player)
+	local function getWithName(Player)
 		local prefixes = {
 			["all"] = function()
 				for _, player in ipairs(Players:GetPlayers()) do
-					Callback(player)
+					table.insert(playerList, player)
 				end
 			end,
 
 			["others"] = function()
 				for _, player in ipairs(Player:GetPlayers()) do
 					if player ~= Client then
-						Callback(player)
+						table.insert(playerList, player)
 					end
 				end
 			end,
 
 			["me"] = function()
-				Callback(Client)
+				table.insert(playerList, Client)
 			end,
 
 			["admins"] = function()
 				for _, player in ipairs(Players:GetPlayers()) do
 					if API.Players.getAdminStatus(player.UserId) then
-						Callback(player)
+						table.insert(playerList, player)
 					end
 				end
 			end,
@@ -115,32 +116,54 @@ function API.Players.executeWithPrefix(Client: player, Player: string, Callback)
 			["nonadmins"] = function()
 				for _, player in ipairs(Players:GetPlayers()) do
 					if not API.Players.getAdminStatus(player.UserId) then
-						Callback(player)
+						table.insert(playerList, player)
 					end
 				end
 			end,
 
 			["random"] = function()
-				Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+				table.insert(playerList, Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
 			end
 		}
 
 		if prefixes[tostring(Player)] then
 			prefixes[tostring(Player)]()
 		else
-			Callback(API.Players.getPlayerByName(Player))
+			table.insert(playerList, API.Players.getPlayerByName(Player))
 		end
 	end
 	
 	if string.match(Player, ",") then
 		for PlayerName in string.gmatch(Player, "([^,]+)(,? ?)") do
-			runOnName(PlayerName)
+			getWithName(PlayerName)
 		end
 	else
-		runOnName(Player)
+		getWithName(Player)
 	end
 
-	return true
+	return #playerList > 0 and playerList or nil
+end
+
+function API.Players.executeWithPrefix(Client: player, Player: string, Callback)
+	Player = string.lower(Player)
+	local clientAdminLevel = API.Players.getAdminLevel(Client.UserId)
+
+	if clientAdminLevel
+	and module.DisableTable[clientAdminLevel]
+	and module.DisableTable[clientAdminLevel][Player] == true then
+		return false
+	end
+	
+	local List = API.Players.GetPlayersFromNameSelector(Client, Player)
+
+	if List then
+		for _, v in ipairs(List) do
+			Callback(v)
+		end
+		return true
+	else
+		return false
+	end
 end
 
 function API.Players.getPlayerByName(Player: string)
@@ -342,17 +365,20 @@ module = setmetatable({}, {
 		else
 			return API[key]
 		end
-	end
+	end,
+	__metatable = "The metatable is locked"
 })
 
 globalAPI = setmetatable({
-	checkHasPermission = makeBindable(sandboxFunc(module.checkHasPermission)),
-	checkAdmin = makeBindable(sandboxFunc(module.checkAdmin)),
-	getAdminLevel = makeBindable(sandboxFunc(module.getAdminLevel)),
-	getAvailableAdmins = makeBindable(sandboxFunc(module.getAvailableAdmins)),
+	checkHasPermission = makeBindable(sandboxFunc(module.Players.checkHasPermission)),
+	checkAdmin = makeBindable(sandboxFunc(module.Players.checkAdmin)),
+	getAdminLevel = makeBindable(sandboxFunc(module.Players.getAdminLevel)),
+	getAvailableAdmins = makeBindable(sandboxFunc(module.Players.getAvailableAdmins)),
+	GetPlayersFromNameSelector = makeBindable(sandboxFunc(module.Players.GetPlayersFromNameSelector)),
+	getAdminStatus = makeBindable(sandboxFunc(module.Players.getAdminStatus)),
 	getAdmins = makeBindable(function()
 		local Tbl = {}
-		for k, v in pairs(module.getAdmins()) do
+		for k, v in pairs(module.Players.getAdmins()) do
 			Tbl[k] = v
 		end
 		return setmetatable(Tbl, {__metatable = "The metatable is locked"})
