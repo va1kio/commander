@@ -1,7 +1,7 @@
 local module = {
 	Name = "System Message",
 	Description = "Send a message as System",
-	Location = "Player",
+	Location = "Server",
 }
 
 module.Execute = function(Client, Type, Attachment)			
@@ -16,7 +16,7 @@ module.Execute = function(Client, Type, Attachment)
 		Status, Input = module.API.filterText(Client, Input)
 		
 		if Status then
-			module.API.doThisToPlayers(Client, Attachment, function(Player)
+			module.API.doThisToPlayers(Client, "all", function(Player)
 				module.API.Players.message(Player, "System", Input)
 			end)
 			return true
