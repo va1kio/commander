@@ -1,6 +1,6 @@
 local module = {
 	Name = "Message",
-	Description = "Send a message to a specific player, others or all" ,
+	Description = "Send a message to everyone" ,
 	Location = "Server",
 }
 
