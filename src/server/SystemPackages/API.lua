@@ -1,5 +1,6 @@
 local module = {}
 local TextService = game:GetService("TextService")
+local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local GroupService = game:GetService("GroupService")
@@ -200,6 +201,8 @@ function API.Players.listenToPlayerAdded(Function)
 end
 
 function API.Players.filterString(From: player, Content: string)
+	if RunService:IsStudio() then return true, Content end
+
 	local success, result = pcall(TextService.FilterStringAsync, TextService, Content, From.UserId)
 	if success and result then
 		result = result:GetNonChatStringForBroadcastAsync()
