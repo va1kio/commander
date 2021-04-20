@@ -6,16 +6,26 @@
 
 Free & open-sourced administration panel for Roblox
 
-## How to install?
+## Installing Commander
 
 There's a few ways to install Commander – either by importing manually, or syncing with Rojo.
+
+### Importing manually
+
 If you are importing it manually, consider watching this video: https://www.youtube.com/watch?v=qiy-Gi1h3zg
 
-If you are syncing with Rojo, use the following commands in your terminal:
+### Rojo
+
+If you are syncing with Rojo, download the newest source code inside the Releases section, and then run the following command in your terminal application (Assume you are inside the folder of the source code)
 ```
-git clone https://github.com/va1kio/commander.git
+rojo build -o "release.rbxlx"
+```
+And then, open `release.rbxlx` in Roblox Studio and start the Rojo server.
+```
 rojo serve
 ```
+
+### Module loader
 
 Alternatively, you can also use our module loader, which allows Commander to be always up-to-date, link to the loader is [here](https://www.roblox.com/library/6648688759/)
 
