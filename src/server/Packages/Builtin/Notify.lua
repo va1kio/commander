@@ -1,7 +1,7 @@
 local module = {
-	Name = "Message",
-	Description = "Send a message to everyone" ,
-	Location = "Server",
+	Name = "Notify",
+	Description = "Send a notification to a specific player, others or all" ,
+	Location = "Player",
 }
 
 module.Execute = function(Client, Type, Attachment)			
@@ -16,12 +16,12 @@ module.Execute = function(Client, Type, Attachment)
 		Status, Input = module.API.filterText(Client, Input)
 		
 		if Status then
-			module.API.doThisToPlayers(Client, "all", function(Player)
-				module.API.Players.message(Player, Client.Name, Input)
+			module.API.doThisToPlayers(Client, Attachment, function(Player)
+				module.API.Players.notify(Player, Client.Name, Input)
 			end)
 			return true
 		else
-			module.API.Players.hint(Client, "System", "Your message to \"" .. tostring(Attachment) .. "\" failed to deliver, please retry later")
+			module.API.Players.hint(Client, "System", "Your notification to \"" .. tostring(Attachment) .. "\" failed to deliver, please retry later")
 		end
 		return false
 	end
