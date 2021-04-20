@@ -1400,4 +1400,7 @@ function Promise.fromEvent(event, predicate)
 	end)
 end
 
-return setmetatable(Promise, {__metatable = "The metatable is locked"})
+return setmetatable(Promise, {
+	__newindex = function() error("Attempt to modify a readonly table", 2) end,
+	__metatable = "The metatable is locked"
+})
