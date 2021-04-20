@@ -1,6 +1,6 @@
 local module = {
 	Name = "System Message",
-	Description = "Send a message as System",
+	Description = "Send a System message to everyone",
 	Location = "Server",
 }
 
