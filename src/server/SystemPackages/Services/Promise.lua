@@ -24,6 +24,7 @@ local function makeEnum(enumName, members)
 		__newindex = function()
 			error(string.format("Creating new members in %s is not allowed!", enumName), 2)
 		end,
+		__metatable = "The metatable is locked"
 	})
 end
 
