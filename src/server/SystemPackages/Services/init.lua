@@ -1,13 +1,13 @@
 local modules = {}
 
-for i,v in pairs(script:GetChildren()) do
+for _, v in pairs(script:GetChildren()) do
 	if v:IsA("ModuleScript") then
 		modules[v.Name] = require(v)
 	end
 end
 
-return setmetatable({},{
-	__index = function(self, key: string)
+return setmetatable({}, {
+	__index = function(_, key: string)
 		local object
 		if modules[key] then
 			object = modules[key]
@@ -16,5 +16,7 @@ return setmetatable({},{
 		end
 		
 		return object
-	end
+	end,
+	__newindex = function() error("Attempt to modify a readonly table", 2) end,
+	__metatable = "The metatable is locked"
 })
