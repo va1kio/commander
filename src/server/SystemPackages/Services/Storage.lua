@@ -3,14 +3,16 @@ local Storages = {}
 local GlobalDisallowed = {"assign", "delete", "create", "globalallowed"}
 
 local updateGlobal = function()
-	rawset(_G, "Storage", setmetatable(module, {
-		__index = function(self, key: string, index: string)
-			if not GlobalDisallowed[key:lower()] then
-				self[key](key, index)
+	rawset(_G, "Storage", setmetatable({}, {
+		__index = function(_, key: string, index: string)
+			if not GlobalDisallowed[string.lower(key)] then
+				module[key](key, index)
 			else
-				error("this method is not available in _G")
+				error("This method is not available in _G", 2)
 			end
-		end
+		end,
+		__newindex = function() error("Attempt to modify a readonly table", 2) end,
+		__metatable = "The metatable is locked"
 	}))
 end
 
@@ -34,8 +36,8 @@ module.Create = function(name: string)
 	if not Storages[name] then
 		Storages[name] = setmetatable(module, {
 			Container = {},
-			__metatable = "table is read-only",
-			__newindex = function() return end
+			__metatable = "The metatable is locked",
+			__newindex = function() error("Attempt to modify a readonly table", 2) end
 		})
 		updateGlobal()
 		
@@ -43,7 +45,8 @@ module.Create = function(name: string)
 	end
 end
 
-return setmetatable(module, {
-	__metatable = "table is read-only",
-	__newindex = function() return end
+return setmetatable({}, {
+	__index = module,
+	__metatable = "The metatable is locked",
+	__newindex = function() error("Attempt to modify a readonly table", 2) end
 })
