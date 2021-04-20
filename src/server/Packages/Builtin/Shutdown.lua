@@ -21,7 +21,7 @@ module.Execute = function(Client, Type, Attachment)
 			wait(5)
 
 			isClosed, reason = true, Input or "No reason given"
-			for _, v in pairs(Players:GetPlayers()) do
+			for _, v in ipairs(Players:GetPlayers()) do
 				v:Kick(string.format("\nThe server has shutdown. Reason: %s", reason))
 			end
 			return true
