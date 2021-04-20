@@ -1,18 +1,18 @@
-![commander banner](https://cdn.discordapp.com/attachments/813583766039560206/831496945604100136/Banner.png)
-
 # Commander
 
-![license tag MIT](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge) ![language luau](https://img.shields.io/badge/language-Luau-blue?style=for-the-badge) ![latest build 1.1.1](https://img.shields.io/badge/latest_build-1.1.1-brightgreen?style=for-the-badge) ![phase Stable](https://img.shields.io/badge/Phase-Stable-blueviolet?style=for-the-badge)
+Commander is an open sourced and community driven administration panel for your Roblox games' needs. Created and designed to be extremely flexible and customisable.
 
-Free & open-sourced administration panel for Roblox
+![commander banner](https://cdn.discordapp.com/attachments/813583766039560206/831496945604100136/Banner.png)
 
-## Installing Commander
+Visit our [documentation](https://commander-4.vercel.app) to learn more. If you have any questions about Commander, feel free to submit a new issue, or visit our Discord community at [here](https://va1kio.github.io/commander-site/goto#discord).
 
-There's a few ways to install Commander – either by importing manually, or syncing with Rojo.
+## Documentation
 
-### Importing manually
+If you want to learn more about Commander in the development side, visit our [documentation](https://commander-4.vercel.app), which includes API reference for packages and the UI library, tutorials on making packages, installing packages, installing themes and more. You can find the source code of the documentation [here](https://github.com/va1kio/commander-site/tree/master/docs-src/v1)
 
-If you are importing it manually, consider watching this video: https://www.youtube.com/watch?v=qiy-Gi1h3zg
+## Installing
+
+There's a few ways to install Commander. If you prefer working with the source code, consider using [Rojo](#Rojo). If you only want to install Commander, use the [loader](#Loader).
 
 ### Rojo
 
@@ -25,18 +25,26 @@ And then, open `release.rbxlx` in Roblox Studio and start the Rojo server.
 rojo serve
 ```
 
-### Module loader
+### Loader
 
-Alternatively, you can also use our module loader, which allows Commander to be always up-to-date, link to the loader is [here](https://www.roblox.com/library/6648688759/)
+For your convenience, we've also released Commander as a loader, which allows Commander to be always up-to-date and easier to manage. You can find the download link [here](https://www.roblox.com/library/6648688759/). Place the loader inside `ServerScriptService` for high maintainability and maximum security.
 
-## Documentation
+## Contributing
 
-Documentation can be found [here](https://va1kio.github.io/commander-site/docs/#/home)
+Commander adheres the Contributor Covenant [code of conduct](./CODE_OF_CONDUCT.md). By contributing, you are expected to uphold this project. Report any inappropriate behavior in our Discord server.
 
-## Useful links
+If you are creating your first time issue or pull request to this repository, consider reading our [contributing guidelines](./CONTRIBUTING.md).
 
-[Website](https://va1kio.github.io/commander-site/)
+Before starting to contribute, please clone the repository's **preview** branch and install Commander with the [Rojo](#Rojo) method, which will allow you to do testing.
 
-[Devforum](https://devforum.roblox.com/t/dp2-commander-easy-to-use-administration-panel/503290/)
+Once you have finished making changes to the codebase, please group changes and stage them one by one with a clear and descriptive commit message, and create a pull request in the **preview** branch.
 
-[Discord](https://discord.gg/RzxxD7YCaU)
+## Credits
+
+Commander is built with open sourced libraries and codes, a list of them can be found here:
+- [Promise](https://github.com/evaera/roblox-lua-promise)
+- [MockDataStore](https://github.com/buildthomas/MockDataStoreService)
+- [Matcher](https://github.com/rgieseke/textredux/blob/main/util/matcher.lua)
+
+## License
+[MIT](./LICENSE)
