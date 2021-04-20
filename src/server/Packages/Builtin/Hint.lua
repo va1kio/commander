@@ -1,7 +1,7 @@
 local module = {
 	Name = "Hint",
 	Description = "Send a hint to a specific player, others or all" ,
-	Location = "Players",
+	Location = "Player",
 }
 
 module.Execute = function(Client, Type, Attachment)			
