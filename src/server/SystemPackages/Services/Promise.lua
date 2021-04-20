@@ -42,7 +42,7 @@ local Error do
 			"TimedOut",
 		}),
 	}
-	Error.__index = Error
+	Error.__index, Error.__metatable = Error, "The metatable is locked"
 
 	function Error.new(options, parent)
 		options = options or {}
@@ -180,7 +180,7 @@ local Promise = {
 	_timeEvent = game:GetService("RunService").Heartbeat,
 }
 Promise.prototype = {}
-Promise.__index = Promise.prototype
+Promise.__index, Promise.__metatable = Promise.prototype, "The metatable is locked"
 
 --[[
 	Constructs a new Promise with the given initializing callback.
@@ -1400,4 +1400,4 @@ function Promise.fromEvent(event, predicate)
 	end)
 end
 
-return Promise
+return setmetatable(Promise, {__metatable = "The metatable is locked"})
