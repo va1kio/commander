@@ -17,7 +17,7 @@ module.Execute = function(Client, Type, Attachment)
 		
 		if Status then
 			module.API.doThisToPlayers(Client, Attachment, function(Player)
-				module.API.Players.message(Player, Client.Name, Input)
+				module.API.Players.notify(Player, Client.Name, Input)
 			end)
 			return true
 		else
