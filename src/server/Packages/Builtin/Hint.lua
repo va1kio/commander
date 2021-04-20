@@ -16,7 +16,7 @@ module.Execute = function(Client, Type, Attachment)
 		Status, Input = module.API.filterText(Client, Input)
 		
 		if Status then
-			module.API.doThisToPlayers(Client, "All", function(Player)
+			module.API.doThisToPlayers(Client, "all", function(Player)
 				module.API.Players.hint(Player, Client.Name, Input)
 			end)
 			return true
