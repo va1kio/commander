@@ -17,6 +17,6 @@ return setmetatable({}, {
 		
 		return object
 	end,
-	__newindex = function() return end,
+	__newindex = function() return nil end,
 	__metatable = "The metatable is locked"
 })
