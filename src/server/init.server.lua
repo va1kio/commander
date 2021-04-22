@@ -233,4 +233,5 @@ if not isPlayerAddedFired then
 	for i,v in pairs(Players:GetPlayers()) do
 		setupUIForPlayer(v)
 	end
+	availableAdmins = systemPackages.API.getAvailableAdmins()
 end
