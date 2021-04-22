@@ -40,7 +40,7 @@ module.Create = function(name: string)
 			__newindex = function() error("Attempt to modify a readonly table", 2) end
 		})
 		updateGlobal()
-		
+
 		return Storages[name]
 	end
 end

@@ -23,7 +23,7 @@ module.new = function(Name: string, Text: string?, Parent: instance, Callback: (
 	Comp.isActive.ImageColor3 = Stylesheet.ThemeColor
 	Comp.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 	Comp.BackgroundColor3 = Stylesheet.Button.MenuHoverColor
-	
+
 	t.setActive = function(Status: boolean)
 		Comp.isActive.Visible = Status
 		Comp.Title.TextColor3 = returnItemOnStatement(Status == true, Stylesheet.ThemeColor, Stylesheet.Menu.DefaultTextColor)

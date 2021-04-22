@@ -8,7 +8,7 @@ module.init = function()
 			["Short"] = 0.3
 		}
 	end
-	
+
 	if not Stylesheet.Fonts then
 		Stylesheet.Fonts = {
 			["Light"] = Enum.Font.Gotham,
@@ -21,7 +21,7 @@ module.init = function()
 end
 
 module.setup = function()
-	
+
 end
 
 return module

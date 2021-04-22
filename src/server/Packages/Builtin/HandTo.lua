@@ -4,14 +4,14 @@ local module = {
 	Location = "Player",
 }
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client, "What's the tool name?").Event:Wait()
 		local player 
 		local tool
 		if Input == false then return false end
 		player, tool = module.API.getPlayerWithName(Attachment), Client.Backpack:FindFirstChild(Input)
-		
+
 		if player and tool then
 			tool.Parent = player.Backpack
 			module.API.Players.hint(player, "HandTo", Client.Name .. "has gave you " .. tool.Name)

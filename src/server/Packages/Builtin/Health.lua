@@ -4,7 +4,7 @@ local module = {
 	Location = "Player",
 }
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 
@@ -13,7 +13,7 @@ module.Execute = function(Client, Type, Attachment)
 		end
 
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
-		
+
 		if char then
 			char.Humanoid.Health = tonumber(Input)
 			return true

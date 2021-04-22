@@ -10,20 +10,20 @@
 	WWW0                                              
 	WWWMqqqqqqqqqq~                                   
 	WWWWWWWWWWWWWW\                                               
-	
+
 	Commander 4 by Evo
-	
+
 	## FAQs
-	
+
 	Q: How to add a new admin?
 	A: You can refer to our documentation (https://va1kio.github.io/commander-site/docs/#/)
-	
+
 	Q: How can I change the theme colour?
 	A: You can change it by modifying the Accent settings below
-	
+
 	Q: How can I change the toggle keybind?
 	A: You can change it by modifying the Keybind settings below.
-	
+
 	Q: I don't see Commander, what's going on?
 	A: You probably have disabled API access for Studio or your game is not published. If none of this solves the issue, just send a DM to nana_kon or join
 	our community.

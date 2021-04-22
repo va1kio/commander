@@ -8,7 +8,7 @@ local function fetch()
 			table.insert(Packages, v.Name)
 		end
 	end
-	
+
 	for _,v in pairs(Latte.Constructors.Window.Window.Pages.Server:GetChildren()) do
 		if v:IsA("Frame") then
 			table.insert(Packages, v.Name)
@@ -30,7 +30,7 @@ module.setup = function()
 	UICorner.Parent = SearchComp
 	Searchbox.Parent = Top
 	SearchComp.Parent = Top.Parent
-	
+
 	Searchbox.Input:GetPropertyChangedSignal("Text"):Connect(function()
 		if #Packages == 0 then fetch() end
 		for _, v in pairs(SearchComp.Container:GetChildren()) do
@@ -38,7 +38,7 @@ module.setup = function()
 				v:Destroy()
 			end 
 		end
-		
+
 		if string.len(Searchbox.Input.Text) >= 1 then
 			local matcher = Latte.Modules.Matcher.new(Packages, true, true)
 			for i, v in pairs(matcher:match(Searchbox.Input.Text)) do
@@ -53,20 +53,20 @@ module.setup = function()
 						Searchbox.Input.Text = ""
 						Latte.Constructors.Window.SwitchPage(Location.Name)
 						Latte.Constructors.Window.Window.Menu.setActive(Location.Name)
-						
+
 						wait(Latte.Modules.Stylesheet.Duration.Short)
 						Location.CanvasPosition = Vector2.new(0, 0)
 						-- TODO: Find a better way to do this, the current method is pretty hardcoded.
 						Latte.Modules.Tween.new(Location, Latte.Modules.TweenInfo.Quint(Latte.Modules.Stylesheet.Duration.Short) ,{CanvasPosition = Vector2.new(0, Location:FindFirstChild(v).AbsolutePosition.Y - 155)})
 					end)
-					
+
 					Item.LayoutOrder = i
 					Item.Parent = SearchComp.Container
 				end
 			end
 		end
 	end)
-	
+
 	QuitSearch = Latte.Components.RoundButton.new("Exit", "rbxassetid://6235536018", Searchbox, function()
 		Active = false
 		Searchbox.Visible = false
@@ -78,7 +78,7 @@ module.setup = function()
 		Searchbox.Visible = true
 		SearchComp.Visible = true
 	end).Image.Size = UDim2.new(0.35, 0, 0.35, 0)
-	
+
 	QuitSearch.ZIndex = 3
 	QuitSearch.Image.ImageColor3 = Color3.fromRGB(150, 150, 150)
 	QuitSearch.Position = UDim2.new(1, 0, 0, 0)

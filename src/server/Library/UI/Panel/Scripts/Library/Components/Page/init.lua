@@ -8,7 +8,7 @@ module.new = function(Name: string, Parent: instance)
 	Comp.CanvasSize = UDim2.new(0, 0, 0, 0)
 	Comp.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	Comp.Parent = Parent
-	
+
 	return Comp
 end
 

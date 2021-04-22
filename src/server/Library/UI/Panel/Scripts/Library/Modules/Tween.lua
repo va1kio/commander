@@ -7,7 +7,7 @@ function module.new(Object: instance, TweenInfo: tweeninfo, Goal)
 		tweenObject:Destroy()
 		tweenObject = nil
 	end)
-	
+
 	tweenObject:Play()
 	return tweenObject
 end

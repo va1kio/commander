@@ -4,10 +4,10 @@ local module = {
 	Location = "Player",
 }
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
-		
+
 		if Input == false then
 			return false
 		end

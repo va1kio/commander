@@ -9,7 +9,7 @@ module.new = function(Parent: instance)
 		["Bottom"] = UDim.new(0, 0),
 		["Parent"] = Parent
 	}
-	
+
 	local function cook()
 		for i,v in pairs(t) do
 			if typeof(v) == "UDim" then
@@ -19,7 +19,7 @@ module.new = function(Parent: instance)
 			end
 		end
 	end
-	
+
 	return setmetatable({}, {
 		__index = function(_, key: string)
 			return t[key]

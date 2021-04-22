@@ -38,16 +38,16 @@ end
 -- Builds permission tables to allow indexing for permissions.
 local function buildPermissionTables()
 	local permissions = systemPackages.Settings["Permissions"]
-	
+
 	for i,v in pairs(permissions) do
 		permissionTable[i] = {}
-		
+
 		if v["Permissions"] then
 			for _,perm in ipairs(v["Permissions"]) do
 				permissionTable[i][perm] = true
 			end
 		end
-		
+
 		if v["Inherits"] and permissions[v["Inherits"]] and permissions[v["Inherits"]]["Permissions"] then
 			for _,perm in ipairs(permissions[v["Inherits"]]["Permissions"]) do
 				permissionTable[i][perm] = true
@@ -59,10 +59,10 @@ end
 -- Builds disable prefix table.
 local function buildDisableTables()
 	local permissions = systemPackages.Settings["Permissions"]
-	
+
 	for i,v in pairs(permissions) do
 		disableTable[i] = {}
-		
+
 		if v["DisallowPrefixes"] then
 			for _,disallow in ipairs(v["DisallowPrefixes"]) do
 				disableTable[i][disallow:lower()] = true
@@ -79,12 +79,12 @@ local function loadPackages()
 			systemPackages[name] = v
 		end
 	end
-	
+
 	buildPermissionTables()
 	buildDisableTables()
 	systemPackages.API.PermissionTable = permissionTable
 	systemPackages.API.DisableTable = disableTable
-	
+
 	for i,v in pairs(systemPackages) do
 		for index, value in pairs(systemPackages) do
 			if systemPackages[index] ~= v and typeof(v) ~= "function" and i ~= "Settings" then
@@ -93,7 +93,7 @@ local function loadPackages()
 			end
 		end
 	end
-	
+
 	for i,v in pairs(script.Packages:GetDescendants()) do
 		if v:IsA("ModuleScript") and not v.Parent:IsA("ModuleScript") then
 			pcall(function()
@@ -145,7 +145,7 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			else
 				warn(Client.UserId, "does not have permission to run", Protocol)
 			end
-			
+
 			return
 		elseif Type == "input" then
 			-- bindable aren't really good for this, yikes
@@ -169,16 +169,16 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 		elseif Type == "setupUIForPlayer" then
 			remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
 			availableAdmins = systemPackages.API.getAvailableAdmins()
-			
+
 			-- Filter out commands that the user doesn't have access to.
 			local packagesButtonsFiltered = {};
-			
+
 			for i,v in ipairs(packagesButtons) do
 				if systemPackages.API.checkHasPermission(Client.UserId, v.PackageId) then
 					table.insert(packagesButtonsFiltered, v)
 				end
 			end
-			
+
 			remotes.Event:FireClient(Client, "fetchCommands", "n/a", packagesButtonsFiltered)
 			remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
 		elseif Type == "getSettings" then
@@ -203,7 +203,7 @@ local function setupUIForPlayer(Client)
 	UI.ResetOnSpawn = false
 	UI.Scripts.Core.Disabled = false
 	UI.Parent = Client.PlayerGui
-	
+
 	if systemPackages.API.checkAdmin(Client.UserId) then
 		isPlayerAddedFired = true
 		UI = script.Library.UI.Panel:Clone()

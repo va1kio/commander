@@ -12,11 +12,11 @@ module.new = function(Name: string, Text: string?, Parent: instance, Callback: (
 	Comp.Background.BackgroundColor3 = module.Latte.Modules.Stylesheet.ThemeColor
 	Comp.Background.Outline.ImageColor3 = module.Latte.Modules.Stylesheet.ThemeColor
 	Comp.Container.Title.TextColor3 = module.Latte.Modules.Stylesheet.ThemeColor
-	
+
 	module.Latte.Modules.Trigger.new(Comp, reaction, 3, false):Connect(function()
 		Callback()
 	end)
-	
+
 	Comp.Parent = Parent
 	return Comp
 end

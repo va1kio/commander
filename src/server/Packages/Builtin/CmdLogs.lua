@@ -5,7 +5,7 @@ local module = {
 }
 local t = {}
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local logs = module.fetchLogs:Invoke()
 		for i,v in pairs(logs) do
@@ -17,7 +17,7 @@ module.Execute = function(Client, Type, Attachment)
 			end
 			logs[i] = logmsg
 		end
-		
+
 		module.API.sendListToPlayer(Client, "Command logs", logs)
 		return true
 	end

@@ -18,7 +18,7 @@ module.new = function(Title: string, Description: string, Parent: instance)
 			["Clicked"] = Instance.new("BindableEvent")
 		}
 	}
-	
+
 	local function cook()
 		comp.Name = t.Title
 		comp.Visible = t.Visible
@@ -26,11 +26,11 @@ module.new = function(Title: string, Description: string, Parent: instance)
 		comp.Container.Text.Description.Text = t.Description
 		comp.Parent = t.Parent
 	end
-	
+
 	module.Latte.Modules.Trigger.new(comp, reaction, 3, false):Connect(function()
 		t.Events.Clicked:Fire()
 	end)
-	
+
 	comp.Container.Text.Title.Font = Stylesheet.Fonts.Book
 	comp.Container.Text.Description.Font = Stylesheet.Fonts.Semibold
 	comp.Container.Text.Description.TextSize = 13
@@ -38,7 +38,7 @@ module.new = function(Title: string, Description: string, Parent: instance)
 	comp.Container.Text.Description.TextColor3 = Stylesheet.PackageButton.DescriptionColor
 	comp.Container.BackgroundColor3 = Stylesheet.PackageButton.BackgroundColor
 	comp.Container.Accent.BackgroundColor3 = Stylesheet.Window.AccentColor
-	
+
 	cook()
 	return setmetatable({}, {
 		__index = function(_, key: string)

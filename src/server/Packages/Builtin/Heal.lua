@@ -4,7 +4,7 @@ local module = {
 	Location = "Player",
 }
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 		if char then

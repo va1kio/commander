@@ -33,15 +33,15 @@ module.setup = function()
 				allLists[Protocol] = {
 					Window = Latte.Components.Window.new(Protocol, Protocol, Vector2.new(300, 400), false, Elements)
 				}
-				
+
 				Latte.Components.Page.new("Body", allLists[Protocol].Window.Pages).UIListLayout:Destroy()
 			end
-			
+
 			allLists[Protocol]["List"] = Latte.Components.DenseList.new("List", allLists[Protocol].Window.Pages.Body)
 			for i,v in pairs(Attachment) do
 				allLists[Protocol]["List"].Items[i] = v
 			end
-			
+
 			allLists[Protocol].Window.ZIndex = 2
 			allLists[Protocol].Window.Toggle(true)
 			allLists[Protocol].Window.switchPage("Body")

@@ -6,7 +6,7 @@ local module = {
 
 local status = false
 
-module.Execute = function(Client, Type, Attachment)			
+module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		status = not status
 		module.Remotes.Event:FireClient(Client, "newMessage", "", {From = "System; ServerLock", Content = "ServerLock status has been changed to " .. tostring(status)})
