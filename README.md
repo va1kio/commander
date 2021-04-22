@@ -35,9 +35,9 @@ Commander adheres the Contributor Covenant [code of conduct](./CODE_OF_CONDUCT.m
 
 If you are creating your first time issue or pull request to this repository, consider reading our [contributing guidelines](./CONTRIBUTING.md).
 
-Before starting to contribute, please clone the repository's **preview** branch and install Commander with the [Rojo](#Rojo) method, which will allow you to do testing.
+Before starting to contribute, please clone this repository with command `git clone https://github.com/va1kio/commander.git` and install Commander with the [Rojo](#Rojo) method, which will allow you to do testing.
 
-Once you have finished making changes to the codebase, please group changes and stage them one by one with a clear and descriptive commit message, and create a pull request in the **preview** branch.
+Once you have finished making changes to the codebase, please group changes and stage them one by one with a clear and descriptive commit message, and create a pull request.
 
 ## Credits
 
