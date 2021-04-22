@@ -29,7 +29,7 @@ function module:dismiss()
 	fade:Set(self._object, 1, tweeninfo.Linear(0.15))
 	tween.new(self._object, tweeninfo.Quint(0.3), {
 		Position = UDim2.new(0, 0, 0, 0),
-		AnchorPoint = Vector2.new(0, 1)
+		AnchorPoint = Vector2.new(0, 0)
 	})
 	wait(0.3)
 	self._object:Destroy()
