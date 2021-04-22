@@ -1,5 +1,5 @@
 local module = {}
-Latte, Elements, Packages = nil, nil, {}
+local Latte, Elements, Packages = nil, nil, {}
 
 local function fetch()
 	Packages = {}

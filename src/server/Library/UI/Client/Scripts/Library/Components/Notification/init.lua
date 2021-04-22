@@ -11,7 +11,7 @@ function module.new(from: string, content: string, parent: instance)
 	local component = script.Comp:Clone()
 	component.Name = script.Name
 	component.Container.Top.Title.Text = from
-	component.Container.UISizeConstraint.MaxSize = Vector2.new("inf", 120)
+	component.Container.UISizeConstraint.MaxSize = Vector2.new(math.huge, 120)
 	component.Container.Body.Content.Text = content
 	component.Parent = parent
 	fade:Set(component, 1)
