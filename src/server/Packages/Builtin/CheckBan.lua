@@ -11,19 +11,20 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local player = module.API.getUserIdWithName(Attachment)
 		local success, result = pcall(dataStore.GetAsync, dataStore, player)
-		
+
 		if success then
-			if result or tonumber(result.End) == math.huge or os.time() < tonumber(result.End or 0) then
-				module.API.Players.message(Client, "CheckBan (" .. player .. ")", "This player is currently banned, here are the details:\nName: " .. Attachment .. "\nUserId: " .. player .. "\nBanned by: " .. tostring(result.By) .. "\nDuration: " .. tostring(result.End) .. "\nReason: " .. result.Reason or "N/A")
+			if result then
+				result = "This player is currently banned, \n\nName: " .. Attachment .. " (" .. player .. ")\n"
+				result = result .. "Moderator: " .. tostring(result.By) .. "\nDuration: " .. tostring(result.End) .. "\nReason: " tostring(result.Reason or "N/A")
 			else
-				module.API.Players.message(Client, "CheckBan (" .. player .. ")", "This player is not banned")
+				result = "This player is not banned"
 			end
-			return true
 		else
-			module.API.Players.message(Client, "CheckBan", "An error occured, please retry later")
+			result = "An error occured, please try later"
 		end
-		
-		return false
+
+		module.API.Players.notify(Client, "CheckBan", result)
+		return true
 	elseif Type == "firstrun" then
 		DataStoreService = module.Services.DataStoreService
 		dataStore = DataStoreService:GetDataStore(module.Settings.Misc.DataStoresKey.Ban or "commander.bans")
