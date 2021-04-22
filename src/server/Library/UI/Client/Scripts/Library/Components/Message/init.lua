@@ -67,6 +67,4 @@ function module:deploy()
 	end)
 end
 
-fade:Set(script.Comp, 1)
-
 return module
