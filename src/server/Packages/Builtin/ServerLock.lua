@@ -9,7 +9,7 @@ local status = false
 module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		status = not status
-		module.API.Players.hint(Client, "ServerLock", "Server is now " .. status and "locked" or "unlocked")
+		module.API.Players.hint(Client, "ServerLock", "Server is now " .. (status and "locked" or "unlocked"))
 		return true
 	elseif Type == "firstrun" then
 		module.API.registerPlayerAddedEvent(function(Client)
