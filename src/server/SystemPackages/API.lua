@@ -33,6 +33,7 @@ API.Players = {
 		["registerPlayerAddedEvent"] = "listenToPlayerAdded",
 	}
 }
+API.Core = {}
 
 local function containsDisallowed(tbl)
 	local allowedTypes = {"table", "function", "thread"}
@@ -359,6 +360,81 @@ function API.Players.getCharacter(Player: player)
 	if Player.Character and Player.Character.PrimaryPart and Player.Character:FindFirstChildOfClass("Humanoid") then
 		return Player.Character
 	end
+end
+
+function API.Core.getDataStore(Name: string, Scope: string?)
+	local object = {}
+	object.__index = object
+	function object:get(Key: string)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.GetAsync, self._object, Key)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:set(Key: string, Data: any)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.SetAsync, self._object, Key, Data)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:increment(Key: string, Delta: number, UserIds: array, Options: instance)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.IncrementAsync, self._object, Key, Delta, UserIds, Options)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:update(Key: string, Transformer: (string) -> void)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.RemoveAsync, self._object, Key, Transformer)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:remove(Key: string)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.RemoveAsync, self._object, Key)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	return module.Services.Promise.new(function(Resolve, Reject)
+		local status, response = pcall(module.Services.DataStoreService.GetDataStore, module.Services.DataStoreService, Name, Scope)
+		if status then
+			local newMeta = setmetatable({
+				_object = response
+			}, object)
+		else
+			Reject(response)
+		end
+	end)
 end
 
 module = setmetatable({}, {
