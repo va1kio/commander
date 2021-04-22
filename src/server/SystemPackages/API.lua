@@ -464,7 +464,7 @@ globalAPI = setmetatable({
 	end)
 }, {
 	__metatable = "The metatable is locked",
-	__newindex = function() return end
+	__newindex = function() error("Attempt to modify a readonly table", 2) end
 })
 
 Players.PlayerAdded:Connect(function(Client)
