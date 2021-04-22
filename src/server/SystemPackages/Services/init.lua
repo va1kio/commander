@@ -17,6 +17,6 @@ return setmetatable({}, {
 		
 		return object
 	end,
-	__newindex = function() error("Attempt to modify a readonly table", 2) end,
+	__newindex = function() return end,
 	__metatable = "The metatable is locked"
 })
