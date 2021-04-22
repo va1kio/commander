@@ -60,7 +60,7 @@
 			<int64 name="SourceAssetId">-1</int64>
 			<token name="Style">0</token>
 			<BinaryString name="Tags"></BinaryString>
-			<string name="Text">Button</string>
+			<string name="Text"></string>
 			<Color3 name="TextColor3">
 				<R>0</R>
 				<G>0</G>
