@@ -10,11 +10,7 @@ local remotes = {
 	Event = Instance.new("RemoteEvent")
 }
 
-local packages = {}
-local packagesButtons = {}
-local systemPackages = {}
-local permissionTable = {}
-local disableTable = {}
+local packages, packagesButtons, systemPackages, permissionTable, disableTable = {}, {}, {}, {}, {}
 local currentTheme = nil
 
 remotefolder.Name = "Commander Remotes"
@@ -80,7 +76,6 @@ local function loadPackages()
 		if v:IsA("ModuleScript") then
 			local name = v.Name
 			v = require(v)
-			warn("loaded systemPackage " .. name)
 			systemPackages[name] = v
 		end
 	end
@@ -100,11 +95,12 @@ local function loadPackages()
 	end
 	
 	for i,v in pairs(script.Packages:GetDescendants()) do
-		if v:IsA("ModuleScript") then
+		if v:IsA("ModuleScript") and not v.Parent:IsA("ModuleScript") then
 			pcall(function()
 				local mod = require(v)
 				mod.Services = systemPackages.Services
 				mod.API = systemPackages.API
+				mod.Settings = systemPackages.Settings
 				mod.Remotes = remotes
 				mod.fetchLogs = script.waypointBindable
 				mod.PackageId = v.Name
@@ -118,8 +114,7 @@ local function loadPackages()
 end
 
 loadPackages()
-
-systemPackages.Settings.Credits = systemPackages.Credits()
+systemPackages.Settings.Credits = systemPackages.GetCredits()
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
 	error("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
@@ -138,7 +133,7 @@ script.waypointBindable.OnInvoke = function()
 end
 
 remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
-	if systemPackages.API.checkAdmin(Client.UserId) then
+	if systemPackages.API.checkAdmin(Client.UserId) and Type ~= "notifyCallback" then
 		if Type == "command" and packages[Protocol] then
 			if systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
 				local status = packages[Protocol].Execute(Client, Type, Attachment)
@@ -169,6 +164,8 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			return systemPackages.Settings.Version[1], systemPackages.Settings.Version[2]
 		elseif Type == "getHasPermission" then
 			return systemPackages.API.checkHasPermission(Client.UserId, Protocol)
+		elseif Type == "getElapsedTime" then
+			return workspace.DistributedGameTime
 		elseif Type == "setupUIForPlayer" then
 			remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
 			availableAdmins = systemPackages.API.getAvailableAdmins()
@@ -188,6 +185,17 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			return systemPackages.Settings
 		end
 	end
+	
+	if Type == "notifyCallback" then
+		-- bindable aren't really good for this, yikes
+		local Event = script.Bindables:FindFirstChild(Protocol)
+		if Event and Attachment then
+			Event:Fire(Attachment or false)
+			Event:Destroy()
+		else
+			return false
+		end
+	end
 end
 
 local function setupUIForPlayer(Client)
@@ -203,15 +211,17 @@ local function setupUIForPlayer(Client)
 		UI.ResetOnSpawn = false
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
+		systemPackages.API.Players.notify(Client, "System", "Press the \"" .. systemPackages.Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander")
+	end
+	
+	if not systemPackages.Settings.Misc.DisableCredits then
+		systemPackages.API.Players.notify(Client, "System", "This game uses Commander 4 from Evo")
 	end
 end
 
 Players.PlayerAdded:Connect(function(Client)
 	setupUIForPlayer(Client)
 	availableAdmins = systemPackages.API.getAvailableAdmins()
-	if not systemPackages.Settings.Misc.DisableCredits then
-		remotes.Event:FireClient(Client, "newNotify", "n/a", {From = "System", Content = "This game uses Commander 4 from Evo"})
-	end
 end)
 
 Players.PlayerRemoving:Connect(function(Client)

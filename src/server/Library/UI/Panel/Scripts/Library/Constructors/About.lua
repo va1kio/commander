@@ -1,4 +1,4 @@
-local module, Page, Latte, Elements = {}, nil, nil, nil
+local module, Page, Latte, Elements, Settings= {}, nil, nil, nil, nil
 
 module.prepare = function()
 	local Top = Instance.new("Frame")
@@ -155,12 +155,12 @@ module.prepare = function()
 	Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Title.BackgroundTransparency = 1
 	Title.BorderSizePixel = 0
-	Title.Font = Enum.Font.Gotham
+	Title.Font = Latte.Modules.Stylesheet.Fonts.Book
 	Title.Name = "Title"
 	Title.AutomaticSize = Enum.AutomaticSize.X
 	Title.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Title.Size = UDim2.new(0, 0, 0, 16)
-	Title.Text = "Commander <font face=\"GothamBold\">4</font>"
+	Title.Text = "Commander <b>4</b>"
 	Title.RichText = true
 	Title.TextColor3 = Latte.Modules.Stylesheet.About.TitleColor
 	Title.TextSize = 16
@@ -174,7 +174,7 @@ module.prepare = function()
 	Subtitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Subtitle.BackgroundTransparency = 1
 	Subtitle.BorderSizePixel = 0
-	Subtitle.Font = Enum.Font.GothamSemibold
+	Subtitle.Font = Latte.Modules.Stylesheet.Fonts.Semibold
 	Subtitle.LayoutOrder = 1
 	Subtitle.Name = "Subtitle"
 	Subtitle.AutomaticSize = Enum.AutomaticSize.X
@@ -201,7 +201,7 @@ module.prepare = function()
 	Title2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Title2.BackgroundTransparency = 1
 	Title2.BorderSizePixel = 0
-	Title2.Font = Enum.Font.Gotham
+	Title2.Font = Latte.Modules.Stylesheet.Fonts.Book
 	Title2.Name = "Title"
 	Title2.AutomaticSize = Enum.AutomaticSize.X
 	Title2.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -220,7 +220,7 @@ module.prepare = function()
 	Subtitle2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Subtitle2.BackgroundTransparency = 1
 	Subtitle2.BorderSizePixel = 0
-	Subtitle2.Font = Enum.Font.GothamSemibold
+	Subtitle2.Font = Latte.Modules.Stylesheet.Fonts.Semibold
 	Subtitle2.LayoutOrder = 1
 	Subtitle2.Name = "Subtitle"
 	Subtitle2.AutomaticSize = Enum.AutomaticSize.X
@@ -277,7 +277,7 @@ module.prepare = function()
 	local Title3 = Instance.new("TextLabel")
 	Title3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Title3.BackgroundTransparency = 1
-	Title3.Font = Enum.Font.Gotham
+	Title3.Font = Latte.Modules.Stylesheet.Fonts.Book
 	Title3.Name = "Title"
 	Title3.AutomaticSize = Enum.AutomaticSize.XY
 	Title3.RichText = true
@@ -289,6 +289,7 @@ module.prepare = function()
 end
 
 module.update = function()
+	Page.Top.Container.Text.Title.Text = "Commander <b>" .. Settings.Version[3] .. "</b>"
 	Page.Top.Container.Text.Subtitle.Text = "Version " .. Settings.Version[2]
 end
 

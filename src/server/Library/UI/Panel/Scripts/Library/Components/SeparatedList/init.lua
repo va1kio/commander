@@ -23,6 +23,8 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 		__newindex = function(_, key: string, value: string)
 			local Item = ActualItems[key] or script.Item:Clone()
 			if not ActualItems[key] then
+				Item.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Book
+				Item.Value.Font = module.Latte.Modules.Stylesheet.Fonts.Semibold
 				Item.Title.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.TitleColor
 				Item.Value.TextColor3 = module.Latte.Modules.Stylesheet.SeparatedList.Item.ValueColor
 				Item.Accent.BackgroundColor3 = module.Latte.Modules.Stylesheet.Window.AccentColor
@@ -45,6 +47,7 @@ module.new = function(Name: string, Title: string?, Parent: instance)
 			if t[key] and key ~= "Items" then
 				t[key] = value
 				Comp.Name = t["Name"]
+				Comp.Container.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 				Comp.Container.Title.Text = t["Title"]
 				Comp.Parent = t["Parent"]
 				

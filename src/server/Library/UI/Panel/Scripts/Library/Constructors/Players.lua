@@ -15,7 +15,7 @@ end
 module.prepare = function()
 	local Padding = Latte.Components.Padding.new(Page)
 	TextField = Latte.Components.CompactTextField.new("TARGET", "search for user", Page)
-	local Suggestion = Latte.Components.PackageButton.new("n/a", "n/a", Page["TARGET"])
+	local Suggestion, Suggested = Latte.Components.PackageButton.new("n/a", "n/a", Page["TARGET"]), ""
 	Suggestion.Object.Visible = false
 	Padding.Top = UDim.new(0, 24)
 	Padding.Bottom = UDim.new(0, 24)
@@ -26,7 +26,8 @@ module.prepare = function()
 			local content = fetch(Text)
 			if content then
 				Suggestion.Object.Visible = true
-				Suggestion.Title = content
+				Suggested = content
+				Suggestion.Title = Latte.Modules.Services.Players:FindFirstChild(content).DisplayName == content and Latte.Modules.Services.Players:FindFirstChild(content).Name or Latte.Modules.Services.Players:FindFirstChild(content).DisplayName .. " (@" .. content .. ")"
 				Suggestion.Description = Latte.Modules.Services.Players:FindFirstChild(content).UserId
 			else
 				Suggestion.Object.Visible = false
@@ -37,7 +38,7 @@ module.prepare = function()
 	end)
 	
 	Suggestion.Events.Clicked.Event:Connect(function()
-		TextField.Content = Suggestion.Title
+		TextField.Content = Suggested
 		Suggestion.Object.Visible = false
 	end)
 end
@@ -57,6 +58,8 @@ module.update = function()
 					Latte.Constructors.Window.notifyUser(nil, "Player parameter must not be empty!")
 				end
 			end)
+			
+			Comp.Object.LayoutOrder = i + 1
 		end
 	end
 end

@@ -2,11 +2,11 @@
 	<Meta name="ExplicitAutoJoints">true</Meta>
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScrollingFrame" referent="RBXca65976dea1643929b5d14206ee284df">
+	<Item class="ScrollingFrame" referent="RBX07ddbbbbb94341e2bdede5cbca86e638">
 		<Properties>
 			<bool name="Active">false</bool>
 			<Vector2 name="AnchorPoint">
-				<X>0</X>
+				<X>1</X>
 				<Y>0</Y>
 			</Vector2>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -49,10 +49,10 @@
 			<Ref name="NextSelectionRight">null</Ref>
 			<Ref name="NextSelectionUp">null</Ref>
 			<UDim2 name="Position">
-				<XS>0</XS>
+				<XS>1</XS>
 				<XO>0</XO>
 				<YS>0</YS>
-				<YO>-36</YO>
+				<YO>-25</YO>
 			</UDim2>
 			<Ref name="RootLocalizationTable">null</Ref>
 			<float name="Rotation">0</float>
@@ -68,8 +68,8 @@
 			<bool name="Selectable">false</bool>
 			<Ref name="SelectionImageObject">null</Ref>
 			<UDim2 name="Size">
-				<XS>1</XS>
-				<XO>0</XO>
+				<XS>0</XS>
+				<XO>275</XO>
 				<YS>1</YS>
 				<YO>0</YO>
 			</UDim2>
@@ -82,11 +82,11 @@
 			<bool name="Visible">true</bool>
 			<int name="ZIndex">1</int>
 		</Properties>
-		<Item class="UIListLayout" referent="RBXd34b3739395e43b4811fbd436ee5a616">
+		<Item class="UIListLayout" referent="RBX77cdffc08a5d454f9c3a72710df40086">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<token name="FillDirection">1</token>
-				<token name="HorizontalAlignment">0</token>
+				<token name="HorizontalAlignment">2</token>
 				<string name="Name">UIListLayout</string>
 				<UDim name="Padding">
 					<S>0</S>
@@ -95,10 +95,10 @@
 				<token name="SortOrder">2</token>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
-				<token name="VerticalAlignment">1</token>
+				<token name="VerticalAlignment">2</token>
 			</Properties>
 		</Item>
-		<Item class="UIPadding" referent="RBX320baf4971c24e619656d999187f16c8">
+		<Item class="UIPadding" referent="RBX2294104c19824cf5b91f9066c43b44fb">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<string name="Name">UIPadding</string>
@@ -112,91 +112,14 @@
 				</UDim>
 				<UDim name="PaddingRight">
 					<S>0</S>
-					<O>0</O>
+					<O>25</O>
 				</UDim>
 				<UDim name="PaddingTop">
 					<S>0</S>
-					<O>4</O>
+					<O>0</O>
 				</UDim>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
-			</Properties>
-		</Item>
-		<Item class="TextLabel" referent="RBX03c337fa1b67417f87e2c68025806612">
-			<Properties>
-				<bool name="Active">false</bool>
-				<Vector2 name="AnchorPoint">
-					<X>1</X>
-					<Y>0</Y>
-				</Vector2>
-				<BinaryString name="AttributesSerialize"></BinaryString>
-				<bool name="AutoLocalize">true</bool>
-				<token name="AutomaticSize">0</token>
-				<Color3 name="BackgroundColor3">
-					<R>1</R>
-					<G>1</G>
-					<B>1</B>
-				</Color3>
-				<float name="BackgroundTransparency">1</float>
-				<Color3 name="BorderColor3">
-					<R>0.105882362</R>
-					<G>0.164705887</G>
-					<B>0.207843155</B>
-				</Color3>
-				<token name="BorderMode">0</token>
-				<int name="BorderSizePixel">0</int>
-				<bool name="ClipsDescendants">false</bool>
-				<bool name="Draggable">false</bool>
-				<token name="Font">17</token>
-				<int name="LayoutOrder">1</int>
-				<float name="LineHeight">1</float>
-				<int name="MaxVisibleGraphemes">-1</int>
-				<string name="Name">Indicator</string>
-				<Ref name="NextSelectionDown">null</Ref>
-				<Ref name="NextSelectionLeft">null</Ref>
-				<Ref name="NextSelectionRight">null</Ref>
-				<Ref name="NextSelectionUp">null</Ref>
-				<UDim2 name="Position">
-					<XS>1</XS>
-					<XO>0</XO>
-					<YS>0</YS>
-					<YO>0</YO>
-				</UDim2>
-				<bool name="RichText">true</bool>
-				<Ref name="RootLocalizationTable">null</Ref>
-				<float name="Rotation">0</float>
-				<bool name="Selectable">false</bool>
-				<Ref name="SelectionImageObject">null</Ref>
-				<UDim2 name="Size">
-					<XS>1</XS>
-					<XO>0</XO>
-					<YS>0</YS>
-					<YO>20</YO>
-				</UDim2>
-				<token name="SizeConstraint">0</token>
-				<int64 name="SourceAssetId">-1</int64>
-				<BinaryString name="Tags"></BinaryString>
-				<string name="Text"></string>
-				<Color3 name="TextColor3">
-					<R>0.941176474</R>
-					<G>0.941176474</G>
-					<B>0.941176474</B>
-				</Color3>
-				<bool name="TextScaled">false</bool>
-				<float name="TextSize">14</float>
-				<Color3 name="TextStrokeColor3">
-					<R>0</R>
-					<G>0</G>
-					<B>0</B>
-				</Color3>
-				<float name="TextStrokeTransparency">0.75</float>
-				<float name="TextTransparency">0</float>
-				<token name="TextTruncate">0</token>
-				<bool name="TextWrapped">true</bool>
-				<token name="TextXAlignment">2</token>
-				<token name="TextYAlignment">2</token>
-				<bool name="Visible">false</bool>
-				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
 	</Item>

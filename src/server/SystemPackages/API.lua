@@ -1,31 +1,85 @@
+local module = {}
 local TextService = game:GetService("TextService")
+local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local GroupService = game:GetService("GroupService")
 
 -- TODO: Update group cache over interval?
-local module = {}
+local API = {}
+local globalAPI
 local t = {}
 local groupCache = {}
+API.Players = {
+	["OldMethods"] = {
+		["sendModalToPlayer"] = "sendModal",
+		["sendListToPlayer"] = "sendList",
+		["doThisToPlayers"] = "executeWithPrefix",
+		["getPlayerWithName"] = "getPlayerByName",
+		["getPlayerWithNamePartial"] = "getPlayerByNamePartial",
+		["getPlayerWithFilter"] = "getPlayerWithFilter",
+		["getUserIdWithName"] = "getUserIdFromName",
+		["getCharacter"] = "getCharacter",
+		["filterText"] = "filterString",
+		["newMessage"] = "message",
+		["newHint"] = "hint",
+		["newNotify"] = "notify",
+		["newNotifyWithAction"] = "notifyWithAction",
+		["checkHasPermission"] = "checkPermission",
+		["checkAdmin"] = "getAdminStatus",
+		["getAdminLevel"] = "getAdminLevel",
+		["getAdmins"] = "getAdmins",
+		["getAvailableAdmins"] = "getAvailableAdmins",
+		["registerPlayerAddedEvent"] = "listenToPlayerAdded",
+	}
+}
+API.Core = {}
 
-function module.sendModalToPlayer(Player: player, Title: string)
-	local Bindable = Instance.new("BindableEvent")
-	local GUID = HttpService:GenerateGUID()
-	Bindable.Name = GUID
-	module.Remotes.Event:FireClient(Player, "modal", GUID, Title)
-	Bindable.Parent = script.Parent.Parent.Bindables
+local function containsDisallowed(tbl)
+	local allowedTypes = {"table", "function", "thread"}
+	for _, value in ipairs(tbl) do
+		return typeof(value) == "userdata" or allowedTypes[type(value)] ~= nil
+	end
+end
 
+local function sandboxFunc(func)
+	local function returnResults(success, ...)
+		return success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured."
+	end
+
+	return function(...)
+		if containsDisallowed({...}) then
+			return "Disallowed input!"
+		end
+
+		return returnResults(pcall(func, ...))
+	end
+end
+
+local function makeBindable(func)
+	local Bindable = Instance.new("BindableFunction")
+	Bindable.OnInvoke = not table.find(module, func) and func or sandboxFunc(func)
 	return Bindable
 end
 
-function module.sendListToPlayer(Player: player, Title: string, Attachment)
+function API.Players.sendModal(Player: player, Title: string?): bindableevent
+	local Bindable = Instance.new("BindableEvent")
+	local GUID = HttpService:GenerateGUID()
+	Bindable.Name = GUID
+	module.Remotes.Event:FireClient(Player, "modal", GUID, Title or "Input required")
+	Bindable.Parent = script.Parent.Parent.Bindables
+	
+	return Bindable
+end
+
+function API.Players.sendList(Player: player, Title: string, Attachment)
 	module.Remotes.Event:FireClient(Player, "newList", Title, Attachment)
 end
 
-function module.doThisToPlayers(Client: player, Player: player, Callback)
+function API.Players.GetPlayersFromNameSelector(Client: player, Player: string)
+	local playerList = {}
 	Player = string.lower(Player)
-
-	local clientAdminLevel = module.getAdminLevel(Client.UserId)
+	local clientAdminLevel = API.Players.getAdminLevel(Client.UserId)
 
 	if clientAdminLevel
 	and module.DisableTable[clientAdminLevel]
@@ -33,48 +87,88 @@ function module.doThisToPlayers(Client: player, Player: player, Callback)
 		return false
 	end
 
-	local function runOnName(Player)
-		if Player == "all" then
-			for _, v in ipairs(Players:GetPlayers()) do
-				Callback(v)
-			end
-		elseif Player == "others" then
-			for _, v in ipairs(Players:GetPlayers()) do
-				if v ~= Client then
-					Callback(v)
+	local function getWithName(Player)
+		local prefixes = {
+			["all"] = function()
+				for _, player in ipairs(Players:GetPlayers()) do
+					table.insert(playerList, player)
 				end
-			end
-		elseif Player == "me" then
-			Callback(Client)
-		elseif Player == "admins" or Player == "nonadmins" then
-			for _, v in ipairs(Players:GetPlayers()) do
-				local isAdmin = module.checkAdmin(v.UserId)
-				if Player == "admins" and isAdmin or Player == "nonadmins" and not isAdmin then
-					Callback(v)
+			end,
+
+			["others"] = function()
+				for _, player in ipairs(Player:GetPlayers()) do
+					if player ~= Client then
+						table.insert(playerList, player)
+					end
 				end
+			end,
+
+			["me"] = function()
+				table.insert(playerList, Client)
+			end,
+
+			["admins"] = function()
+				for _, player in ipairs(Players:GetPlayers()) do
+					if API.Players.getAdminStatus(player.UserId) then
+						table.insert(playerList, player)
+					end
+				end
+			end,
+
+			["nonadmins"] = function()
+				for _, player in ipairs(Players:GetPlayers()) do
+					if not API.Players.getAdminStatus(player.UserId) then
+						table.insert(playerList, player)
+					end
+				end
+			end,
+
+			["random"] = function()
+				table.insert(playerList, Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
 			end
-		elseif Player == "random" then
-			Callback(Players:GetPlayers()[math.random(1, #Players:GetPlayers())])
+		}
+
+		if prefixes[tostring(Player)] then
+			prefixes[tostring(Player)]()
 		else
-			Player = module.getPlayerWithName(Player)
-			if Player then
-				Callback(Player)
-			end
+			table.insert(playerList, API.Players.getPlayerByName(Player))
 		end
 	end
 	
 	if string.match(Player, ",") then
 		for PlayerName in string.gmatch(Player, "([^,]+)(,? ?)") do
-			runOnName(PlayerName)
+			getWithName(PlayerName)
 		end
 	else
-		runOnName(Player)
+		getWithName(Player)
 	end
 
-	return true
+	return #playerList > 0 and playerList or nil
 end
 
-function module.getPlayerWithName(Player: string)
+function API.Players.executeWithPrefix(Client: player, Player: string, Callback)
+	Player = string.lower(Player)
+	local clientAdminLevel = API.Players.getAdminLevel(Client.UserId)
+
+	if clientAdminLevel
+	and module.DisableTable[clientAdminLevel]
+	and module.DisableTable[clientAdminLevel][Player] == true then
+		return false
+	end
+	
+	local List = API.Players.GetPlayersFromNameSelector(Client, Player)
+
+	if List then
+		for _, v in ipairs(List) do
+			Callback(v)
+		end
+		return true
+	else
+		return false
+	end
+end
+
+function API.Players.getPlayerByName(Player: string)
 	for _, v in ipairs(Players:GetPlayers()) do
 		if string.lower(v.Name) == string.lower(Player) then
 			return v
@@ -82,7 +176,7 @@ function module.getPlayerWithName(Player: string)
 	end
 end
 
-function module.getPlayerWithNamePartial(Player: string)
+function API.Players.getPlayerByNamePartial(Player: string)
 	for _, v in ipairs(Players:GetPlayers()) do
 		if string.lower(string.sub(v.Name, 1, #Player)) == string.lower(Player) then
 			return v;
@@ -90,7 +184,7 @@ function module.getPlayerWithNamePartial(Player: string)
 	end
 end
 
-function module.getPlayerWithFilter(filter: (Instance) -> boolean)
+function API.Players.getPlayerWithFilter(filter: (Instance) -> boolean)
 	for _, v in ipairs(Players:GetPlayers()) do
 		if filter(v) == true then
 			return v;
@@ -98,16 +192,18 @@ function module.getPlayerWithFilter(filter: (Instance) -> boolean)
 	end
 end
 
-function module.getUserIdWithName(Player: string)
+function API.Players.getUserIdFromName(Player: string)
 	local success, result = pcall(Players.GetUserIdFromNameAsync, Players, Player)
 	return result
 end
 
-function module.registerPlayerAddedEvent(Function)
+function API.Players.listenToPlayerAdded(Function)
 	table.insert(t, Function)
 end
 
-function module.filterText(From: player, Content: string)
+function API.Players.filterString(From: player, Content: string)
+	if RunService:IsStudio() then return true, Content end
+
 	local success, result = pcall(TextService.FilterStringAsync, TextService, Content, From.UserId)
 	if success and result then
 		result = result:GetNonChatStringForBroadcastAsync()
@@ -116,16 +212,47 @@ function module.filterText(From: player, Content: string)
 	return success, result
 end
 
-function module.newMessage(To: player|string, From: string, Content: string, Duration: number?)
+function API.Players.message(To: player|string, From: string, Content: string, Duration: number?)
 	if tostring(To):lower() == "all" then
-		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
 	else
-		module.Remotes.Event:FireClient(player, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration or 5})
+		module.Remotes.Event:FireClient(To, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
 	end
 end
 
-function module.checkHasPermission(ClientId: number, Command: string)
-	local clientAdminLevel = module.getAdminLevel(ClientId)
+function API.Players.hint(To: player|string, From: string, Content: string, Duration: number?)
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newHint", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+	else
+		module.Remotes.Event:FireClient(To, "newHint", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+	end
+end
+
+function API.Players.notify(To: player|string, From: string, Content: string)
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newNotify", "", {["From"] = From, ["Content"] = Content})
+	else
+		module.Remotes.Event:FireClient(To, "newNotify", "", {["From"] = From, ["Content"] = Content})
+	end
+end
+
+function API.Players.notifyWithAction(To: player|string, Type, From: string, Content: string)
+	local Bindable = Instance.new("BindableEvent")
+	local GUID = HttpService:GenerateGUID()
+	Bindable.Name = GUID
+	
+	if tostring(To):lower() == "all" then
+		module.Remotes.Event:FireAllClients("newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, {["From"] = From, ["Content"] = Content})
+	else
+		module.Remotes.Event:FireClient(To, "newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, {["From"] = From, ["Content"] = Content})
+	end
+	
+	Bindable.Parent = script.Parent.Parent.Bindables
+	return Bindable
+end
+
+function API.Players.checkPermission(ClientId: number, Command: string)
+	local clientAdminLevel = API.Players.getAdminLevel(ClientId)
 
 	if not clientAdminLevel or not module.PermissionTable[clientAdminLevel] then
 		return false
@@ -135,11 +262,11 @@ function module.checkHasPermission(ClientId: number, Command: string)
 		or module.PermissionTable[clientAdminLevel]["*"] == true)
 end
 
-function module.checkAdmin(ClientId: number)
-	return module.getAdminLevel(ClientId) ~= nil
+function API.Players.getAdminStatus(ClientId: number)
+	return API.Players.getAdminLevel(ClientId) ~= nil
 end
 
-function module.getAdminLevel(ClientId: number)
+function API.Players.getAdminLevel(ClientId: number)
 	local highestPriority, permissionGroupId = -math.huge, nil;
 
 	for i, v in pairs(module.Settings.Admins) do
@@ -214,14 +341,14 @@ function module.getAdminLevel(ClientId: number)
 	return permissionGroupId
 end
 
-function module.getAdmins()
+function API.Players.getAdmins()
 	return module.Settings.Admins
 end
 
-function module.getAvailableAdmins()
+function API.Players.getAvailableAdmins()
 	local availableAdmins = 0
 	for _, v in ipairs(Players:GetPlayers()) do
-		if module.checkAdmin(v.UserId) then
+		if API.Players.getAdminStatus(v.UserId) then
 			availableAdmins += 1
 		end
 	end
@@ -229,58 +356,116 @@ function module.getAvailableAdmins()
 	return availableAdmins
 end
 
-function module.getCharacter(Player: player)
+function API.Players.getCharacter(Player: player)
 	if Player.Character and Player.Character.PrimaryPart and Player.Character:FindFirstChildOfClass("Humanoid") then
 		return Player.Character
 	end
 end
 
-local function containsDisallowed(tbl)
-	for _, v in ipairs(tbl) do
-		if type(v) == "table" or typeof(v) == "userdata" or type(v) == "function" or type(v) == "thread" then
-			return true
+function API.Core.getDataStore(Name: string, Scope: string?)
+	local object = {}
+	object.__index = object
+	function object:get(Key: string)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.GetAsync, self._object, Key)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:set(Key: string, Data: any)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.SetAsync, self._object, Key, Data)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:increment(Key: string, Delta: number, UserIds: array, Options: instance)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.IncrementAsync, self._object, Key, Delta, UserIds, Options)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:update(Key: string, Transformer: (string) -> void)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.RemoveAsync, self._object, Key, Transformer)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	function object:remove(Key: string)
+		return module.Services.Promise.new(function(Resolve, Reject)
+			local status, response = pcall(self._object.RemoveAsync, self._object, Key)
+
+			if status then
+				Resolve(response)
+			else
+				Reject(response)
+			end
+		end)
+	end
+
+	return module.Services.Promise.new(function(Resolve, Reject)
+		local status, response = pcall(module.Services.DataStoreService.GetDataStore, module.Services.DataStoreService, Name, Scope)
+		if status then
+			local newMeta = setmetatable({
+				_object = response
+			}, object)
+		else
+			Reject(response)
 		end
-	end
+	end)
 end
 
-local function sandboxFunc(func)
-	local function returnResults(success, ...)
-		return success and (not containsDisallowed({...}) and ... or "API returned disallowed arguments. Vulnerability?") or "An error occured."
-	end
-
-	return function(...)
-		if containsDisallowed({...}) then
-			return "Disallowed input!"
+module = setmetatable({}, {
+	__index = function(self, key: string)
+		if API.Players.OldMethods[key] then
+			return API.Players[API.Players.OldMethods[key]]
+		else
+			return API[key]
 		end
+	end,
+	__metatable = "The metatable is locked"
+})
 
-		return returnResults(pcall(func, ...))
-	end
-end
-
-local function makeBindable(func)
-	local Bindable = Instance.new("BindableFunction")
-	Bindable.OnInvoke = not table.find(module, func) and func or sandboxFunc(func)
-	return Bindable
-end
-
-local globalAPI = setmetatable({
-	checkHasPermission = makeBindable(sandboxFunc(module.checkHasPermission)),
-	checkAdmin = makeBindable(sandboxFunc(module.checkAdmin)),
-	getAdminLevel = makeBindable(sandboxFunc(module.getAdminLevel)),
-	getAvailableAdmins = makeBindable(sandboxFunc(module.getAvailableAdmins)),
+globalAPI = setmetatable({
+	checkHasPermission = makeBindable(sandboxFunc(module.Players.checkHasPermission)),
+	checkAdmin = makeBindable(sandboxFunc(module.Players.checkAdmin)),
+	getAdminLevel = makeBindable(sandboxFunc(module.Players.getAdminLevel)),
+	getAvailableAdmins = makeBindable(sandboxFunc(module.Players.getAvailableAdmins)),
+	GetPlayersFromNameSelector = makeBindable(sandboxFunc(module.Players.GetPlayersFromNameSelector)),
+	getAdminStatus = makeBindable(sandboxFunc(module.Players.getAdminStatus)),
 	getAdmins = makeBindable(function()
 		local Tbl = {}
-		for k, v in pairs(module.getAdmins()) do
+		for k, v in pairs(module.Players.getAdmins()) do
 			Tbl[k] = v
 		end
 		return setmetatable(Tbl, {__metatable = "The metatable is locked"})
 	end)
 }, {
 	__metatable = "The metatable is locked",
-	__newindex = function() return end
+	__newindex = function() error("Attempt to modify a readonly table", 2) end
 })
-
-rawset(_G, "CommanderAPI", globalAPI)
 
 Players.PlayerAdded:Connect(function(Client)
 	for _, v in ipairs(t) do
@@ -288,4 +473,5 @@ Players.PlayerAdded:Connect(function(Client)
 	end
 end)
 
+rawset(_G, "CommanderAPI", globalAPI)
 return module

@@ -24,6 +24,7 @@ local function makeEnum(enumName, members)
 		__newindex = function()
 			error(string.format("Creating new members in %s is not allowed!", enumName), 2)
 		end,
+		__metatable = "The metatable is locked"
 	})
 end
 
@@ -41,7 +42,7 @@ local Error do
 			"TimedOut",
 		}),
 	}
-	Error.__index = Error
+	Error.__index, Error.__metatable = Error, "The metatable is locked"
 
 	function Error.new(options, parent)
 		options = options or {}
@@ -179,7 +180,7 @@ local Promise = {
 	_timeEvent = game:GetService("RunService").Heartbeat,
 }
 Promise.prototype = {}
-Promise.__index = Promise.prototype
+Promise.__index, Promise.__metatable = Promise.prototype, "The metatable is locked"
 
 --[[
 	Constructs a new Promise with the given initializing callback.
@@ -1399,4 +1400,7 @@ function Promise.fromEvent(event, predicate)
 	end)
 end
 
-return Promise
+return setmetatable(Promise, {
+	__newindex = function() error("Attempt to modify a readonly table", 2) end,
+	__metatable = "The metatable is locked"
+})

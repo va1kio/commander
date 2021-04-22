@@ -17,7 +17,7 @@ module.Execute = function(Client, Type, Attachment)
 		return false
 	elseif Type == "firstrun" then
 		DataStoreService = module.Services.DataStoreService
-		dataStore = DataStoreService:GetDataStore("commander.bans")
+		dataStore = DataStoreService:GetDataStore(module.Settings.Misc.DataStoresKey.Ban or "commander.bans")
 	end
 end
 

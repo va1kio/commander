@@ -15,6 +15,7 @@ local function stylise(UI: guiobject)
 		Accent.Parent = UI.Container.Top
 		
 		UI.Container.TopbarShadow.Visible = false
+		UI.Container.Top.Title.TextSize = 16
 		UI.Container.Top.BackgroundColor3 = Stylesheet.Window.TopbarBackgroundColorIfAccentUsed
 		UI.Container.Top.Background.ImageColor3 = Stylesheet.Window.TopbarBackgroundColorIfAccentUsed
 		UI.Container.Top.Title.TextColor3 = Stylesheet.Window.TopbarElementColorIfAccentUsed
@@ -190,6 +191,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		end
 	end
 	
+	comp.Container.Top.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Semibold
 	window.newButton("Exit", "rbxassetid://6235536018", "Right", 1, window.Toggle)
 	window.newButton("Menu", "rbxassetid://6272739995", "Left", 1, window.Menu.Toggle)
 	window.Toggle()
