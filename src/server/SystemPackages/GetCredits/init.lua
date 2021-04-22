@@ -18,4 +18,6 @@ function module.get()
 	end
 end
 
-return module
+return setmetatable({},{
+	__call = module.get
+})
