@@ -140,12 +140,8 @@ end
 module.update = function()
 	Server.Items["Players count"] = PlayersCount or 0
 	Server.Items["Administrators ingame"] = AdministratorsCount or 0
-<<<<<<< HEAD
 	Page.Top.Container.Subtitle.Text = Level
 	
-=======
-
->>>>>>> 1ad486a6a581821bc1221b272946191f770ff14b
 	System.Items["Modules loaded"] = #Packages or 0
 	if Settings then
 		System.Items["Version"] = Settings.Version[1]

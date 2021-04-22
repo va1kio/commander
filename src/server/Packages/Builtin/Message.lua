@@ -8,14 +8,8 @@ module.Execute = function(Client, Type, Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client, "What's the message?").Event:Wait()
 
-<<<<<<< HEAD
 		if not Input then return false end
-=======
-		if Input == false then
-			return false
-		end
->>>>>>> 1ad486a6a581821bc1221b272946191f770ff14b
-
+		
 		local Status
 		Status, Input = module.API.filterText(Client, Input)
 
