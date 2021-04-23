@@ -62,6 +62,10 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 			local expanded = ExpandedNotification.new(Attachment.From, Attachment.Content, Elements)
 			expanded._object.Bottom.Primary.Content.Text = "Okay"
 			expanded:deploy()
+			
+			Notification.stopDismissing = true
+			expanded.onDismiss:Wait()
+			Notification.stopDismissing = false
 		end
 	elseif Type == "newNotifyWithAction" then
 		local notification = Notification.new(Attachment.From, Attachment.Content, Elements.List)
@@ -73,7 +77,9 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 			expanded._object.Bottom.Primary.Content.Text = Protocol.Type
 			expanded:deploy()
 			
+			Notification.stopDismissing = true
 			local response = expanded.onDismiss.Event:Wait()
+			Notification.stopDismissing = false
 			Remotes.Function:InvokeServer("notifyCallback", Protocol.GUID, response)
 		end
 	end
