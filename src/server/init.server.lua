@@ -115,6 +115,7 @@ end
 
 loadPackages()
 systemPackages.Settings.Credits = systemPackages.GetCredits()
+systemPackages.Settings.UI.AlertSound = systemPackages.Settings.UI.AlertSound or 6518811702
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
 	error("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
