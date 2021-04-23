@@ -213,16 +213,16 @@ function API.Players.filterString(From: player, Content: string)
 end
 
 function API.Players.message(To: player|string, From: string, Content: string, Duration: number?, Sound: number?)
-	local attachment = {["From"] = From, ["Content"] = Content, ["Duration"] = Duration, ["Sound"] = Sound or module.Settings.UI.Sound}
+	local attachment = {["From"] = From, ["Content"] = Content, ["Duration"] = Duration, ["Sound"] = Sound or module.Settings.UI.AlertSound}
 	if tostring(To):lower() == "all" then
-		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+		module.Remotes.Event:FireAllClients("newMessage", "", attachment)
 	else
-		module.Remotes.Event:FireClient(To, "newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+		module.Remotes.Event:FireClient(To, "newMessage", "", attachment)
 	end
 end
 
 function API.Players.hint(To: player|string, From: string, Content: string, Duration: number?, Sound: number?)
-	local attachment = {["From"] = From, ["Content"] = Content, ["Duration"] = Duration, ["Sound"] = Sound or module.Settings.UI.Sound}
+	local attachment = {["From"] = From, ["Content"] = Content, ["Duration"] = Duration, ["Sound"] = Sound or module.Settings.UI.AlertSound}
 	if tostring(To):lower() == "all" then
 		module.Remotes.Event:FireAllClients("newHint", "", attachment)
 	else
@@ -231,7 +231,7 @@ function API.Players.hint(To: player|string, From: string, Content: string, Dura
 end
 
 function API.Players.notify(To: player|string, From: string, Content: string, Sound: number?)
-	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound}
+	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.AlertSound}
 	if tostring(To):lower() == "all" then
 		module.Remotes.Event:FireAllClients("newNotify", "", attachment)
 	else
@@ -242,7 +242,7 @@ end
 function API.Players.notifyWithAction(To: player|string, Type, From: string, Content: string, Sound: number?)
 	local Bindable = Instance.new("BindableEvent")
 	local GUID = HttpService:GenerateGUID()
-	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound}
+	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.AlertSound}
 	Bindable.Name = GUID
 	
 	if tostring(To):lower() == "all" then
