@@ -28,10 +28,11 @@ end
 
 Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 	coroutine.wrap(function()
-		if Type == "newNotify" or Type == "newNotifyWithAction" then
+		local supportedTypes = ["newNotify", "newMessage", "newHint", "newNotifyWithAction]
+		if supportedTypes[Type] then
 			if activeElements.Audio == nil then
 				activeElements.Audio = true
-				playAudio(6518811702, nil, Elements).Ended:Wait()
+				playAudio(Attachment.Sound, nil, Elements).Ended:Wait()
 				wait(2.5)
 				activeElements.Audio = nil
 			end
