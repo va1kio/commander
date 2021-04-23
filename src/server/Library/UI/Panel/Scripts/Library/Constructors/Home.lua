@@ -138,8 +138,8 @@ module.prepare = function()
 end
 
 module.update = function()
-	Server.Items["Players count"] = PlayersCount or 0
-	Server.Items["Administrators ingame"] = AdministratorsCount or 0
+	Server.Items["Players count"] = #Latte.Modules.Services.Players:GetPlayers()
+	Server.Items["Administrators ingame"] = module.Remotes.RemoteFunction:InvokeServer("getAvailableAdmins")
 	Page.Top.Container.Subtitle.Text = Level
 	
 	System.Items["Modules loaded"] = #Packages or 0
@@ -170,19 +170,18 @@ module.setup = function()
 				Latte.Modules.TButton.new(Elements.Topbar.Right.Commander):Connect(function()
 					Latte.Constructors.Window.Toggle()
 				end)
+        Latte.Modules.Services.UserInputService.InputBegan:Connect(function(Input, isGameProcessed)
+				  if Input.KeyCode == Settings.UI.Keybind and not isGameProcessed then
+					  Latte.Constructors.Window.Toggle()
+				  end
+			  end)
 			end
-			Latte.Modules.Services.UserInputService.InputBegan:Connect(function(Input, isGameProcessed)
-				if Input.KeyCode == Settings.UI.Keybind and not isGameProcessed then
-					Latte.Constructors.Window.Toggle()
-				end
-			end)
 		end
 		module.update()
 	end)
-
-	PlayersCount = #Latte.Modules.Services.Players:GetPlayers()
-	AdministratorsCount = module.Remotes.RemoteFunction:InvokeServer("getAvailableAdmins")
-	module.update()
+	
+  Latte.Modules.Services.Players.PlayerAdded:Connect(module.update)
+  Latte.Modules.Services.Player.PlayerRemoving:Connect(module.update)
 
 	coroutine.wrap(function()
 		local Time = module.Remotes.RemoteFunction:InvokeServer("getElapsedTime")
