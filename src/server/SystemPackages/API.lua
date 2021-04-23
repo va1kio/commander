@@ -231,7 +231,7 @@ function API.Players.hint(To: player|string, From: string, Content: string, Dura
 end
 
 function API.Players.notify(To: player|string, From: string, Content: string, Sound: number?)
-	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound})
+	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound}
 	if tostring(To):lower() == "all" then
 		module.Remotes.Event:FireAllClients("newNotify", "", attachment)
 	else
@@ -242,7 +242,7 @@ end
 function API.Players.notifyWithAction(To: player|string, Type, From: string, Content: string, Sound: number?)
 	local Bindable = Instance.new("BindableEvent")
 	local GUID = HttpService:GenerateGUID()
-	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound})
+	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound}
 	Bindable.Name = GUID
 	
 	if tostring(To):lower() == "all" then
