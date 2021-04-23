@@ -64,7 +64,7 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 			expanded:deploy()
 			
 			Notification.stopDismissing = true
-			expanded.onDismiss:Wait()
+			expanded.onDismiss.Event:Wait()
 			Notification.stopDismissing = false
 		end
 	elseif Type == "newNotifyWithAction" then
