@@ -181,7 +181,7 @@ module.setup = function()
 	end)
 	
   Latte.Modules.Services.Players.PlayerAdded:Connect(module.update)
-  Latte.Modules.Services.Player.PlayerRemoving:Connect(module.update)
+  Latte.Modules.Services.Players.PlayerRemoving:Connect(module.update)
 
 	coroutine.wrap(function()
 		local Time = module.Remotes.RemoteFunction:InvokeServer("getElapsedTime")
