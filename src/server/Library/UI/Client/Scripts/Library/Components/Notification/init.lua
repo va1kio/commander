@@ -1,5 +1,6 @@
 local module = {}
 module.__index = module
+module.stopDismissing = false
 
 local modules = script.Parent.Parent.Modules
 local promise = require(modules.Promise)
@@ -23,7 +24,7 @@ function module.new(from: string, content: string, parent: instance)
 end
 
 function module:dismiss(arguments)
-	if self.dismissed then return end
+	if self.dismissed or module.stopDismissing then return end
 	self.dismissed = true
 	self.onDismiss:Fire(arguments)
 	fade:Set(self._object.Container, 1, tweeninfo.Linear(0.15))
