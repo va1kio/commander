@@ -45,6 +45,8 @@ module.setup = function()
 			allLists[Protocol].Window.ZIndex = 2
 			allLists[Protocol].Window.Toggle(true)
 			allLists[Protocol].Window.switchPage("Body")
+		elseif Type == "firstRun" then
+			module.Window.Title = Attachment.UI.Title or "Commander"
 		end
 	end)
 end
