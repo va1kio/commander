@@ -1,0 +1,3 @@
+[submodule "src/server/Library/UI/Panel/Scripts/Library/Modules/Snapdragon"]
+	path = src/server/Library/UI/Panel/Scripts/Library/Modules/Snapdragon
+	url = https://github.com/roblox-aurora/rbx-snapdragon.git

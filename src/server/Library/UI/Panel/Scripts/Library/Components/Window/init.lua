@@ -91,7 +91,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 	local Latte = module.Latte
 	local Stylesheet = Latte.Modules.Stylesheet
 	local comp = script.Comp:Clone()
-	Latte.Modules.Dragger.new(comp.Container.Top, comp)
+	Latte.Modules.Snapdragon.createDragController(comp.Container.Top, {SnapEnabled = true, DragGui = comp}):Connect()
 	local Toggled = true
 
 	local window = {
