@@ -45,6 +45,7 @@ Commander is built with open sourced libraries and codes, a list of them can be 
 - [Promise](https://github.com/evaera/roblox-lua-promise)
 - [MockDataStore](https://github.com/buildthomas/MockDataStoreService)
 - [Matcher](https://github.com/rgieseke/textredux/blob/main/util/matcher.lua)
+- [Snapdragon](https://github.com/roblox-aurora/rbx-snapdragon)
 
 ## License
 [MIT](./LICENSE)
