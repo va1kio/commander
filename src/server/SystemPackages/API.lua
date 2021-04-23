@@ -212,7 +212,8 @@ function API.Players.filterString(From: player, Content: string)
 	return success, result
 end
 
-function API.Players.message(To: player|string, From: string, Content: string, Duration: number?)
+function API.Players.message(To: player|string, From: string, Content: string, Duration: number?, Sound: number?)
+	local attachment = {["From"] = From, ["Content"] = Content, ["Duration"] = Duration, ["Sound"] = Sound or module.Settings.UI.Sound}
 	if tostring(To):lower() == "all" then
 		module.Remotes.Event:FireAllClients("newMessage", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
 	else
@@ -220,31 +221,34 @@ function API.Players.message(To: player|string, From: string, Content: string, D
 	end
 end
 
-function API.Players.hint(To: player|string, From: string, Content: string, Duration: number?)
+function API.Players.hint(To: player|string, From: string, Content: string, Duration: number?, Sound: number?)
+	local attachment = {["From"] = From, ["Content"] = Content, ["Duration"] = Duration, ["Sound"] = Sound or module.Settings.UI.Sound}
 	if tostring(To):lower() == "all" then
-		module.Remotes.Event:FireAllClients("newHint", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+		module.Remotes.Event:FireAllClients("newHint", "", attachment)
 	else
-		module.Remotes.Event:FireClient(To, "newHint", "", {["From"] = From, ["Content"] = Content, ["Duration"] = Duration})
+		module.Remotes.Event:FireClient(To, "newHint", "", attachment)
 	end
 end
 
-function API.Players.notify(To: player|string, From: string, Content: string)
+function API.Players.notify(To: player|string, From: string, Content: string, Sound: number?)
+	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound})
 	if tostring(To):lower() == "all" then
-		module.Remotes.Event:FireAllClients("newNotify", "", {["From"] = From, ["Content"] = Content})
+		module.Remotes.Event:FireAllClients("newNotify", "", attachment)
 	else
-		module.Remotes.Event:FireClient(To, "newNotify", "", {["From"] = From, ["Content"] = Content})
+		module.Remotes.Event:FireClient(To, "newNotify", "", attachment)
 	end
 end
 
-function API.Players.notifyWithAction(To: player|string, Type, From: string, Content: string)
+function API.Players.notifyWithAction(To: player|string, Type, From: string, Content: string, Sound: number?)
 	local Bindable = Instance.new("BindableEvent")
 	local GUID = HttpService:GenerateGUID()
+	local attachment = {["From"] = From, ["Content"] = Content, ["Sound"] = Sound or module.Settings.UI.Sound})
 	Bindable.Name = GUID
 	
 	if tostring(To):lower() == "all" then
-		module.Remotes.Event:FireAllClients("newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, {["From"] = From, ["Content"] = Content})
+		module.Remotes.Event:FireAllClients("newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, attachment)
 	else
-		module.Remotes.Event:FireClient(To, "newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, {["From"] = From, ["Content"] = Content})
+		module.Remotes.Event:FireClient(To, "newNotifyWithAction", {["Type"] = Type, ["GUID"] = GUID}, attachment)
 	end
 	
 	Bindable.Parent = script.Parent.Parent.Bindables
