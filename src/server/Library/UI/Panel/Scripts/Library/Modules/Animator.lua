@@ -20,8 +20,9 @@ end
 function module.Window.animateOut(Object: guiobject, UIScale: uiscale, Duration: number|nil)
 	Duration = Duration or module.Latte.Modules.Stylesheet.Duration.Short
 	module.Latte.Modules.Fader.FadeOut(Object, Duration/2)
-	module.Latte.Modules.Tween.new(UIScale, module.Latte.Modules.TweenInfo.Quint(Duration), {Scale = 0.95}).Completed:Wait()
-	Object.Visible = false
+	module.Latte.Modules.Tween.new(UIScale, module.Latte.Modules.TweenInfo.Quint(Duration), {Scale = 0.95}).Completed:Connect(function()
+		Object.Visible = false
+	end)
 end
 
 function module.Menu.animateIn(Object: guiobject, Duration: number|nil)
@@ -38,16 +39,16 @@ end
 
 function module.Button.Round.Hover(Object: guiobject)
 	local short = module.Latte.Modules.Stylesheet.Duration.Short
-	local scalingTweenInfo = module.Latte.Modules.TweenInfo.Quint(short)
+	local scalingTweenInfo = module.Latte.Modules.TweenInfo.Back(short)
 	local fadingTweenInfo = module.Latte.Modules.TweenInfo.Linear(short)
-	module.Latte.Modules.Tween.new(Object.Hover, fadingTweenInfo, {BackgroundTransparency = 0.8})
+	module.Latte.Modules.Tween.new(Object.Hover, fadingTweenInfo, {BackgroundTransparency = 0.9})
 	module.Latte.Modules.Tween.new(Object.Hover.UIScale, scalingTweenInfo, {Scale = 1})
 end
 
 function module.Button.Round.Hold(Object: guiobject)
 	local short = module.Latte.Modules.Stylesheet.Duration.Short
 	local fadingTweenInfo = module.Latte.Modules.TweenInfo.Linear(short)
-	module.Latte.Modules.Tween.new(Object.Hover, fadingTweenInfo, {BackgroundTransparency = 0.65})
+	module.Latte.Modules.Tween.new(Object.Hover, fadingTweenInfo, {BackgroundTransparency = 0.85})
 end
 
 function module.Button.Round.Over(Object: guiobject)
