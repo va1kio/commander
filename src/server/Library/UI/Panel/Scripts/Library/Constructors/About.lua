@@ -291,6 +291,15 @@ end
 module.update = function()
 	Page.Top.Container.Text.Title.Text = "Commander <b>" .. Settings.Version[3] .. "</b>"
 	Page.Top.Container.Text.Subtitle.Text = "Version " .. Settings.Version[2]
+	if Settings.LatestVersion ~= false and Settings.LatestVersion ~= Settings.Version[1] then
+		Page.Update.Container.Text.Title.Text = "Outdated build"
+		Page.Update.Container.Text.Subtitle.Text = "Latest version: " .. Settings.LatestVersion .. " – Contact developer to update"
+		Page.Update.Container.Icon.Symbol.Image = "http://www.roblox.com/asset/?id=6521431858"
+	elseif Settings.LatestVersion ~= false then
+		Page.Update.Container.Text.Title.Text = "Up-to-date"
+		Page.Update.Container.Text.Subtitle.Text = "Latest version: " .. Settings.LatestVersion
+		Page.Update.Container.Icon.Symbol.Image = "http://www.roblox.com/asset/?id=6521420593"
+	end
 end
 
 module.setup = function()

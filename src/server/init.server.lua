@@ -1,4 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 
 local remotefolder = Instance.new("Folder")
@@ -115,6 +116,7 @@ end
 
 loadPackages()
 systemPackages.Settings.Credits = systemPackages.GetCredits()
+systemPackages.Settings.LatestVersion = systemPackages.GetRelease()
 systemPackages.Settings.UI.AlertSound = systemPackages.Settings.UI.AlertSound or 6518811702
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
@@ -134,7 +136,7 @@ script.waypointBindable.OnInvoke = function()
 end
 
 remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
-	if systemPackages.API.checkAdmin(Client.UserId) and Type ~= "notifyCallback" then
+	if CollectionService:HasTag(Client, "commander.admins") and Type ~= "notifyCallback" then
 		if Type == "command" and packages[Protocol] then
 			if systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
 				local status = packages[Protocol].Execute(Client, Type, Attachment)
@@ -160,7 +162,7 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 		elseif Type == "getAdmins" then
 			return systemPackages.API.getAdmins()
 		elseif Type == "getAvailableAdmins" then
-			return availableAdmins
+			return #CollectionService:GetTagged("commander.admins")
 		elseif Type == "getCurrentVersion" then
 			return systemPackages.Settings.Version[1], systemPackages.Settings.Version[2]
 		elseif Type == "getHasPermission" then
@@ -169,7 +171,7 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			return workspace.DistributedGameTime
 		elseif Type == "setupUIForPlayer" then
 			remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
-			availableAdmins = systemPackages.API.getAvailableAdmins()
+			CollectionService:AddTag(Client, "commander.admins")
 
 			-- Filter out commands that the user doesn't have access to.
 			local packagesButtonsFiltered = {};
@@ -206,6 +208,7 @@ local function setupUIForPlayer(Client)
 	UI.Parent = Client.PlayerGui
 
 	if systemPackages.API.checkAdmin(Client.UserId) then
+		CollectionService:AddTag(Client, "commander.admins")
 		isPlayerAddedFired = true
 		UI = script.Library.UI.Panel:Clone()
 		UI.Name = "Panel"
@@ -213,6 +216,11 @@ local function setupUIForPlayer(Client)
 		UI.Scripts.Core.Disabled = false
 		UI.Parent = Client.PlayerGui
 		systemPackages.API.Players.notify(Client, "System", "Press the \"" .. systemPackages.Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander")
+		if systemPackages.Settings.LatestVersion ~= false and systemPackages.Settings.LatestVersion ~= systemPackages.Settings.Version[1] then
+			systemPackages.API.Players.hint(Client, "System", "Commander is outdated, latest version available is " .. systemPackages.Settings.LatestVersion)
+		elseif systemPackages.Settings.LatestVersion == false then
+			systemPackages.API.Players.hint(Client, "System", "Unable to fetch latest version info for Commander")
+		end
 	end
 	
 	if not systemPackages.Settings.Misc.DisableCredits then
@@ -222,11 +230,6 @@ end
 
 Players.PlayerAdded:Connect(function(Client)
 	setupUIForPlayer(Client)
-	availableAdmins = systemPackages.API.getAvailableAdmins()
-end)
-
-Players.PlayerRemoving:Connect(function(Client)
-	availableAdmins = systemPackages.API.getAvailableAdmins()
 end)
 
 -- for situations where PlayerAdded will not work as expected in Studio
@@ -234,5 +237,4 @@ if not isPlayerAddedFired then
 	for i,v in pairs(Players:GetPlayers()) do
 		setupUIForPlayer(v)
 	end
-	availableAdmins = systemPackages.API.getAvailableAdmins()
 end
