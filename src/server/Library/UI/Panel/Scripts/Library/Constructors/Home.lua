@@ -139,7 +139,7 @@ end
 
 module.update = function()
 	Server.Items["Players count"] = #Latte.Modules.Services.Players:GetPlayers()
-	Server.Items["Administrators ingame"] = module.Remotes.RemoteFunction:InvokeServer("getAvailableAdmins")
+	Server.Items["Administrators ingame"] = #Latte.Modules.Services.CollectionService:GetTagged("commander.admins")
 	Page.Top.Container.Subtitle.Text = Level
 	
 	System.Items["Modules loaded"] = #Packages or 0
