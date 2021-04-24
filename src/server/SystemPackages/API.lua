@@ -435,6 +435,8 @@ function API.Core.getDataStore(Name: string, Scope: string?)
 			local newMeta = setmetatable({
 				_object = response
 			}, object)
+
+			Resolve(newMeta)
 		else
 			Reject(response)
 		end
