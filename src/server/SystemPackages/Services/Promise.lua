@@ -1,3 +1,5 @@
+-- COMMENT: Please stop making changes to this module, legit broke the whole commander thing with the metatable change
+
 --[[
 	An implementation of Promises similar to Promise/A+.
 ]]
@@ -24,7 +26,6 @@ local function makeEnum(enumName, members)
 		__newindex = function()
 			error(string.format("Creating new members in %s is not allowed!", enumName), 2)
 		end,
-		__metatable = "The metatable is locked"
 	})
 end
 
@@ -42,7 +43,7 @@ local Error do
 			"TimedOut",
 		}),
 	}
-	Error.__index, Error.__metatable = Error, "The metatable is locked"
+	Error.__index = Error
 
 	function Error.new(options, parent)
 		options = options or {}
@@ -180,7 +181,7 @@ local Promise = {
 	_timeEvent = game:GetService("RunService").Heartbeat,
 }
 Promise.prototype = {}
-Promise.__index, Promise.__metatable = Promise.prototype, "The metatable is locked"
+Promise.__index = Promise.prototype
 
 --[[
 	Constructs a new Promise with the given initializing callback.
@@ -1400,7 +1401,4 @@ function Promise.fromEvent(event, predicate)
 	end)
 end
 
-return setmetatable(Promise, {
-	__newindex = function() error("Attempt to modify a readonly table", 2) end,
-	__metatable = "The metatable is locked"
-})
+return Promise
