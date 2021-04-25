@@ -6,6 +6,7 @@ local HttpService = game:GetService("HttpService")
 local GroupService = game:GetService("GroupService")
 
 -- TODO: Update group cache over interval?
+local isFirstTime = true
 local API = {}
 local globalAPI
 local t = {}
@@ -199,6 +200,9 @@ end
 
 function API.Players.listenToPlayerAdded(Function)
 	table.insert(t, Function)
+	for _, client in ipairs(Players:GetPlayers()) do
+		pcall(Function, client)
+	end 
 end
 
 function API.Players.filterString(From: player, Content: string)
@@ -474,8 +478,8 @@ globalAPI = setmetatable({
 })
 
 Players.PlayerAdded:Connect(function(Client)
-	for _, v in ipairs(t) do
-		pcall(v, Client)
+	for _, callback in ipairs(t) do
+		pcall(callback, Client)
 	end
 end)
 

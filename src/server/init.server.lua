@@ -124,7 +124,16 @@ systemPackages.Settings.DataStoresKey = systemPackages.Settings.DataStoresKey or
 --
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
-	error("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
+	warn("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
+	warn("Switching to default theme...")
+	assert(script.Library.UI.Stylesheets:FindFirstChild("Minimal"), "Default theme missing...")
+	local themeColorValue = Instance.new("Color3Value")
+	themeColorValue.Name = "ThemeColor"
+	themeColorValue.Value = systemPackages.Settings.UI.Accent
+	currentTheme = script.Library.UI.Stylesheets:FindFirstChild("Minimal"):Clone()
+	currentTheme.Name = "Stylesheet"
+	themeColorValue.Parent = currentTheme
+	currentTheme.Parent = script.Library.UI.Panel.Scripts.Library.Modules
 else
 	local themeColorValue = Instance.new("Color3Value")
 	themeColorValue.Name = "ThemeColor"
