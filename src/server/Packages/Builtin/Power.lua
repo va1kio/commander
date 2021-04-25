@@ -5,17 +5,25 @@ local module = {
 }
 
 module.Execute = function(Client, Type, Attachment)
+	print(Client,Type,Attachment)
 	if Type == "command" then
 		local Input = module.API.sendModalToPlayer(Client).Event:Wait()
 
 		if Input == false then
+			print("No input!")
 			return false
 		end
 
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
+		print(char)
 
 		if char then
-			char.Humanoid.JumpPower = tonumber(Input)
+			if char.Humanoid.UseJumpPower then
+				char.Humanoid.JumpPower = tonumber(Input)
+			else
+				char.Humanoid.JumpHeight = tonumber(Input)
+			end
+			
 			return true
 		end
 		return false
