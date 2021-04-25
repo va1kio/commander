@@ -116,8 +116,12 @@ end
 
 loadPackages()
 systemPackages.Settings.Credits = systemPackages.GetCredits()
+
+--@OVERRIDE
 systemPackages.Settings.LatestVersion = systemPackages.GetRelease()
 systemPackages.Settings.UI.AlertSound = systemPackages.Settings.UI.AlertSound or 6518811702
+systemPackages.Settings.DataStoresKey = systemPackages.Settings.DataStoresKey or {}
+--
 
 if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
 	error("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
