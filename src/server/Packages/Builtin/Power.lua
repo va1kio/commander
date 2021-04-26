@@ -15,7 +15,12 @@ module.Execute = function(Client, Type, Attachment)
 		local char = module.API.getCharacter(module.API.getPlayerWithName(Attachment))
 
 		if char then
-			char.Humanoid.JumpPower = tonumber(Input)
+			if char.Humanoid.UseJumpPower then
+				char.Humanoid.JumpPower = tonumber(Input)
+			else
+				char.Humanoid.JumpHeight = tonumber(Input)
+			end
+			
 			return true
 		end
 		return false
