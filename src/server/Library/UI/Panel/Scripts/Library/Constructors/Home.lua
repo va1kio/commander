@@ -10,6 +10,9 @@ local function returnTime(Seconds: number)
 end
 
 module.prepare = function()
+	local PagePadding = module.Latte.Components.Padding.new(Page)
+	PagePadding.Bottom = UDim.new(0, 24)
+
 	local Top = Instance.new("Frame")
 	Top.BackgroundTransparency = 1
 	Top.BorderSizePixel = 0
@@ -117,6 +120,8 @@ module.prepare = function()
 	Server.Items["Players count"] = "1"
 	Server.Items["Administrators ingame"] = "1"
 	Server.Items["Server uptime"] = "00:00"
+	Server.Items["Server locale"] = "N/A"
+	Server.Items["Place version"] = "0"
 
 	System = Latte.Components.SeparatedList.new("System", "SYSTEM STATS", Page)
 	System.Items["Modules loaded"] = "0"
@@ -180,8 +185,10 @@ module.setup = function()
 		module.update()
 	end)
 	
-  Latte.Modules.Services.Players.PlayerAdded:Connect(module.update)
-  Latte.Modules.Services.Players.PlayerRemoving:Connect(module.update)
+	Latte.Modules.Services.Players.PlayerAdded:Connect(module.update)
+	Latte.Modules.Services.Players.PlayerRemoving:Connect(module.update)
+	Server.Items["Server locale"] = module.Remotes.RemoteFunction:InvokeServer("getLocale") or "N/A"
+	Server.Items["Place version"] = module.Remotes.RemoteFunction:InvokeServer("getPlaceVersion") or "N/A"
 
 	coroutine.wrap(function()
 		local Time = module.Remotes.RemoteFunction:InvokeServer("getElapsedTime")
