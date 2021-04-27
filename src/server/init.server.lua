@@ -1,3 +1,4 @@
+warn("Commander – Listening to clients")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -11,7 +12,7 @@ local remotes = {
 	Event = Instance.new("RemoteEvent")
 }
 
-local packages, packagesButtons, systemPackages, permissionTable, disableTable = {}, {}, {}, {}, {}
+local packages, packagesButtons, systemPackages, permissionTable, disableTable, cachedData = {}, {}, {}, {}, {}, {}
 local currentTheme = nil
 
 remotefolder.Name = "Commander Remotes"
@@ -199,6 +200,29 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 			remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
 		elseif Type == "getSettings" then
 			return systemPackages.Settings
+		elseif Type == "getLocale" then
+			if cachedData.serverlocale then
+				return cachedData.serverlocale
+			else
+				local ok , response = systemPackages.Services.Promise.new(function(Resolve, Reject)
+					local ok, data = pcall(systemPackages.Services.HttpService.GetAsync, systemPackages.Services.HttpService, "http://ip-api.com/json/")
+					if ok then
+						data = systemPackages.Services.HttpService:JSONDecode(data).countryCode
+						Resolve(data)
+					else
+						Reject(data)
+					end
+				end):await()
+	
+				if ok then
+					cachedData.serverlocale = response
+					return response
+				else
+					warn(response)
+				end
+			end
+		elseif Type == "getPlaceVersion" then
+			return game.PlaceVersion
 		end
 	end
 	
