@@ -32,7 +32,7 @@
 local module = {}
 
 module.Admins = {
-	["nana_kon"] = "Owner" -- ["Name"] = "Permission",
+	["nana_kon"] = "Owner", -- ["Name"] = "Permission",
 }
 -- Permission options can be found below: Moderator, Admin, Owner
 
