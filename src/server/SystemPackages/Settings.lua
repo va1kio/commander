@@ -78,7 +78,7 @@ module.Permissions = {
 module.UI = {
 	["Accent"] = Color3.fromRGB(64, 157, 130),
 	["Keybind"] = Enum.KeyCode.Semicolon,
-	["Theme"] = "Minimal"
+	["Theme"] = "Minimal Dark"
 }
 
 module.Misc = {
@@ -88,6 +88,6 @@ module.Misc = {
 	}
 }
 
-module.Version = {"1.3.0-beta1", "1.3.0 (Official Build)", "Sedum"}
+module.Version = {"1.3.5-beta1", "1.3.5 (Official Build)", "Sedum"}
 
 return module
