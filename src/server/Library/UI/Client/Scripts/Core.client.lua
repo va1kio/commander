@@ -1,9 +1,13 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StarterGui = game:GetService("StarterGui")
 
 local Remotes = {
 	Event = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteEvent"),
 	Function = ReplicatedStorage:WaitForChild("Commander Remotes"):WaitForChild("RemoteFunction"),
 }
+local CurrentCamera = workspace.CurrentCamera
+
+-- UI elements
 local Elements = script.Parent.Parent.Elements
 local Library = script.Parent.Library
 local Message = require(Library.Components.Message)
@@ -82,5 +86,16 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 			Notification.stopDismissing = false
 			Remotes.Function:InvokeServer("notifyCallback", Protocol.GUID, response)
 		end
+	elseif Type == "setCoreGuiEnabled" then
+		StarterGui:SetCoreGuiEnabled(Attachment.Type, Attachment.Status)
+	elseif Type == "setCamera" then
+		CurrentCamera.CFrame = Attachment.CFrame or CurrentCamera.CFrame
+		CurrentCamera.CameraSubject = Attachment.CameraSubject or CurrentCamera.CameraSubject
+		CurrentCamera.CameraType = Attachment.CameraType or CurrentCamera.CameraType
+		CurrentCamera.FieldOfView = Attachment.FieldOfView or CurrentCamera.FieldOfView
+		CurrentCamera.MaxAxisFieldOfView = Attachment.MaxAxisFieldOfView or CurrentCamera.MaxAxisFieldOfView
+		CurrentCamera.DiagonalFieldOfView = Attachment.DiagonalFieldOfView or CurrentCamera.DiagonalFieldOfView
+		CurrentCamera.FieldOfViewMode = Attachment.FieldOfViewMode or CurrentCamera.FieldOfViewMode
+		CurrentCamera.HeadScale = Attachment.HeadScale or CurrentCamera.HeadScale
 	end
 end)
