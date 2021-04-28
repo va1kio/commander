@@ -15,7 +15,13 @@ end
 return function()
     local status, response = fetch():await()
     if status then
-        return response[1].name
+        for _,v in ipairs(response) do
+            if tostring(string.match(v.name, "%d+%.%d+%.%d+")) ~= v.name then
+                continue
+            else
+                return v.name
+            end
+        end
     else
         return false
     end
