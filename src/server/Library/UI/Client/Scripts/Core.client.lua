@@ -17,6 +17,10 @@ local ExpandedNotification = require(Library.Components.ExpandedNotification)
 local ReplyBox = require(Library.Components.ReplyBox)
 local activeElements = {}
 
+local Bindable = Instance.new("BindableEvent")
+Bindable.Name = "Event"
+Bindable.Parent = Elements
+
 local function playAudio(Id: number|string, Volume: number?, Parent: instance): sound
 	local audio = Instance.new("Sound")
 	audio.SoundId = "rbxassetid://" .. Id
@@ -30,7 +34,7 @@ local function playAudio(Id: number|string, Volume: number?, Parent: instance): 
 	return audio
 end
 
-Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
+local function onCall(Type: string, Protocol: string?, Attachment)
 	coroutine.wrap(function()
 		local supportedTypes = {"newNotify", "newMessage", "newHint", "newNotifyWithAction"}
 		if table.find(supportedTypes, Type) then
@@ -98,4 +102,7 @@ Remotes.Event.OnClientEvent:Connect(function(Type, Protocol, Attachment)
 		CurrentCamera.FieldOfViewMode = Attachment.FieldOfViewMode or CurrentCamera.FieldOfViewMode
 		CurrentCamera.HeadScale = Attachment.HeadScale or CurrentCamera.HeadScale
 	end
-end)
+end
+
+Remotes.Event.OnClientEvent:Connect(onCall)
+Bindable.Event:Connect(onCall)
