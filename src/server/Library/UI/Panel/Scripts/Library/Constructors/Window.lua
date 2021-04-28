@@ -1,4 +1,4 @@
-local module, Latte, Elements, isActive, currentPage, bindable = {}, nil, nil, true, nil, nil
+local module, Latte, Elements, isActive, currentPage, Settings, bindable = {}, nil, nil, true, nil, {}, nil
 local allLists = {}
 
 module.Toggle = function()
@@ -24,13 +24,13 @@ module.notifyUser = function(Title: string?, Content: string, Duration: number?)
 			["Icon"] = "rbxassetid://6027381584"
 		})
 	else
-		bindable:Fire("newNotify", "", {["From"] = Title, ["Content"] = Content})
+		bindable:Fire("newNotify", "", {["From"] = Title or "System", ["Content"] = Content, ["Sound"] = Settings.UI.AlertSound})
 	end
 end
 
 module.setup = function()
 	bindable = Elements.Parent.Parent:WaitForChild("Client")
-	if bindable:FindFirstChild("Elements") then
+	if bindable:WaitForChild("Elements", 5) then
 		bindable = bindable:FindFirstChild("Elements"):FindFirstChild("Event")
 	else
 		bindable = nil
@@ -57,6 +57,7 @@ module.setup = function()
 			allLists[Protocol].Window.Toggle(true)
 			allLists[Protocol].Window.switchPage("Body")
 		elseif Type == "firstRun" then
+			Settings = Attachment
 			module.Window.Title = Attachment.UI.Title or "Commander"
 		end
 	end)

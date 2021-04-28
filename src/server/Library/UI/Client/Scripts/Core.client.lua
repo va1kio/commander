@@ -17,9 +17,7 @@ local ExpandedNotification = require(Library.Components.ExpandedNotification)
 local ReplyBox = require(Library.Components.ReplyBox)
 local activeElements = {}
 
-local Bindable = Instance.new("BindableEvent")
-Bindable.Name = "Event"
-Bindable.Parent = Elements
+local Bindable = Elements.Event
 
 local function playAudio(Id: number|string, Volume: number?, Parent: instance): sound
 	local audio = Instance.new("Sound")
