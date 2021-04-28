@@ -370,6 +370,14 @@ function API.Players.getCharacter(Player: player)
 	end
 end
 
+function API.Players.setTransparency(Character: model, Value: number)
+	for _, object in ipairs(Character:GetDescendants()) do
+		if object:IsA("BasePart") or object:IsA("Decal")or object:IsA("Texture") then
+			object.Transparency = Value
+		end
+	end
+end
+
 function API.Core.getDataStore(Name: string, Scope: string?)
 	local object = {}
 	object.__index = object
