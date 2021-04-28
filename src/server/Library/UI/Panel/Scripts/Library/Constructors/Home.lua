@@ -159,6 +159,9 @@ module.init = function()
 end
 
 module.setup = function()
+	local Bindable = Instance.new("BindableFunction")
+	Bindable.Name = "TogglePanel"
+	Bindable.Parent = Elements
 	Page = Latte.Constructors.Window.Window.newPage("Home", true, 1)
 	Page.UIListLayout.Padding = UDim.new(0, 24)
 	module.prepare()
@@ -175,11 +178,14 @@ module.setup = function()
 				Latte.Modules.TButton.new(Elements.Topbar.Right.Commander):Connect(function()
 					Latte.Constructors.Window.Toggle()
 				end)
-        Latte.Modules.Services.UserInputService.InputBegan:Connect(function(Input, isGameProcessed)
-				  if Input.KeyCode == Settings.UI.Keybind and not isGameProcessed then
-					  Latte.Constructors.Window.Toggle()
-				  end
-			  end)
+        		Latte.Modules.Services.UserInputService.InputBegan:Connect(function(Input, isGameProcessed)
+					if Input.KeyCode == Settings.UI.Keybind and not isGameProcessed then
+						Latte.Constructors.Window.Toggle()
+					end
+			  	end)
+				Bindable.OnInvoke = function()
+					Latte.Constructors.Window.Toggle()
+				end
 			end
 		end
 		module.update()
