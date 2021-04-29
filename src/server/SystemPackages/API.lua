@@ -365,7 +365,7 @@ function API.Players.getAvailableAdmins()
 end
 
 function API.Players.getCharacter(Player: player)
-	if Player.Character and Player.Character.PrimaryPart and Player.Character:FindFirstChildOfClass("Humanoid") then
+	if Player and Player.Character and Player.Character.PrimaryPart and Player.Character:FindFirstChildOfClass("Humanoid") then
 		return Player.Character
 	end
 end
