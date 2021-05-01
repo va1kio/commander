@@ -206,7 +206,7 @@ function API.Players.listenToPlayerAdded(Function)
 end
 
 function API.Players.filterString(From: player, Content: string)
-	if not utf8.len(string) then -- Prevents invalid UTF8 from being sent to oddly behaving UTF8 from being sent
+	if not utf8.len(Content) then -- Prevents invalid UTF8 from being sent to oddly behaving UTF8 from being sent
 		return false, ""
 	end
 
