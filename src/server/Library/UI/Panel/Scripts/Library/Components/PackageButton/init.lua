@@ -34,6 +34,7 @@ module.new = function(Title: string, Description: string, Parent: instance)
 	comp.Container.Text.Title.Font = Stylesheet.Fonts.Book
 	comp.Container.Text.Description.Font = Stylesheet.Fonts.Semibold
 	comp.Container.Text.Description.TextSize = 13
+	comp.Container.UICorner.CornerRadius = Stylesheet.CornerData.PackageButton
 	comp.Container.Text.Title.TextColor3 = Stylesheet.PackageButton.TitleColor
 	comp.Container.Text.Description.TextColor3 = Stylesheet.PackageButton.DescriptionColor
 	comp.Container.BackgroundColor3 = Stylesheet.PackageButton.BackgroundColor

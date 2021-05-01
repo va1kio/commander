@@ -84,7 +84,7 @@ module.prepare = function()
 	Subtitle.Parent = Container
 
 	local UICorner = Instance.new("UICorner")
-	UICorner.CornerRadius = UDim.new(1, 0)
+	UICorner.CornerRadius = Latte.Modules.Stylesheet.CornerData.ProfileIcon
 	UICorner.Parent = Avatar
 
 	local Backdrop = Instance.new("Frame")
@@ -109,11 +109,11 @@ module.prepare = function()
 	Icon.Parent = Avatar
 
 	local UICorner2 = Instance.new("UICorner")
-	UICorner2.CornerRadius = UDim.new(1, 0)
+	UICorner2.CornerRadius = Latte.Modules.Stylesheet.CornerData.ProfileIcon
 	UICorner2.Parent = Backdrop
 
 	local UICorner3 = Instance.new("UICorner")
-	UICorner3.CornerRadius = UDim.new(1, 0)
+	UICorner3.CornerRadius = Latte.Modules.Stylesheet.CornerData.ProfileIcon
 	UICorner3.Parent = Icon
 
 	Server = Latte.Components.SeparatedList.new("Server", "SERVER STATS", Page)

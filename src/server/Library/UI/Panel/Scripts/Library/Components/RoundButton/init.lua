@@ -8,6 +8,7 @@ module.new = function(Name: string, Image: string, Parent: instance, Callback: (
 	local Comp = script.Comp:Clone()
 	Comp.Name = Name
 	Comp.Image.Image = Image
+	Comp.Hover.UICorner.CornerRadius = module.Latte.Modules.Stylesheet.CornerData.RoundButton
 	Comp.Hover.BackgroundColor3 = module.Latte.Modules.Stylesheet.Button.RoundHoverColor
 
 	module.Latte.Modules.Trigger.new(Comp, reaction, 3, false):Connect(function()

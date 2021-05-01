@@ -21,6 +21,7 @@ module.new = function(Name: string, Text: string?, Parent: instance, Callback: (
 	Comp.Title.Text = Text or Name
 	Comp.Title.TextColor3 = Stylesheet.Menu.DefaultTextColor
 	Comp.isActive.ImageColor3 = Stylesheet.ThemeColor
+	Comp.isActive.SliceScale = Stylesheet.CornerData.MenuButton
 	Comp.Title.Font = module.Latte.Modules.Stylesheet.Fonts.Book
 	Comp.BackgroundColor3 = Stylesheet.Button.MenuHoverColor
 
