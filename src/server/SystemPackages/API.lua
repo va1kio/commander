@@ -3,6 +3,7 @@ local TextService = game:GetService("TextService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
+local CollectionService = game:GetService("CollectionService")
 local GroupService = game:GetService("GroupService")
 
 -- TODO: Update group cache over interval?
@@ -275,6 +276,10 @@ function API.Players.checkPermission(ClientId: number, Command: string)
 end
 
 function API.Players.getAdminStatus(ClientId: number)
+	for _, player in ipairs(Players:GetPlayers()) do
+		return player.UserId == ClientId and CollectionService:HasTag(player, "commander.admins")
+	end
+	
 	return API.Players.getAdminLevel(ClientId) ~= nil
 end
 
