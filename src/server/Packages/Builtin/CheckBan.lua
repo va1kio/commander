@@ -14,8 +14,9 @@ module.Execute = function(Client, Type, Attachment)
 
 		if success then
 			if result then
-				result = "This player is currently banned, \n\nName: " .. Attachment .. " (" .. player .. ")\n"
-				result = result .. "Moderator: " .. tostring(result.By) .. "\nDuration: " .. tostring(result.End) .. "\nReason: " tostring(result.Reason or "N/A")
+				local message = "This player is currently banned, \n\nName: " .. Attachment .. " (" .. player .. ")\n"
+				warn(result.Reason)
+				result = message .. "Moderator: " .. tostring(result.By) .. "\nDuration: " .. tostring(result.End) .. "\nReason: " .. tostring(result.Reason or "N/A")
 			else
 				result = "This player is not banned"
 			end
