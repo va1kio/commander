@@ -12,7 +12,7 @@ local remotes = {
 	Event = Instance.new("RemoteEvent")
 }
 
-local packages, packagesButtons, systemPackages, permissionTable, disableTable, cachedData = {}, {}, {}, {}, {}, {}
+local packages, packagesButtons, systemPackages, permissionTable, disableTable, cachedData, sharedCommons = {}, {}, {}, {}, {}, {}, {}
 local currentTheme = nil
 
 remotefolder.Name = "Commander Remotes"
@@ -105,19 +105,29 @@ local function loadPackages()
 
 	for i,v in pairs(script.Packages:GetDescendants()) do
 		if v:IsA("ModuleScript") and not v.Parent:IsA("ModuleScript") then
-			pcall(function()
+			local ok, response = pcall(function()
 				local mod = require(v)
 				mod.Services = systemPackages.Services
 				mod.API = systemPackages.API
 				mod.Settings = systemPackages.Settings
 				mod.Remotes = remotes
+				mod.Shared = sharedCommons
 				mod.fetchLogs = script.waypointBindable
 				mod.PackageId = v.Name
 				if mod and mod.Name and mod.Description and mod.Location then
 					packages[mod.Name] = mod
 				end
-				mod.Execute(nil, "firstrun")
+				
+				if not mod.Init then
+					mod.Execute(nil, "firstrun")
+				else
+					mod.Init()
+				end
 			end)
+
+			if not ok then
+				error("\n\nOh snap! Commander encountered a fatal error while trying to compile commands in the runtime...\n\nAffected files: game." .. v:GetFullName() .. ".lua\nError message: " .. response .. "\n\n")
+			end
 		end
 	end
 end
