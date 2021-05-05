@@ -178,6 +178,14 @@ function API.Players.getPlayerByName(Player: string)
 	end
 end
 
+function API.Players.getPlayerByUserId(Player: number)
+	for _, v in ipairs(Players:GetPlayers()) do
+		if v.UserId == Player then
+			return v
+		end
+	end
+end
+
 function API.Players.getPlayerByNamePartial(Player: string)
 	for _, v in ipairs(Players:GetPlayers()) do
 		if string.lower(string.sub(v.Name, 1, #Player)) == string.lower(Player) then
@@ -277,7 +285,14 @@ end
 
 function API.Players.getAdminStatus(ClientId: number)
 	for _, player in ipairs(Players:GetPlayers()) do
-		return player.UserId == ClientId and CollectionService:HasTag(player, "commander.admins")
+		if player.UserId == ClientId and CollectionService:HasTag(player, "commander.admins") then
+			return true
+		elseif player.UserId == ClientId and CollectionService:HasTag(player, "commander.fetched") then
+			return false
+		elseif API.Players.getAdminLevel(ClientId) ~= nil then
+			CollectionService:AddTag(player, "commander.admins")
+			return true
+		end
 	end
 	
 	return API.Players.getAdminLevel(ClientId) ~= nil
