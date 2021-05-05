@@ -25,7 +25,7 @@ module.Execute = function(Client, Type, Attachment)
 			end
 
 			local success, result = module.API.filterText(Client, Input)
-			success = pcall(dataStore.SetAsync, dataStore, player, {End = os.time() + tonumber(Input2) * 60 * 60, Reason = result})
+			success = pcall(dataStore.SetAsync, dataStore, player, {By = Client.Name .. " (" .. Client.UserId .. ")", End = os.time() + tonumber(Input2) * 60 * 60, Reason = result})
 
 			if actualPlayer and success then
 				actualPlayer:Kick("\nBanned\nReason: " .. result .. "\n\nCome back at " .. os.date("%d %b, %Y (%a) %X", tick() + tonumber(Input2) * 60 * 60))

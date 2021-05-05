@@ -19,7 +19,8 @@ module.Execute = function(Client, Type, Attachment)
 			end
 
 			local success, result = module.API.filterText(Client, Input)
-			success = pcall(dataStore.SetAsync, dataStore, player, {End = math.huge, Reason = result})
+			warn(result)
+			success = pcall(dataStore.SetAsync, dataStore, player, {By = Client.Name .. " (" .. Client.UserId .. ")", End = math.huge, Reason = result})
 
 			if actualPlayer and success then
 				actualPlayer:Kick("\nPermanently banned\nReason: " ..  result)
