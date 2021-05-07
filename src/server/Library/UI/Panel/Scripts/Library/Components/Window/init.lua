@@ -7,7 +7,7 @@ local function stylise(UI: guiobject)
 	UI.Container.UICorner.CornerRadius = Stylesheet.CornerData.Window
 	UI.Container.Menu.Container.UICorner.CornerRadius = Stylesheet.CornerData.Window
 	UI.Container.Top.UICorner.CornerRadius = Stylesheet.CornerData.Window
-	UI.Container.Top.Background.SliceScale = Stylesheet.CornerData.Window.Offset / 100
+	UI.Container.Top.Background.SliceScale = Stylesheet.CornerData.Window.Offset / 300
 
 	if Stylesheet.Window.TopbarUseAccentInstead then
 		local Accent = Instance.new("Frame")
