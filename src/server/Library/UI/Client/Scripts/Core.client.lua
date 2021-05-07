@@ -33,17 +33,17 @@ local function playAudio(Id: number|string, Volume: number?, Parent: instance): 
 end
 
 local function onCall(Type: string, Protocol: string?, Attachment)
-	coroutine.wrap(function()
+	pcall(coroutine.wrap(function()
 		local supportedTypes = {"newNotify", "newMessage", "newHint", "newNotifyWithAction"}
 		if table.find(supportedTypes, Type) then
 			if activeElements.Audio == nil then
 				activeElements.Audio = true
-				playAudio(Attachment.Sound, nil, Elements).Ended:Wait()
+				playAudio(Attachment.Sound or 0, nil, Elements).Ended:Wait()
 				wait(2.5)
 				activeElements.Audio = nil
 			end
 		end
-	end)()
+	end))
 	
 	if Type == "newMessage" then
 		if activeElements.Message then
