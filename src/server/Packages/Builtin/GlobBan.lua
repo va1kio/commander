@@ -43,7 +43,7 @@ end
 function module.Init()
     private.DataStore = module.Services.DataStoreService:GetDataStore(module.Settings.Misc.DataStoresKey.Ban or "commander.bans")
     module.API.Players.listenToPlayerAdded(function(Player: player)
-        local ok, data = pcall(private.DataStore.GetAsync, private.DataStore.GetAsync, "data")
+        local ok, data = pcall(private.DataStore.GetAsync, private.DataStore, "data")
         if not ok then
             Player:Kick("Something went wrong while trying to fetch data, retry later")
         end
