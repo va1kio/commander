@@ -8,7 +8,7 @@ module.Location = "Player"
 function module.Execute(Client: player?, Type: string, Attachment)
     if Type == "command" then
         local possiblyUserId = module.API.Players.getUserIdFromName(Attachment)
-        if type(possiblyUserId) == "string" then
+        if type(possiblyUserId) == "string" or module.API.Players.getAdminStatus(possiblyUserId) then
             return false
         end
 
@@ -48,11 +48,13 @@ function module.Init()
             Player:Kick("Something went wrong while trying to fetch data, retry later")
         end
 
-        if data[Player.UserId] then
-            data = data[Player.UserId]
+        if data[tostring(Player.UserId)] then
+            data = data[tostring(Player.UserId)]
             if data.End == "PERM" then
+                module.API.Players.hint("all", "System", "Player " .. Player.UserId .. " tried to join but is banned")
                 Player:Kick("Banned by " .. data.By[2] .. " at " .. data.At .. "\n\nReason: " .. data.Reason .. "\n\nNote: This ban is a global ban, you will not be allowed to join this game unless unbanned")
             elseif type(data.End) == "number" and data.End > os.time() then
+                module.API.Players.hint("all", "System", "Player " .. Player.UserId .. " tried to join but is banned")
                 Player:Kick("Banned by " .. data.By[2] .. " at " .. data.At .. "\n\nReason: " .. data.Reason .. "\n\nNote: This ban is a timed global ban, you will not be allowed to join this game until " .. os.date("%c", data.End))
             end
         end

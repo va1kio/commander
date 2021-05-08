@@ -12,19 +12,21 @@ function module.Execute(Client: player?, Type: string, Attachment)
             return false
         end
 
+        local data = private.DataStore:GetAsync("data")
+        if not data then data = {} end
+
         if module.Shared.LocalBans and module.Shared.LocalBans[possiblyUserId] then
-            table.remove(module.Shared.LocalBans, possiblyUserId)
+            module.Shared.LocalBans[possiblyUserId] = nil
             module.API.Players.hint(Client, "System", "Successfully unbanned player " .. possiblyUserId .. " locally")
+            warn(module.Shared.LocalBans[possiblyUserId])
             return true
-        else
-            local data = private.DataStore:GetAsync("data")
-            if not data then data = {} 
-            else
-                table.remove(data, possiblyUserId)
-            end
-    
+        end
+
+        if data[tostring(possiblyUserId)] then
+            data[tostring(possiblyUserId)] = nil
+
             local ok, response = pcall(private.DataStore.SetAsync, private.DataStore, "data", data)
-            module.API.Players.hint(Client, "System", ok and "Successfully unbanned player " .. possiblyUserId .. "!" or "An error occured while trying to unban player " .. possiblyUserId .. "\n\nError message:\n" .. response)
+            module.API.Players.hint(Client, "System", ok and "Successfully unbanned player " .. possiblyUserId .. " globally" or "An error occured while trying to unban player " .. possiblyUserId .. "\n\nError message:\n" .. response)
             return true
         end
     end

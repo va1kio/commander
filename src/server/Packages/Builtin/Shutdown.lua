@@ -17,7 +17,7 @@ module.Execute = function(Client, Type, Attachment)
 		end
 
 		if not Input or success and result then
-			module.API.Players.message("all", "System", "Shutting down in 5")
+			module.API.Players.message("all", "System", "Shutting down in 5", 5)
 			wait(5)
 
 			isClosed, reason = true, Input or "No reason given"

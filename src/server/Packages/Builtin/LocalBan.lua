@@ -8,7 +8,7 @@ module.Location = "Player"
 function module.Execute(Client: player?, Type: string, Attachment)
     if Type == "command" then
         local possiblyUserId = module.API.Players.getUserIdFromName(Attachment)
-        if type(possiblyUserId) == "string" then
+        if type(possiblyUserId) == "string" or module.API.Players.getAdminStatus(possiblyUserId) then
             return false
         end
 
@@ -33,7 +33,7 @@ function module.Execute(Client: player?, Type: string, Attachment)
         module.Shared.LocalBans[possiblyUserId] = data
         module.API.Players.hint(Client, "System", "Successfully banned player " .. possiblyUserId .. " locally!")
         if ok and possiblyUser then
-            possiblyUser:Kick("Banned by " .. Client.Name .. " at " .. data[possiblyUserId].At .. "\n\nReason: " .. content .. "\n\nNote: This is a local ban, you can still visit other servers in this game")
+            possiblyUser:Kick("Banned by " .. Client.Name .. " at " .. data.At .. "\n\nReason: " .. content .. "\n\nNote: This is a local ban, you can still visit other servers in this game")
         end
     end
 end
