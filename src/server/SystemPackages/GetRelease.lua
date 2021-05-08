@@ -23,6 +23,6 @@ return function()
             end
         end
     else
-        return false
+        return false, HttpService.HttpEnabled
     end
 end
