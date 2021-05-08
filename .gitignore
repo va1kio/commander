@@ -11,3 +11,7 @@
 
 # Custom packages
 /src/server/Packages/Custom
+
+# Workspace configuration files.
+.nova/
+.vscode/
