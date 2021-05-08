@@ -17,6 +17,11 @@ function module.Execute(Client: player?, Type: string, Attachment)
         if not input then
             return false
         end
+        local ok, content = module.API.Players.filterString(Client, input)
+        if not ok then
+            module.API.Players.hint(Client, "System", "An error occured while trying to filter string message")
+            return false
+        end
 
         local data = private.DataStore:GetAsync("data")
         if not data then data = {} end
@@ -24,13 +29,13 @@ function module.Execute(Client: player?, Type: string, Attachment)
             ["By"] = {Client.UserId, Client.Name},
             ["At"] = os.date("%c", os.time()),
             ["End"] = "PERM",
-            ["Reason"] = input
+            ["Reason"] = content
         }
 
         local ok, response = pcall(private.DataStore.SetAsync, private.DataStore, "data", data)
         module.API.Players.hint(Client, "System", ok and "Successfully banned player " .. possiblyUserId .. "!" or "An error occured while trying to ban player " .. possiblyUserId .. "\n\nError message:\n" .. response)
         if ok and possiblyUser then
-            possiblyUser:Kick("Banned by " .. Client.Name .. " at " .. data[possiblyUserId].At .. "\n\nReason: " .. input .. "\n\nNote: This ban is a global ban, you will not be allowed to join this game unless unbanned")
+            possiblyUser:Kick("Banned by " .. Client.Name .. " at " .. data[possiblyUserId].At .. "\n\nReason: " .. content .. "\n\nNote: This ban is a global ban, you will not be allowed to join this game unless unbanned")
         end
     end
 end
