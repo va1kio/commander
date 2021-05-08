@@ -165,7 +165,7 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		Latte.Modules.Animator.Window.animateIn(window.CurrentPage, window.CurrentPage.UIScale)
 	end
 
-	window.Toggle = function(Override: boolean?)
+	window.toggle = function(Override: boolean?)
 		if Override then
 			Latte.Modules.Animator.Window.animateIn(comp, comp.UIScale)
 		elseif Override == false then
@@ -179,6 +179,9 @@ module.new = function(Name: string, Title: string?, Size: Vector2?, ShowMenu: Bo
 		Toggled = Override or not Toggled
 		window.Events.Toggled:Fire(Toggled)
 	end
+
+	-- consistent naming convention
+	window.Toggle = window.toggle
 
 	-- Fix data.
 	local function cook()
