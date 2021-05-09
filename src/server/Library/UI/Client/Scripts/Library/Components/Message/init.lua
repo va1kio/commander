@@ -39,7 +39,7 @@ function module:payload()
 	self.payload = promise.new(function(resolve, reject)
 		if self.dismissed then reject("Object is already dismissed.") end
 		for i = self.interval, 0, -1 do
-			self._object.Top.Time.Text = i
+			self._object.Top.Time.Text = i .. "s"
 			wait(1)
 		end
 
