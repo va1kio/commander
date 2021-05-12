@@ -1,217 +1,233 @@
-warn("Commander – Listening to clients")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 
-local remotefolder = Instance.new("Folder")
-local availableAdmins = 0 -- In order to reduce server stress, we are caching this value so less API calls will be needed to send the available admins number back to player
-
-local isPlayerAddedFired = false
+-- Considering we are just renaming the folder, and connect the function to a function.
+-- It's fine to parent them to ReplicatedStorage for the time being
+local remoteFolder = Instance.new("Folder", ReplicatedStorage)
 local remotes = {
-	Function = Instance.new("RemoteFunction"),
-	Event = Instance.new("RemoteEvent")
+    ["Function"] = Instance.new("RemoteFunction", ReplicatedStorage),
+    ["Event"] = Instance.new("RemoteEvent", ReplicatedStorage)
 }
 
-local packages, packagesButtons, systemPackages, permissionTable, disableTable, cachedData, sharedCommons = {}, {}, {}, {}, {}, {}, {}
+local packages, systemPackages = {}, {}
+local permissionTable, disableTable = {}, {}
+local packagesButtons = {}
+local cachedData = {}
+local sharedCommons = {}
 local currentTheme = nil
+local isPlayerAddedFired = false
 
-remotefolder.Name = "Commander Remotes"
-remotes.Function.Parent, remotes.Event.Parent = remotefolder, remotefolder
-remotefolder.Parent = ReplicatedStorage
-remotefolder = nil
-
-for i,v in pairs(script.Packages:GetDescendants()) do
-	if v:IsA("ModuleScript") then
-		pcall(function()
-			local mod = require(v)
-			if mod.Execute and mod.Name and mod.Description and mod.Location then
-				packagesButtons[#packagesButtons + 1] = {
-					Name = mod.Name,
-					Protocol = mod.Name,
-					Description = mod.Description,
-					Location = mod.Location,
-					PackageId = v.Name
-				}
-			end
-		end)
-	end
+local function Warn(...)
+    if systemPackages.Settings.Misc.IsVerbose then
+        warn("Commander; " .. ...)
+    end
 end
 
--- Builds permission tables to allow indexing for permissions.
-local function buildPermissionTables()
-	local permissions = systemPackages.Settings["Permissions"]
+local function BuildPermissions()
+    local permissions = systemPackages.settings["Permission"]
 
-	for i,v in pairs(permissions) do
-		permissionTable[i] = {}
+    for rank, data in pairs(permissions) do
+        permissions[rank] = {}
 
-		if v["Permissions"] then
-			for _,perm in ipairs(v["Permissions"]) do
-				permissionTable[i][perm] = true
-			end
-		end
+        if data["Permission"] then
+            for _, permission in ipairs(data["Permission"]) do
+                permissionTable[rank][permission] = true
+            end
+        end
 
-		if v["Inherits"] and permissions[v["Inherits"]] and permissions[v["Inherits"]]["Permissions"] then
-			for _,perm in ipairs(permissions[v["Inherits"]]["Permissions"]) do
-				permissionTable[i][perm] = true
-			end
-		end
-	end
+        if data["Inherits"] and permissions[data["Inheirits"]] and permissions[data["Inherits"]]["Permission"] then
+            for _, permission in ipairs(permissions[data["Inherits"]]["Permission"]) do
+                permissionTable[rank][permission] = true
+            end
+        end
+     end
 end
 
--- Builds disable prefix table.
-local function buildDisableTables()
-	local permissions = systemPackages.Settings["Permissions"]
+local function BuildDisableds()
+    local permissions = systemPackages.Settings["Permissions"]
+    
+    for rank, data in pairs(permissions) do
+        disableTable[rank] = {}
 
-	for i,v in pairs(permissions) do
-		disableTable[i] = {}
-
-		if v["DisallowPrefixes"] then
-			for _,disallow in ipairs(v["DisallowPrefixes"]) do
-				disableTable[i][disallow:lower()] = true
-			end
-		end
-	end
+        if data["DisallowedPrefixes"] then
+            for _, disallowed in ipairs(data["DisallowedPrefixes"]) do
+                disableTable[rank][string.lower(disallowed)] = true
+            end
+        end
+    end
 end
 
-local function loadPackages()
-	for i,v in pairs(script.SystemPackages:GetChildren()) do
-		if v:IsA("ModuleScript") then
-			local name = v.Name
-			v = require(v)
-			systemPackages[name] = v
-		end
-	end
+local function LoadSystemPackages()
+    -- We are unsure whether the object is actually a module, hence named it possiblyModule
+    for _, possiblyModule in ipairs(script.SystemPackages:GetChildren()) do
+        if possiblyModule:IsA("ModuleScript") then
+            systemPackages[possiblyModule.Name] = require(possiblyModule)
+        end
+    end
 
-	buildPermissionTables()
-	buildDisableTables()
-	systemPackages.API.PermissionTable = permissionTable
-	systemPackages.API.DisableTable = disableTable
-	systemPackages.Settings.Credits = systemPackages.GetCredits()
+    -- Separated this for loop away from the loop above, as everything is not fully inserted
+    -- It is better to run the loop again to assign all packages into each other.
+    for currentName, currentModule in pairs(systemPackages) do
+        if typeof(currentModule) ~= "function" and currentName ~= "Settings" then
+            currentModule.Remotes = remotes
+            for name, module in pairs(systemPackages) do
+                if module ~= currentModule then
+                    currentModule[name] = module
+                end
+            end
+        end
+    end
+end
 
-	--@OVERRIDE
+local function LoadPackages()
+    -- This function only loads packages, but not initialize them, they should be done
+    -- in the Initialize() function independently
+    for _, possiblyPackage in ipairs(script.Packages:GetChildren()) do
+        if possiblyPackage:IsA("ModuleScript") and not possiblyPackage.Parent:IsA("ModuleScript") then
+            local ok, response = pcall(function()
+                local package = require(possiblyPackage)
+                if package and package.Name and package.Description and package.Location then
+                    package.SystemPackages = systemPackages
+                    package.Remotes = remotes
+                    package.Shared = sharedCommons
+                    package.fetchLogs = script.waypointBindable
+
+                    -- I know this may sound rebundant, but this is to make stuff compatible with
+                    -- packages coded way before this sudden code refactor, hopefully you will understand.
+                    package.Services = package.SystemPackages.Services
+                    package.API = package.SystemPackages.API
+                    package.Settings = package.SystemPackages.Settings
+
+                    packages[package.Name] = package
+                else
+                    return false, "Unknown package, have you filled in the name, description and the location of the package?"
+                end
+            end)
+
+            if not ok then
+                warn("Commander; failed to load package " .. possiblyPackage.Name .. " with response: \n" .. response)
+            end
+        end
+    end
+
+    for _, possiblyPackage in pairs(script.Packages:GetDescendants()) do
+        if possiblyPackage:IsA("ModuleScript") then
+            pcall(function()
+                local package = require(possiblyPackage)
+                -- No need to warn for unknown package again, the loop earlier does that for us already
+                if package.Execute and package.Name and package.Description and package.Location then
+                    packagesButtons[#packagesButtons + 1] = {
+                        Name = package.Name,
+                        Protocol = package.Name,
+                        Description = package.Description,
+                        Location = package.Location,
+                        PackageId = possiblyPackage.Name
+                    }
+                end
+            end)
+        end
+    end
+end
+
+local function OverrideInformation()
+    -- Some settings are optional, but as a result, we need to override them
+    -- if they happened to be not assigned, or not present in the module
 	systemPackages.Settings.LatestVersion, systemPackages.Settings.IsHttpEnabled = systemPackages.GetRelease()
 	systemPackages.Settings.UI.AlertSound = systemPackages.Settings.UI.AlertSound or 6518811702
 	systemPackages.Settings.Misc.DataStoresKey = systemPackages.Settings.Misc.DataStoresKey or {}
-	--
+end
 
-	for i,v in pairs(systemPackages) do
-		for index, value in pairs(systemPackages) do
-			if systemPackages[index] ~= v and typeof(v) ~= "function" and i ~= "Settings" then
-				v.Remotes = remotes
-				v[index] = value
-			end
+local function SetTheme()
+    local possiblyTheme = script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme)
+    local themeColor = Instance.new("Color3Value")
+    themeColor.Name = "ThemeColor"
+    themeColor.Value = systemPackages.Settings.UI.Accent
+
+    if possiblyTheme and possiblyTheme:IsA("ModuleScript") then
+        currentTheme = possiblyTheme:Clone()
+    else
+        warn("Commander; cannot find custom theme, falling back to default theme: Minimal")
+        currentTheme = script.Parent.UI.Stylesheets:FindFirstChild("Minimal")
+        if not currentTheme then
+            -- Come on, why would you do this...
+            error("Commander; failed to compile, default theme is missing")
+        end
+        currentTheme = currentTheme:Clone()
+    end
+
+    currentTheme.Name = "Stylesheet"
+    themeColor.Parent = currentTheme
+    currentTheme.Parent = script.Library.UI.Panel.Scripts.Library.Modules
+end
+
+local function setupUIForPlayer(Client: player)
+    local interface = script.Library.UI.Client:Clone()
+    interface.ResetOnSpawn = false
+    interface.Parent = Client.PlayerGui
+
+    if systemPackages.API.checkAdmin(Client.UserId) then
+        isPlayerAddedFired = true
+        CollectionService:AddTag(Client, "commander.admins")
+        
+        interface = script.Library.UI.Panel:Clone()
+        interface.Name = "Panel"
+        interface.ResetOnSpawn = false
+        interface.Parent = Client.PlayerGui
+
+        systemPackages.API.Players.notify(Client, "System", "Press the \"" .. systemPackages.Settings.UI.Keybind.Name .. "\" key, or click the Command icon on the top to toggle Commander")
+		if systemPackages.Settings.LatestVersion ~= false and systemPackages.Settings.LatestVersion ~= systemPackages.Settings.Version[1] then
+			systemPackages.API.Players.hint(Client, "System", "Commander is outdated, latest version available is " .. systemPackages.Settings.LatestVersion, 5)
+		elseif systemPackages.Settings.LatestVersion == false and systemPackages.Settings.IsHttpEnabled then
+			systemPackages.API.Players.hint(Client, "System", "Unable to fetch latest version info for Commander", 5)
+		elseif not systemPackages.Settings.IsHttpEnabled then
+			systemPackages.API.Players.hint(Client, "System", "HttpService is not enabled, functions are limited", 5)
 		end
-	end
 
-	for i,v in pairs(script.Packages:GetDescendants()) do
-		if v:IsA("ModuleScript") and not v.Parent:IsA("ModuleScript") then
-			local ok, response = pcall(function()
-				local mod = require(v)
-				mod.Services = systemPackages.Services
-				mod.API = systemPackages.API
-				mod.Settings = systemPackages.Settings
-				mod.Remotes = remotes
-				mod.Shared = sharedCommons
-				mod.fetchLogs = script.waypointBindable
-				mod.PackageId = v.Name
-				if mod and mod.Name and mod.Description and mod.Location then
-					packages[mod.Name] = mod
-				end
-				
-				if not mod.Init then
-					mod.Execute(nil, "firstrun")
-				else
-					mod.Init()
-				end
-			end)
-
-			if not ok then
-				error("\n\nOh snap! Commander encountered a fatal error while trying to compile commands in the runtime...\n\nAffected files: game." .. v:GetFullName() .. ".lua\nError message: " .. response .. "\n\n")
-			end
-		end
-	end
+        if not systemPackages.Settings.Misc.DisableCredits then
+            systemPackages.API.Players.hint(Client, "System", "This game uses Commander 4 from Evo", 5)
+        end
+    end
 end
 
-loadPackages()
+local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: string?, Attachment: any): any
+    local administratorOnlyMethods = {"command", "getAdmins", "getAvailableAdmins", "getCurrentVersion", "getHasPermission", "getElapsedTime", "getSettings", "getLocale", "setupUIForPlayer", "getPlaceVersion"}
+    if table.find(administratorOnlyMethods, Type) and CollectionService:HasTag(Client, "commander.admins") then
+        if Type == "command" and packages[Protocol] and systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
+            local ok = pcall(function()
+                local status = packages[Protocol].Execute(Client, Type, Attachment)
+                if status then
+                    systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
+                elseif status == nil then
+                    -- Compatability support, might be removed one day
+                    systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name .. " (TRY)", {Attachment})
+                end
+            end)
 
-if not script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme) then
-	warn("ERR! | Theme " .. systemPackages.Settings.UI.Theme .. " is not installed")
-	warn("Switching to default theme...")
-	assert(script.Library.UI.Stylesheets:FindFirstChild("Minimal"), "Default theme missing...")
-	local themeColorValue = Instance.new("Color3Value")
-	themeColorValue.Name = "ThemeColor"
-	themeColorValue.Value = systemPackages.Settings.UI.Accent
-	currentTheme = script.Library.UI.Stylesheets:FindFirstChild("Minimal"):Clone()
-	currentTheme.Name = "Stylesheet"
-	themeColorValue.Parent = currentTheme
-	currentTheme.Parent = script.Library.UI.Panel.Scripts.Library.Modules
-else
-	local themeColorValue = Instance.new("Color3Value")
-	themeColorValue.Name = "ThemeColor"
-	themeColorValue.Value = systemPackages.Settings.UI.Accent
-	currentTheme = script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme):Clone()
-	currentTheme.Name = "Stylesheet"
-	themeColorValue.Parent = currentTheme
-	currentTheme.Parent = script.Library.UI.Panel.Scripts.Library.Modules
-end
-
-script.waypointBindable.OnInvoke = function()
-	return systemPackages.Services.Waypoints.fetch()
-end
-
-remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
-	if CollectionService:HasTag(Client, "commander.admins") and Type ~= "notifyCallback" then
-		if Type == "command" and packages[Protocol] then
-			if systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
-				local status = packages[Protocol].Execute(Client, Type, Attachment)
-				if status then
-					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
-				elseif status == nil then
-					systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name .. " (TRY)", {Attachment})
-				end
-			else
-				warn(Client.UserId, "does not have permission to run", Protocol)
-			end
-
-			return
-		elseif Type == "input" then
-			-- bindable aren't really good for this, yikes
-			local Event = script.Bindables:FindFirstChild(Protocol)
-			if Event and Attachment then
-				Event:Fire(Attachment or false)
-				Event:Destroy()
-			else
-				return false
-			end
-		elseif Type == "getAdmins" then
-			return systemPackages.API.getAdmins()
-		elseif Type == "getAvailableAdmins" then
-			return #CollectionService:GetTagged("commander.admins")
-		elseif Type == "getCurrentVersion" then
-			return systemPackages.Settings.Version[1], systemPackages.Settings.Version[2]
-		elseif Type == "getHasPermission" then
-			return systemPackages.API.checkHasPermission(Client.UserId, Protocol)
-		elseif Type == "getElapsedTime" then
-			return workspace.DistributedGameTime
-		elseif Type == "setupUIForPlayer" then
-			remotes.Event:FireClient(Client, "firstRun", "n/a", systemPackages.Settings)
-			CollectionService:AddTag(Client, "commander.admins")
-
-			-- Filter out commands that the user doesn't have access to.
-			local packagesButtonsFiltered = {};
-
-			for i,v in ipairs(packagesButtons) do
-				if systemPackages.API.checkHasPermission(Client.UserId, v.PackageId) then
-					table.insert(packagesButtonsFiltered, v)
-				end
-			end
-
-			remotes.Event:FireClient(Client, "fetchCommands", "n/a", packagesButtonsFiltered)
-			remotes.Event:FireClient(Client, "fetchAdminLevel", "n/a", systemPackages.API.getAdminLevel(Client.UserId))
-		elseif Type == "getSettings" then
-			return systemPackages.Settings
-		elseif Type == "getLocale" then
-			if cachedData.serverlocale then
+            return ok
+        elseif Type == "input" then
+            local event = script.Bindables:FindFirstChild(Protocol)
+            if event and Attachment then
+                event:Fire(Attachment or false)
+                event:Destroy()
+                return true
+            end
+        elseif Type == "getAdmins" then
+            return systemPackages.API.getAdmins()
+        elseif Type == "getAvailableAdmins" then
+            return #CollectionService:GetTagged("commander.admins")
+        elseif Type == "getCurrentVersion" then
+            return systemPackages.Settings.Version[1], systemPackages.Settings.Version[2]
+        elseif Type == "getHasPermission" then
+            return systemPackages.API.checkHasPermission(Client.UserId, Protocol)
+        elseif Type == "getElapsedTime" then
+            return workspace.DistributedGameTime
+        elseif Type == "getSettings" then
+            return systemPackages.Settings
+        elseif Type == "getPlaceVersion" then
+            return game.PlaceVersion
+        elseif Type == "getLocale" then
+            if cachedData.serverlocale then
 				return cachedData.serverlocale
 			else
 				local ok , response = systemPackages.Services.Promise.new(function(Resolve, Reject)
@@ -228,62 +244,65 @@ remotes.Function.OnServerInvoke = function(Client, Type, Protocol, Attachment)
 					cachedData.serverlocale = response
 					return response
 				else
-					warn(response)
+					warn("Commander; " .. response)
 				end
 			end
-		elseif Type == "getPlaceVersion" then
-			return game.PlaceVersion
-		end
-	end
-	
-	if Type == "notifyCallback" then
-		-- bindable aren't really good for this, yikes
-		local Event = script.Bindables:FindFirstChild(Protocol)
-		if Event and Attachment then
-			Event:Fire(Attachment or false)
-			Event:Destroy()
-		else
-			return false
-		end
-	end
+        elseif Type == "setupUIForPlayer" then
+            local filteredPackagesButtons = {}
+            CollectionService:AddTag(Client, "commander.admins")
+
+            -- Simple filter, to filter out packages that user has no permission to use
+            for _, package in ipairs(packagesButtons) do
+                if systemPackages.API.checkHasPermission(Client.UserId, package.PackageId) then
+                    table.insert(filteredPackagesButtons, package)
+                end
+            end
+
+            remotes.Event:FireClient(Client, "firstRun", nil, systemPackages.Settings)
+            remotes.Event:FireClient(Client, "fetchAdminLevel", nil, systemPackages.API.getAdminLevel(Client.UserId))
+            remotes.Event:FireClient(Client, "fetchCommands", nil, filteredPackagesButtons)
+            return true
+        end
+    end
+
+    if Type == "notifyCallback" then
+        local event = script.Bindables:FindFirstChild(Protocol)
+        if event and Attachment then
+            event:Fire(Attachment or false)
+            event:Destroy()
+            return true
+        end
+    end
+
+    return false
 end
 
-local function setupUIForPlayer(Client)
-	local UI = script.Library.UI.Client:Clone()
-	UI.ResetOnSpawn = false
-	UI.Scripts.Core.Disabled = false
-	UI.Parent = Client.PlayerGui
+local function Initialize()
+    Warn("Commander; loading...")
+    LoadSystemPackages()
+    BuildPermissions()
+    BuildDisableds()
+    OverrideInformation()
 
-	if systemPackages.API.checkAdmin(Client.UserId) then
-		CollectionService:AddTag(Client, "commander.admins")
-		isPlayerAddedFired = true
-		UI = script.Library.UI.Panel:Clone()
-		UI.Name = "Panel"
-		UI.ResetOnSpawn = false
-		UI.Scripts.Core.Disabled = false
-		UI.Parent = Client.PlayerGui
-		systemPackages.API.Players.notify(Client, "System", "Press the \"" .. systemPackages.Settings.UI.Keybind.Name .. "\" or click the Command icon on the top to toggle Commander")
-		if systemPackages.Settings.LatestVersion ~= false and systemPackages.Settings.LatestVersion ~= systemPackages.Settings.Version[1] then
-			systemPackages.API.Players.hint(Client, "System", "Commander is outdated, latest version available is " .. systemPackages.Settings.LatestVersion, 5)
-		elseif systemPackages.Settings.LatestVersion == false and systemPackages.Settings.IsHttpEnabled then
-			systemPackages.API.Players.hint(Client, "System", "Unable to fetch latest version info for Commander", 5)
-		elseif not systemPackages.Settings.IsHttpEnabled then
-			systemPackages.API.Players.hint(Client, "System", "HttpService is not enabled, functions are limited", 5)
-		end
-	end
-	
-	if not systemPackages.Settings.Misc.DisableCredits then
-		systemPackages.API.Players.hint(Client, "System", "This game uses Commander 4 from Evo", 5)
-	end
+    systemPackages.API.PermissionTable = permissionTable
+    systemPackages.API.DisableTable = disableTable
+    systemPackages.Settings.Credits = systemPackages.GetCredits()
+
+    LoadPackages()
+    SetTheme()
+
+    remoteFolder.Name = "Commander Remotes"
+    remotes.Function.OnServerInvoke = OnRemoteFunctionInvoke
+    Players.PlayerAdded:Connect(function(Client)
+        setupUIForPlayer(Client)
+    end)
+
+    if not isPlayerAddedFired then
+        for i,v in pairs(Players:GetPlayers()) do
+            setupUIForPlayer(v)
+        end
+    end
+    Warn("Commander; listening to clients")
 end
 
-Players.PlayerAdded:Connect(function(Client)
-	setupUIForPlayer(Client)
-end)
-
--- for situations where PlayerAdded will not work as expected in Studio
-if not isPlayerAddedFired then
-	for i,v in pairs(Players:GetPlayers()) do
-		setupUIForPlayer(v)
-	end
-end
+Initialize()
