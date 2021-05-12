@@ -88,6 +88,6 @@ module.Misc = {
 	}
 }
 
-module.Version = {"1.3.0", "1.3.0 (Official Build)", "Azalea Beta"}
+module.Version = {"1.4.0", "1.4.0 (Official Build)", "Lilium"}
 
 return module
