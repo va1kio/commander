@@ -83,6 +83,7 @@ module.UI = {
 
 module.Misc = {
 	["DisableCredits"] = false,
+	["IsVerbose"] = true,
 	["DataStoresKey"] = {
 		["Ban"] = "commander.bans"
 	}

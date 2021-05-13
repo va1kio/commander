@@ -6,8 +6,8 @@ local Players = game:GetService("Players")
 -- It's fine to parent them to ReplicatedStorage for the time being
 local remoteFolder = Instance.new("Folder", ReplicatedStorage)
 local remotes = {
-    ["Function"] = Instance.new("RemoteFunction", ReplicatedStorage),
-    ["Event"] = Instance.new("RemoteEvent", ReplicatedStorage)
+    ["Function"] = Instance.new("RemoteFunction", remoteFolder),
+    ["Event"] = Instance.new("RemoteEvent", remoteFolder)
 }
 
 local packages, systemPackages = {}, {}
@@ -15,30 +15,41 @@ local permissionTable, disableTable = {}, {}
 local packagesButtons = {}
 local cachedData = {}
 local sharedCommons = {}
+local holdedWarns = {} -- Settings is not loaded at first, so we need to hold the warns!
 local currentTheme = nil
 local isPlayerAddedFired = false
 
 local function newWarn(...)
-    if systemPackages.Settings.Misc.IsVerbose then
+    if systemPackages.Settings and systemPackages.Settings.Misc.IsVerbose then
         warn("Commander; " .. ...)
+
+        if #holdedWarns ~= 0 then
+            local reference = holdedWarns
+            holdedWarns = {}
+            for _, message in ipairs(holdedWarns) do
+                warn("Commander; " .. message)
+            end
+        end
+    elseif not systemPackages.Settings then
+        table.insert(holdedWarns, ...)
     end
 end
 
 local function BuildPermissions()
-    local permissions = systemPackages.settings["Permission"]
+    local permissions = systemPackages.Settings["Permissions"]
 
     for rank, data in pairs(permissions) do
     	newWarn("building permission table for " .. rank)
-        permissions[rank] = {}
+        permissionTable[rank] = {}
 
-        if data["Permission"] then
-            for _, permission in ipairs(data["Permission"]) do
+        if data["Permissions"] then
+            for _, permission in ipairs(data["Permissions"]) do
                 permissionTable[rank][permission] = true
             end
         end
 
-        if data["Inherits"] and permissions[data["Inheirits"]] and permissions[data["Inherits"]]["Permission"] then
-            for _, permission in ipairs(permissions[data["Inherits"]]["Permission"]) do
+        if data["Inherits"] and permissions[data["Inheirits"]] and permissions[data["Inherits"]]["Permissions"] then
+            for _, permission in ipairs(permissions[data["Inherits"]]["Permissions"]) do
                 permissionTable[rank][permission] = true
             end
         end

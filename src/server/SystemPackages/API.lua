@@ -331,7 +331,7 @@ function API.Players.GetAdminLevel(ClientId: number)
 		local isInGroup = false
 
 		if typeof(name) == "string" then
-			if string.match(i, "(%d+):([<>]?)(%d+)") then
+			if string.match(name, "(%d+):([<>]?)(%d+)") then
 				-- Group setting.
 				-- Formatted as groupId:[<>]?rankId.
 				-- "<" / ">" signifies if the user rank should be
@@ -510,7 +510,9 @@ end
 -- To make naming convention much consistent, we have changed our function to PascalCase
 -- As a result, we need backward compatibility as older packages and code uses camelCase
 -- for functions
-API.Players = setmetatable(API.Players, {
+API.Players = setmetatable({
+	_actual = API.Players
+}, {
 	__index = function(self, key: string)
 		local newKey = ""
 		for index, character in ipairs(string.split(key, "")) do
@@ -521,7 +523,7 @@ API.Players = setmetatable(API.Players, {
 			newKey = newKey .. character
 		end
 		
-		return self[newKey]
+		return self._actual[newKey]
 	end	
 })
 
@@ -543,7 +545,7 @@ globalAPI = setmetatable({
 	GetAvailableAdmins = MakeBindable(IsolateFunction(module.Players.getAvailableAdmins)),
 	GetPlayersFromNameSelector = MakeBindable(IsolateFunction(module.Players.GetPlayersFromNameSelector)),
 	GetAdminStatus = MakeBindable(IsolateFunction(module.Players.getAdminStatus)),
-	GetAdmins = makeBindable(function()
+	GetAdmins = MakeBindable(function()
 		local permissions = {}
 		for name, permission in pairs(module.Players.getAdmins()) do
 			permissions[name] = permission
