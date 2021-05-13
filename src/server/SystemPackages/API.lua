@@ -512,16 +512,9 @@ end
 -- for functions
 API.Players = setmetatable(API.Players, {
 	__index = function(self, key: string)
-		local newKey = ""
-		for index, character in ipairs(string.split(key, "")) do
-			if index == 1 then
-				character = string.upper(character)
-			end
-			
-			newKey = newKey .. character
-		end
+		key = string.upper(string.sub(key,1,1)) .. string.sub(key,2)
 		
-		return self[newKey]
+		return rawget(self,key) --calling self[newKey] would just invoke this index again
 	end	
 })
 
