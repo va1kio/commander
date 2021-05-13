@@ -9,6 +9,7 @@ local remotes = {
     ["Function"] = Instance.new("RemoteFunction", remoteFolder),
     ["Event"] = Instance.new("RemoteEvent", remoteFolder)
 }
+local logTemplate = "[Commander]: "
 
 local packages, systemPackages = {}, {}
 local permissionTable, disableTable = {}, {}
@@ -21,13 +22,13 @@ local isPlayerAddedFired = false
 
 local function newWarn(...)
     if systemPackages.Settings and systemPackages.Settings.Misc.IsVerbose then
-        warn("Commander; " .. ...)
+        warn(logTemplate .. ...)
 
         if #holdedWarns ~= 0 then
             local reference = holdedWarns
             holdedWarns = {}
             for _, message in ipairs(holdedWarns) do
-                warn("Commander; " .. message)
+                warn(logTemplate .. message)
             end
         end
     elseif not systemPackages.Settings then
@@ -123,7 +124,7 @@ local function LoadPackages()
             end)
 
             if not ok then
-                warn("Commander; failed to load package " .. possiblyPackage.Name .. " with response: \n" .. response)
+                warn(logTemplate .. "failed to load package " .. possiblyPackage.Name .. " with response: \n" .. response)
             end
         end
     end
@@ -166,11 +167,11 @@ local function SetTheme()
     if possiblyTheme and possiblyTheme:IsA("ModuleScript") then
         currentTheme = possiblyTheme:Clone()
     else
-        warn("Commander; cannot find custom theme, falling back to default theme: Minimal")
+        warn("[Commander]:  cannot find custom theme, falling back to default theme: Minimal")
         currentTheme = script.Parent.UI.Stylesheets:FindFirstChild("Minimal")
         if not currentTheme then
             -- Come on, why would you do this...
-            error("Commander; failed to compile, default theme is missing")
+            error(logTemplate .. "failed to compile, default theme is missing")
         end
         currentTheme = currentTheme:Clone()
     end
@@ -269,7 +270,7 @@ local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: st
 					cachedData.serverlocale = response
 					return response
 				else
-					warn("Commander; " .. response)
+					warn("[Commander]:  " .. response)
 				end
 			end
         elseif Type == "setupUIForPlayer" then
