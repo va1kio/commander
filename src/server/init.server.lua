@@ -19,8 +19,12 @@ local currentTheme = nil
 local isPlayerAddedFired = false
 
 local function newWarn(...)
-    if systemPackages.Settings.Misc.IsVerbose then
-        warn("Commander; " .. ...)
+    if systemPackages.Settings then
+        if systemPackages.Settings.Misc.IsVerbose then
+            warn("Commander; " .. ...)
+        end
+    else
+        warn(debug.traceback("Something unexpectedly tried to read a value from Settings before it has loaded ",2))
     end
 end
 
