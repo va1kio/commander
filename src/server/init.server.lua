@@ -18,7 +18,7 @@ local sharedCommons = {}
 local currentTheme = nil
 local isPlayerAddedFired = false
 
-local function Warn(...)
+local function newWarn(...)
     if systemPackages.Settings.Misc.IsVerbose then
         warn("Commander; " .. ...)
     end
@@ -28,6 +28,7 @@ local function BuildPermissions()
     local permissions = systemPackages.settings["Permission"]
 
     for rank, data in pairs(permissions) do
+    	newWarn("building permission table for " .. rank)
         permissions[rank] = {}
 
         if data["Permission"] then
@@ -48,6 +49,7 @@ local function BuildDisableds()
     local permissions = systemPackages.Settings["Permissions"]
     
     for rank, data in pairs(permissions) do
+    	newWarn("building disabled table for " .. rank)
         disableTable[rank] = {}
 
         if data["DisallowedPrefixes"] then
@@ -60,6 +62,7 @@ end
 
 local function LoadSystemPackages()
     -- We are unsure whether the object is actually a module, hence named it possiblyModule
+    newWarn("fetching SystemPackages...")
     for _, possiblyModule in ipairs(script.SystemPackages:GetChildren()) do
         if possiblyModule:IsA("ModuleScript") then
             systemPackages[possiblyModule.Name] = require(possiblyModule)
@@ -74,6 +77,7 @@ local function LoadSystemPackages()
             for name, module in pairs(systemPackages) do
                 if module ~= currentModule then
                     currentModule[name] = module
+                    newWarn("loaded SystemPackage " .. name)
                 end
             end
         end
@@ -81,6 +85,7 @@ local function LoadSystemPackages()
 end
 
 local function LoadPackages()
+	newWarn("fetching packages...")
     -- This function only loads packages, but not initialize them, they should be done
     -- in the Initialize() function independently
     for _, possiblyPackage in ipairs(script.Packages:GetChildren()) do
@@ -100,6 +105,7 @@ local function LoadPackages()
                     package.Settings = package.SystemPackages.Settings
 
                     packages[package.Name] = package
+                    newWarn("loaded package " .. possiblyPackage.Name)
                 else
                     return false, "Unknown package, have you filled in the name, description and the location of the package?"
                 end
@@ -136,9 +142,11 @@ local function OverrideInformation()
 	systemPackages.Settings.LatestVersion, systemPackages.Settings.IsHttpEnabled = systemPackages.GetRelease()
 	systemPackages.Settings.UI.AlertSound = systemPackages.Settings.UI.AlertSound or 6518811702
 	systemPackages.Settings.Misc.DataStoresKey = systemPackages.Settings.Misc.DataStoresKey or {}
+	systemPackages.Settings.Misc.IsVerbose = systemPackages.Settings.Misc.IsVerbose or false
 end
 
 local function SetTheme()
+	newWarn("applying theme " .. systemPackages.Settings.UI.Theme .. "...")
     local possiblyTheme = script.Library.UI.Stylesheets:FindFirstChild(systemPackages.Settings.UI.Theme)
     local themeColor = Instance.new("Color3Value")
     themeColor.Name = "ThemeColor"
@@ -159,21 +167,25 @@ local function SetTheme()
     currentTheme.Name = "Stylesheet"
     themeColor.Parent = currentTheme
     currentTheme.Parent = script.Library.UI.Panel.Scripts.Library.Modules
+    newWarn("complete setting up themes for panel")
 end
 
 local function setupUIForPlayer(Client: player)
     local interface = script.Library.UI.Client:Clone()
     interface.ResetOnSpawn = false
     interface.Parent = Client.PlayerGui
+    newWarn("cloned client interface to player " .. Client.Name)
 
     if systemPackages.API.checkAdmin(Client.UserId) then
         isPlayerAddedFired = true
         CollectionService:AddTag(Client, "commander.admins")
+        newWarn(Client.Name .. " is a person in authority")
         
         interface = script.Library.UI.Panel:Clone()
         interface.Name = "Panel"
         interface.ResetOnSpawn = false
         interface.Parent = Client.PlayerGui
+        newWarn("cloned panel interface to player " .. Client.Name)
 
         systemPackages.API.Players.notify(Client, "System", "Press the \"" .. systemPackages.Settings.UI.Keybind.Name .. "\" key, or click the Command icon on the top to toggle Commander")
 		if systemPackages.Settings.LatestVersion ~= false and systemPackages.Settings.LatestVersion ~= systemPackages.Settings.Version[1] then
@@ -191,6 +203,7 @@ local function setupUIForPlayer(Client: player)
 end
 
 local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: string?, Attachment: any): any
+	newWarn(Client.Name .. " is invoking RemoteFunction with type " .. Type .. ", protocol " .. Protocol)
     local administratorOnlyMethods = {"command", "getAdmins", "getAvailableAdmins", "getCurrentVersion", "getHasPermission", "getElapsedTime", "getSettings", "getLocale", "setupUIForPlayer", "getPlaceVersion"}
     if table.find(administratorOnlyMethods, Type) and CollectionService:HasTag(Client, "commander.admins") then
         if Type == "command" and packages[Protocol] and systemPackages.API.checkHasPermission(Client.UserId, packages[Protocol].PackageId) then
@@ -200,6 +213,7 @@ local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: st
                     systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name, {Attachment})
                 elseif status == nil then
                     -- Compatability support, might be removed one day
+                    newWarn("package did not return a boolean at execution, marked usage as [TRY]")
                     systemPackages.Services.Waypoints.new(Client.Name, packages[Protocol].Name .. " (TRY)", {Attachment})
                 end
             end)
@@ -250,6 +264,7 @@ local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: st
         elseif Type == "setupUIForPlayer" then
             local filteredPackagesButtons = {}
             CollectionService:AddTag(Client, "commander.admins")
+            newWarn("setting up interface for client " .. Client.Name)
 
             -- Simple filter, to filter out packages that user has no permission to use
             for _, package in ipairs(packagesButtons) do
@@ -261,6 +276,7 @@ local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: st
             remotes.Event:FireClient(Client, "firstRun", nil, systemPackages.Settings)
             remotes.Event:FireClient(Client, "fetchAdminLevel", nil, systemPackages.API.getAdminLevel(Client.UserId))
             remotes.Event:FireClient(Client, "fetchCommands", nil, filteredPackagesButtons)
+            newWarn("completed setting up interface for client " .. Client.Name)
             return true
         end
     end
@@ -278,7 +294,8 @@ local function OnRemoteFunctionInvoke(Client: player, Type: string, Protocol: st
 end
 
 local function Initialize()
-    Warn("Commander; loading...")
+    newWarn("loading...")
+    newWarn("building server...")
     LoadSystemPackages()
     BuildPermissions()
     BuildDisableds()
@@ -287,7 +304,8 @@ local function Initialize()
     systemPackages.API.PermissionTable = permissionTable
     systemPackages.API.DisableTable = disableTable
     systemPackages.Settings.Credits = systemPackages.GetCredits()
-
+	
+	newWarn("building packages and client..."
     LoadPackages()
     SetTheme()
 
@@ -298,11 +316,13 @@ local function Initialize()
     end)
 
     if not isPlayerAddedFired then
+    	newWarn("firing setupUIForPlayer...")
         for i,v in pairs(Players:GetPlayers()) do
             setupUIForPlayer(v)
         end
     end
-    Warn("Commander; listening to clients")
+    newWarn("complete loading")
+    newWarn("listening to clients...")
 end
 
 Initialize()
