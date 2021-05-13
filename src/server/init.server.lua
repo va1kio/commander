@@ -305,7 +305,7 @@ local function Initialize()
     systemPackages.API.DisableTable = disableTable
     systemPackages.Settings.Credits = systemPackages.GetCredits()
 	
-	newWarn("building packages and client..."
+	newWarn("building packages and client...")
     LoadPackages()
     SetTheme()
 
