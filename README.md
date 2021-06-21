@@ -1,3 +1,6 @@
+⚠️ Under construction!
+All source code hosted under this repository is under a large recode, if you plan to install Commander for your game, find the Releases section for the latest source code, or use the loader.
+
 # Commander
 
 I liked the idea of Commander, but I never liked how I coded it, with that I am hugely unmotivated to code for Commander, and more errors and typos started to come out. While I've archived this project previously, I feel like I can at least improve the codebase one more time, and call it as the final release, I guess? Honestly, really depends.
@@ -6,11 +9,11 @@ Commander is an open sourced and community driven administration panel for your 
 
 ![commander banner](https://cdn.discordapp.com/attachments/813583766039560206/831496945604100136/Banner.png)
 
-Visit our [documentation](https://commander-4.vercel.app) to learn more. If you have any questions about Commander, feel free to submit a new issue, or visit our Discord community at [here](https://va1kio.github.io/commander-site/goto#discord).
+Visit our [documentation](https://commander-4.vercel.app) to learn more. If you have any questions about Commander, feel free to submit a new issue, or visit our Discord community at [here](https://7kayoh.github.io/commander-site/goto#discord).
 
 ## Documentation
 
-If you want to learn more about Commander in the development side, visit our [documentation](https://commander-4.vercel.app), which includes API reference for packages and the UI library, tutorials on making packages, installing packages, installing themes and more. You can find the source code of the documentation [here](https://github.com/va1kio/commander-site/tree/master/docs-src/v1)
+If you want to learn more about Commander in the development side, visit our [documentation](https://commander-4.vercel.app), which includes API reference for packages and the UI library, tutorials on making packages, installing packages, installing themes and more. You can find the source code of the documentation [here](https://github.com/7kayoh/commander-site/tree/master/docs-src/v1)
 
 ## Installing
 
