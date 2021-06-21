@@ -1,6 +1,6 @@
 # Commander
 
-I liked the idea of Commander, but I never liked how I coded it, with that I am hugely unmotivated to code for Commander, and more errors and typos started to come out. As a result, I'll probably archive this project. Feel free to make a new one and do whatever you want, honestly don't want to care anymore.
+I liked the idea of Commander, but I never liked how I coded it, with that I am hugely unmotivated to code for Commander, and more errors and typos started to come out. While I've archived this project previously, I feel like I can at least improve the codebase one more time, and call it as the final release, I guess? Honestly, really depends.
 
 Commander is an open sourced and community driven administration panel for your Roblox games' needs. Created and designed to be extremely flexible and customisable.
 
