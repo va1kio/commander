@@ -1,11 +1,9 @@
 local HttpService = game:GetService("HttpService")
 local Promise = require(script.Parent.Services.Promise)
 
-local URL = "https://api.github.com/repos/va1kio/commander/tags"
-
 local function fetch()
     return Promise.new(function(resolve, reject)
-        local status, response = pcall(HttpService.GetAsync, HttpService, URL)
+        local status, response = pcall(HttpService.GetAsync, HttpService, "https://api.github.com/repos/va1kio/commander/tags")
         if status then
             resolve(HttpService:JSONDecode(response))
         else
@@ -17,11 +15,11 @@ end
 return function()
     local status, response = fetch():await()
     if status then
-        for _, item in ipairs(response) do
-            if tostring(string.match(item.name, "%d+%.%d+%.%d+")) ~= item.name then
+        for _,v in ipairs(response) do
+            if tostring(string.match(v.name, "%d+%.%d+%.%d+")) ~= v.name then
                 continue
             else
-                return item.name, HttpService.HttpEnabled
+                return v.name
             end
         end
     else
