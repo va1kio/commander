@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - indev
 
 jobs:
   ci:
@@ -22,6 +22,6 @@ jobs:
       run: rojo --version
 
     - name: Deploy
-      run: rojo upload deploy.project.json --cookie "$ROBLOSECURITY" --asset_id 6648681899
+      run: rojo upload deploy.project.json --cookie "$ROBLOSECURITY" --asset_id 6992945211
       env:
         ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}

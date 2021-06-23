@@ -1,11 +1,9 @@
-⚠️ Under construction!
-All source code hosted under this repository is under a large recode, if you plan to install Commander for your game, find the Releases section for the latest source code, or use the loader.
+⚠️ Hello Developers!
+This is an in-development version of Commander, which includes **highly unstable** and untested code, if you are using Commander for your game, please avoid using this build! Use the build in the main branch instead!
 
 # Commander
 
-[![CI](https://github.com/7kayoh/commander/actions/workflows/deploy.yml/badge.svg)](https://github.com/7kayoh/commander/actions/workflows/deploy.yml)
-
-I liked the idea of Commander, but I never liked how I coded it, with that I am hugely unmotivated to code for Commander, and more errors and typos started to come out. While I've archived this project previously, I feel like I can at least improve the codebase one more time, and call it as the final release, I guess? Honestly, really depends.
+[![CI](https://github.com/7kayoh/commander/actions/workflows/indev-deploy.yml/badge.svg)](https://github.com/7kayoh/commander/actions/workflows/indev-deploy.yml)
 
 Commander is an open sourced and community driven administration panel for your Roblox games' needs. Created and designed to be extremely flexible and customisable.
 
