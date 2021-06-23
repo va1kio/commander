@@ -3,6 +3,8 @@ All source code hosted under this repository is under a large recode, if you pla
 
 # Commander
 
+[![CI](https://github.com/7kayoh/commander/actions/workflows/deploy.yml/badge.svg)](https://github.com/7kayoh/commander/actions/workflows/deploy.yml)
+
 I liked the idea of Commander, but I never liked how I coded it, with that I am hugely unmotivated to code for Commander, and more errors and typos started to come out. While I've archived this project previously, I feel like I can at least improve the codebase one more time, and call it as the final release, I guess? Honestly, really depends.
 
 Commander is an open sourced and community driven administration panel for your Roblox games' needs. Created and designed to be extremely flexible and customisable.
