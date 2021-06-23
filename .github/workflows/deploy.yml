@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: Deployment
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: true
+
+    - name: Report tool versions
+      run: rojo --version
+
+    - name: Deploy
+      run: rojo upload deploy.project.json --cookie "$ROBLOSECURITY" --asset_id 6648681899
+      env:
+        ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}

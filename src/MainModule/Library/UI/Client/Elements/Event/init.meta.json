@@ -1,0 +1,5 @@
+{
+	"className": "BindableEvent",
+    "name": "Event",
+	"ignoreUnknownInstances": true
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Commander 4",
+    "tree": {
+        "$path": "src/MainModule"
+    }
+  }
